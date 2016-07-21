@@ -39,3 +39,10 @@ luac.out
 *.x86_64
 *.hex
 
+# Ignore all files/folders that are not EventHorzion files or our meta info
+*
+!.gitignore
+!LICENSE
+!README.md
+!EventHorizon*/
+!EventHorizon*/**
