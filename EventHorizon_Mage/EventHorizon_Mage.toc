@@ -1,0 +1,10 @@
+## Interface: 70300
+## Title: EventHorizon_|c4069ccf0Mage|r
+## Author: Brusalk, Binkenstein
+## LoadOnDemand: 1
+## Dependencies: EventHorizon
+## OptDeps: 
+## SavedVariables: 
+
+config.lua
+myconfig.lua

@@ -1,0 +1,10 @@
+## Interface: 70300
+## Title: EventHorizon_|cFFC79C6EWarrior|r
+## Author: Brusalk
+## LoadOnDemand: 1
+## Dependencies: EventHorizon
+## OptDeps: 
+## SavedVariables: 
+
+config.lua
+myconfig.lua

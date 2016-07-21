@@ -1,0 +1,10 @@
+## Interface: 70300
+## Title: EventHorizon_|c6000FF96Monk|r
+## Author: Brusalk (Config by Thymon)
+## Dependencies: EventHorizon
+## LoadOnDemand: 1
+## OptDeps: 
+## SavedVariables: 
+
+config.lua
+myconfig.lua

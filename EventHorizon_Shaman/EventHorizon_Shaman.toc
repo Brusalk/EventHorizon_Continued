@@ -1,0 +1,10 @@
+## Interface: 70300
+## Title: EventHorizon_|c802459ffShaman|r
+## Author: Brusalk, Binkenstein, Hekili!
+## Dependencies: EventHorizon
+## LoadOnDemand: 1
+## OptDeps: 
+## SavedVariables: 
+
+config.lua
+myconfig.lua

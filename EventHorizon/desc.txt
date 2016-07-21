@@ -1,0 +1,512 @@
+[b][size=3]Hey There. Taroven has decided to stop supporting this addon, but I've decided to pick up development in his place :)
+ -Brusalk (Bronzebeard-US)[/size][/b]
+
+[size=2]EventHorizon is now updated and working for Mists of Pandaria. Just download the most recent version and you should be good to go!(1.9.5)
+
+If you have and comments, concerns, questions, suggestions, anything, don't hesitate to contact me either through comments here or via mail or whisper on Bronzebeard. Whisper someone online in The Feral Agressors guild to see if I'm on an alt if I'm not on my main character Brusalk.
+
+If you feel that the class config for your class is not up to snuff then please let me know why and update it yourself! There is now a how-to on class configuration below! (Well.. tomorrow. I'm going to bed for now :P)
+
+There is also a how-to on customization of how EH looks below as well. Check it out! 
+
+Please be aware that I'm rewriting this addon from scratch to be released officially before the release of MoP in September. As such some configuration options for the current version of EH may change or not exist in the rewrite in an effort to make things easier to understand. (Also, coming in the rewrite is an in-game configuration menu as well as the ability to alter class-configs in-game to make it easier to customize EH.
+[/size]
+
+
+
+[COLOR=RoyalBlue][B][SIZE=5]What does EventHorizon do?[/SIZE][/COLOR][/b]
+
+EventHorizon displays all of your class/spec's rotational abilities on a common time scale. This means that instead of seeing a regular percentage-based timer bar, EH shows you exactly what is happening in relation to everything else. If that sounds complicated at all, just look at the screenshots.
+The basic idea: An ability that lasts 12 seconds and has 6 seconds remaining shouldn't look exactly the same as one that lasts 5 minutes and has 2.5 minutes remaining.
+
+[B]Videos showing EH in action: [/B]
+Dezzimal posted a great [URL="http://www.youtube.com/watch?v=T6b49x87uGk"]instructional video[/URL] using a Shadow Priest for reference.
+breakingsong [URL="http://www.youtube.com/watch?v=mTRntgF09oI"]demonstrated EH[/URL] on a Destro Warlock.
+
+Also, for instant gratification, here's a quick snippet showing a Shadow Priest's rotation at 1 frame per second, using an older layout:
+[IMG]http://www.wowinterface.com/forums/attachment.php?attachmentid=2295&d=1235191727[/IMG]
+
+The big white line is the current time. Future events are on the right side, past events on the left. As time goes by, the events scroll from right to left.
+
+The green bars are your cast bars. They use exactly the same times that your normal cast bar would display, with all haste modifiers applied.
+
+You can also see cooldowns, DoTs, and their ticks (predicted in the future, and from the combat log in the past). EventHorizon is extremely intelligent when dealing with most things DoT/HoT-related.
+
+The white lines that appear before the cast times are the times when you press the button (send the cast message to the server). The difference between this line and the start of the cast is your lag.
+
+[COLOR=RoyalBlue][B][SIZE=5]How do I set it up?[/SIZE][/B][/COLOR]
+EventHorizon does not include an in-game configuration UI. However, it really doesn't need one - Everything should "just work".
+
+Power users and those wishing to theme EventHorizon for a specific UI, please read on to the advanced portion of this section. Don't worry, it's easier than it may seem.
+
+[B]The basics:[/B]
+* The window may be moved via the drag-handle on the upper right frame corner. It may be a little hard to see at first, but will light up as soon as you mouse over it.
+
+* You can show/hide EventHorizon manually by using /eventhorizon or /ehz.
+
+[B]Advanced configuration:[/B]
+
+Note: I would highly recommend an advanced text editor such as [URL="http://notepad-plus.sourceforge.net/uk/site.htm"]Notepad++[/URL] if you wish to edit the configuration files. While this isn't required by any means, an editor with syntax highlighting makes changing the files MUCH easier.
+
+* The default configuration for EventHorizon is located in [I]EventHorizon\config.lua[/I]. This file contains every setting available for EH and is heavily commented to help tweak things to your liking. This file may be deleted and EventHorizon will maintain its functionality (not that I would ever recommend doing that).
+
+* Any changes you make to config.lua will be removed when you update EventHorizon. This is by design. [B]HOWEVER[/B], there's an easy way to get around that. Simply create a new file (or a copy of config.lua) named "myconfig.lua". This file is automatically loaded, and because it loads after config.lua, the settings in myconfig.lua will always be the ones to appear in-game.
+
+
+[b]Files[/b]
+
+There are 2 files which you can edit to change the physical appearance of EventHorizon including colors, size, global functionality and other things. I'm going to assume that you have the most recent version of the configuration file provided in the most recent version of EventHorizon. 
+
+config.lua:
+You can think of this as the default settings of EventHorizon. If you want to change settings then you can do so here, but when you download a new version of EventHorizon you have to be careful as the new version includes config.lua and will overwrite any changes you've made to this file. You can always skip this file when overwriting, but it's better to use myconfig.lua as it's intended to avoid this problem.
+
+myconfig.lua:
+This file overwrites any values in config.lua with the values changed inside it. So if you have config.width set to 375 in config.lua and config.width set to 200 in myconfig.lua, EventHorizon will use 200 as the value.
+Where this is useful is that myconfig.lua is [i]never[/i] included in the updated versions of EventHorzion, and as such will never be overwritten when downloading a new version of EventHorizon. 
+
+As such best practice is to alter any values you wish to change in config.lua by changing the values inside myconfig.lua. 
+
+
+[b]Configuration[/b]
+
+In order to change settings of something you just have to change the text after the equals sign on the line with the setting you want to change.
+
+For example if you wanted to change the width of the addon you would change line 33 which normally reads (by default)
+[code]
+config.width = 375                                -- Width of a single bar....
+[/code]
+
+to
+
+[code]
+config.width = 200                                -- Width of a single bar....
+[/code]
+
+And now EventHorizon will have a width of 200 rather than 375.
+
+Other variables are well explained in the text which comes after the -- on the lines respective to their variables. 
+
+
+Best practice would be to have open config.lua and myconfig.lua at the same time. Then for any changes you want to make to EventHorizon that you do not want to change you add into myconfig.lua on a new line the line you want to change by copy and paste, and then change the value to what you want. This way when you update EventHorizon you do not lose all your configuration options :)
+
+
+It may seem complicated at first, and you can completely skip the step with myconfig.lua if you want, but once you understand it it's very simple to do :)
+
+
+The default myconfig.lua with no variable changes inside it should have the following at the top of the file before any variable changes:
+
+[code]
+local EHN,ns = ...
+
+local config = EventHorizon.config
+local c = EventHorizon.colors
+
+local _,class = UnitClass('player')	-- These locals make in-line conditions a little easier. See the color section for a few examples.
+local DK = class == "DEATHKNIGHT"
+local Druid = class == "DRUID"
+local Hunter = class == "HUNTER"
+local Mage = class == "MAGE"
+local Paladin = class == "PALADIN"
+local Priest = class == "PRIEST"
+local Rogue = class == "ROGUE"
+local Shaman = class == "SHAMAN"
+local Warlock = class == "WARLOCK"
+local Warrior = class == "WARRIOR"
+
+--[[ EDIT BELOW THIS LINE ]]--
+[/code]
+
+
+
+
+
+* If you would like to show/hide the frame under specific circumstances take a look at EventHorizon_Redshift, which is located in the Optional Files section of this page.
+* If you're a Goose user, or have another addon managing your frame visibility, EventHorizonFrame is what you'll want to track.
+
+EventHorizon_Redshift has a similar configuration to EventHorizon itself, though is much simpler in nature.
+
+
+[COLOR=RoyalBlue][B][SIZE=5]Altering your classes configuration to fit your specific needs![/SIZE][/B][/COLOR]
+
+The settings where classes/specs bars are located are in config.lua in the folder for your class. (Example: EventHorizon_Monk) For examples I'll use the priest configuration. This is written for use with the new configuration system in mind so if things don't quite match up with what is in your config.lua that is why. You can either use what I've written here or alter what you already have by trial and error :)
+
+[b][size=2]Order:[/size][/b]
+Bars are added to EventHorizon in the order which they are called for the player's class. So the order of the bars that appear in EventHorizon is dependent on the order in which you add them in the config.lua. 
+
+[b][size=2]How to add new bars[/size][/b]
+
+This is done by calling self:newSpell(). self:newSpell() is a function which takes in a table of bar configuration options. 
+
+For example, in the priest configuration we add a bar which has Vampiric Touch/SWD CD with the following:
+[code]
+-- Vampiric Touch/swd cd
+	self:newSpell({
+		debuff = {34914,3},
+		cast = 34914,
+		cooldown = 32379,
+		refreshable = true,
+		hasted = true,
+		requiredTree = 3,
+		requiredLevel = 28,
+		stance = 1,
+	})
+[/code]
+
+Here we add a new bar with the options debuff, cast, cooldown, refreshable, hasted, requiredTree, requiredLevel, and stance
+ The values of the options is represented by what appears after the = sign and before the ,. cast is set to 34914 which is the spellID of Vampiric Touch. As a result the bar will now show Vampiric Touch casts on this new bar. Any calls of self:newSpell() before this one will appear before this bar, and any calls after this one will appear after this bar in-game.
+
+[b][size=2]Altering existing bars:[/size][/b]
+Simply change values, delete lines of options you want to remove, or add options/values you want to add. :)
+
+
+[COLOR=RoyalBlue][b][size=2]Comprehensive list of options and acceptable values and what they do:[/size][/b][/color]
+
+
+[b]itemID:[/b] 
+Display the cooldown of the item with itemID provided. If more than one itemID is provided in a table, then EH will show the longest. 
+
+Example(s):
+[code]
+self:newSpell({
+        itemID = 1543
+})
+[/code]
+EH will show as a cooldown on this bar the cooldown of item with itemID 1543
+
+[code]
+self:newSpell({
+       itemID = { 1543, 1544, ... , 1243 },
+})
+[/code]
+EH will show as a cooldown on this bar the longest cooldown of the items with itemIDs 1543, 1544, ... , 1243
+
+
+[b]slotID:[/b]
+Display the cooldown/internal cooldown/playerbuff of the item located in the slot of slotID provided
+
+slotIDs:
+        ChestSlot = 5
+	FeetSlot = 8
+	Finger0Slot = 11
+	Finger1Slot = 12
+	HandsSlot = 10
+	HeadSlot= 1
+	LegsSlot = 7
+	MainHandSlot = 16
+	NeckSlot = 2
+	SecondaryHandSlot = 17
+	ShirtSlot = 4
+	ShoulderSlot = 3
+	abardSlot = 19
+	Trinket0Slot = 13
+	Trinket1Slot = 14
+	WaistSlot = 6
+	WristSlot = 9
+
+Example(s):
+[code]
+self:newSpell({
+        slotID = 13,
+})
+[/code]
+EventHorizon will show the playerbuff/internal cooldown/cooldown of the trinket located in the first trinket slot (slotID = 13)
+
+
+[b]cast:[/b] 
+Display the casts of the spell(s) provided on this bar.
+
+Example(s):
+[code]
+self:newSpell({
+        cast = 1543
+})
+[/code]
+EH will show the casts of the spell with spellID 1543
+
+[code]
+self:newSpell({
+      cast = { 1543, 1544, ... , 1243 },
+})
+[/code]
+EH will show the casts of the spells with spellIDs 1543, 1544, ... , 1243
+
+
+[b]channel: (or channeled)[/b] 
+Display the cast of the channeled spell(s) provided on this bar.
+
+Example(s):
+[code]
+self:newSpell({
+        channel = {1543,3},
+})
+[/code]
+EH will show as a cast the channel with spellID 1543 that hits 3 times over it's full duration
+
+[code]
+self:newSpell({
+       channeled = { {1543,2}, {1544,4}, ... , {1254, 6} },
+})
+[/code]
+EH will show as a cast the channel with spellID 1543 that hits 2 times, the channel with spellID 1544 that hits 4 times, ... , and the channel with spellID 1254 that hits 6 times over it's full duration.
+
+
+[b]cooldown:[/b] 
+A spellID or a table of spellIDs. EH will show the longest cooldown of the provided spellID(s)
+
+Example(s):
+[code]
+self:newSpell({
+        cooldown = 1543,
+})
+[/code]
+EH will show the cooldown of spell with spellID 1543,
+
+[code]
+self:newSpell({
+        cooldown = {1543, 1642, ... , 1274},
+})[/code]
+EH will show the longest cooldown of the spells with spellIDs 1543, 1642, ... , 1274
+
+
+[b]debuff:[/b] 
+A spellID or a table of a spellID and it's unhasted time between ticks (if it's a DoT). Defaults to debuffs on the target.
+
+Example(s):
+[code]
+self:newSpell({
+        debuff = {1543, 3},
+})
+[/code]
+EH will show the debuff with spellID 1543 that has an unhasted time between ticks of 3 seconds.
+
+[code]
+self:newSpell({
+		debuff = 1543,
+})
+EH will show the debuff with spellID 1543 that has no ticks. Just a simple debuff
+
+
+[b]playerbuff:[/b] 
+If there is no debuff defined for this bar, then EH will show the buff which appears on the player by default. Either a spellID or a table of a spellID and it's unhasted time between ticks
+
+Example(s):
+[code]
+self:newSpell({
+        playerbuff = {1543, 3},
+})
+[/code]
+EH will show a buff on the player of the buff with spellID 1543 and unhasted time between ticks of 3 seconds. 
+
+[code]
+self:newSpell({
+		playerbuff = 1543,
+})
+[/code]
+EH will show a buff on the player with spellID 1543 that has no ticks.
+
+
+[b]hasted:[/b] 
+true or false/nil. If true then the debuff/playerbuff for this bar has hasted ticks. 
+
+Example(s):
+[code]
+self:newSpell({
+        debuff = {1543, 3},
+        hasted = true,
+})
+[/code]
+EH will the debuff with spellID 1543 that has a unhasted tick time of 3 seconds that is affected by haste.
+
+
+[b]recast:[/b] 
+true or false/nil. If true then a recast line will appear at the end of the debuff/playerbuff indicating that the player should aim to have the cast finish within this area.
+
+Example(s):
+[code]
+self:newSpell({
+        debuff = {1543, 3},
+        recast = true,
+})
+[/code]
+EH will show a recast line for the debuff with spellID 1543 that has an unhasted time between ticks of 3 seconds.
+
+
+[b]minstacks:[/b] 
+number or nil. If a number then the debuff/playerbuff defined for this bar must have greater than or equal to the number of stacks for it to show.
+
+Example(s):
+[code]
+self:newSpell({
+        playerbuff = {1543, 3},
+        minstacks = 2,
+})
+[/code]
+EH will show a buff on the player of spellID 1543 that has an unhasted tick time of 3 seconds, but will only show if more than two stacks of the buff is on the player.
+
+
+[b]internalcooldown:[/b] 
+number or true or false/nil. If a number than EH will display an internal cooldown of number seconds for the slotID provided. If true then EH will display the internal cooldown of the trinket in the provided slotID that is defined in trinkets.lua. If false or nil then will not show an internal cooldown
+
+Example(s):
+[code]
+self:newSpell({
+        slotID = 14,
+		internalcooldown = 45,
+})
+[/code]
+EH will show the internalcooldown of the trinket in slotID 14 as if it has an internal cooldown of 45 seconds.
+
+
+[b]unique:[/b] 
+true or false/nil. If true then EH will show buffs/debuffs on the target (by default) that are casted by anyone that match the provided debuff or buff ID. Normally debuffs are only shown if cast by the player
+
+Example(s):
+[code]
+self:newSpell({
+        debuff = {1543, 3},
+        unique = true,
+})
+[/code]
+EH will show a recast line for the debuff with spellID 1543 that has an unhasted time between ticks of 3 seconds that is cast by anyone.
+
+
+[b]keepIcon:[/b] 
+true or false/nil. If true then EH will not change the icon from the icon that's first shown on login regardless of what's cast.
+
+Example(s):
+[code]
+self:newSpell({
+        debuff = {1543, 3},
+        keepIcon = true,
+})
+[/code]
+EH will keep the icon of debuff 1543 regardless of what else occurs on this spellbar.
+
+
+[b]icon:[/b] 
+number or string. If a number than EH will always show as the icon for this bar the icon of the spell of spellID number. If a string then EH will always show the icon provided by the string. The string must be a path to a string. Look up frame:SetTexture() on wowprogramming for more information.
+
+Example(s):
+[code]
+self:newSpell({
+        debuff = {1543, 3},
+        icon = 1544,
+})
+[/code]
+EH will show the debuff 1543 with unhasted time between ticks of 3 seconds, but will always show the icon of the spell with spellID 1544.
+
+
+[b]smallCooldown[/b] 
+true or false/nil. If true then the cooldown will use the height settings provided inside config.lua represented by smallCooldown rather than cooldown. Basically makes it so a cooldown is smaller than the normal height
+
+Example(s):
+[code]
+self:newSpell({
+        cooldown = 1543,
+        smallCooldown = true,
+})
+[/code]
+EH will show a small cooldown of the spell with spellID 1543
+
+
+
+[COLOR=RoyalBlue][b][size=2]Options to restrict when bars are shown:[/size][/b][/color]
+
+You may have noticed how not all bars are shown at the same time. That's because of these options! Wooo!
+
+
+[b]requiredGlyph[/b] 
+spellID or false/nil. If not false/nil then in order for this bar to show the player must have the glyph with spellID provided.
+
+Example(s):
+[code]
+self:newSpell({
+        cooldown = 1543,
+        smallCooldown = true,
+		requiredGlyph = 12456,
+})
+[/code]
+EH will show a small cooldown of the spell with spellID 1543 [i]if[/i] they have the glyph with spellID 12456 active.
+
+
+[b]requiredTree[/b] 
+A number, a table of numbers or false/nil. If a number between 0 and the number of possible specializations for the players class, then the player's active specialization must be the one represented by the number. 1 represents the first specialization (Disc for priests), 2 represents the second (Holy for priests), 3 represents the third (Shadow for priests) and 4 represents Resto if a druid. 0 represents no specialization.
+Can also be a table of numbers in which case the player's active specilization must be one of the provided numbers in the table.
+
+Example(s):
+[code]
+self:newSpell({
+        cooldown = 1543,
+        smallCooldown = true,
+		requiredTree = 3,
+})
+[/code]
+EH will show a small cooldown of the spell with spellID 1543 [i]if[/i] the player's active specialization is the third one for their class.
+
+[code]
+self:newSpell({
+        cooldown = 1543,
+        smallCooldown = true,
+		requiredTree = {0,1,3},
+})
+[/code]
+EH will show a small cooldown of the spell with spellID 1543 [i]if[/i] the player's active specialization is either none, the first, or the third for their class.
+
+
+[b]requiredLevel:[/b] 
+A number between 1 and max level or nil/false. If a number than the player must be at the level or higher for the bar to show.
+Example(s):
+[code]
+self:newSpell({
+        cooldown = 1543,
+        smallCooldown = true,
+		requiredLevel = 84,
+})
+[/code]
+EH will show a small cooldown of the spell with spellID 1543 [i]if[/i] the player is 84 or higher.
+
+
+[b]stance[/b] 
+A number between 0 and the number of stances the player can use. The stances start at 0 for no stance, and then as you go right on the stance bar (default UI) the next stance is 1, then 2 and so on.
+Can also be a table of numbers in which case the player must be in one of the stances for the bar to show.
+
+Example(s):
+[code]
+self:newSpell({
+        cooldown = 1543,
+        smallCooldown = true,
+		stance = 1,
+})
+[/code]
+EH will show a small cooldown of the spell with spellID 1543 [i]if[/i] the player is in stance 1. 
+
+[code]
+self:newspell({
+		cooldown = 1543,
+		smallCooldown = true,
+		stance = {0, 1, 4},
+})
+[/code]
+EH will show a small cooldown of the spell with spellID 1543 [i]if[/i] the player is in either no stance, stance 1, or stance 4.
+
+
+[COLOR=RoyalBlue][b][size=2]A few last things in regard to class configs:[/size][/b][/color]
+These are all individual options which can be combined together to form advanced functionality. The only interaction between the options to keep in mind is that playerbuffs will [b]not[/b] show if a debuff is also provided for that bar. This is simply a technical limitation which can't be avoided.
+
+I hope this has made it easier for you to understand how to configure EventHorizon to suit your individual needs!
+
+
+[COLOR=RoyalBlue][B][SIZE=5]What's changed from the original EventHorizon?[/SIZE][/B][/COLOR]
+Check the changelog for the long version, but for a very quick summary of some of the changes:
+* ALL classes and specs are now supported. This includes both healing and tanking.
+* Class coloring has been implemented, giving a more personal touch to the addon and also providing a more differentiated layout.
+* Glyphs that add time to an existing spell now display a stack count on the affected spell's icon. Check the Balance Druid screenshot for an example, it's on the Moonfire bar.
+* Much more support has been added for custom spell configuration. Check out the class module code for examples, they're all over the place.
+* DoT and HoT ticks are now recalculated every time they occur. This makes EH much, much more accurate than it was previously.
+
+[B]What still needs to be changed?[/B]
+EventHorizon is past due for a complete rewrite. This is being actively developed and is planned for a release before the official release of Mists of Pandaria within the next month. Please be advised that after it's release 1) I'll no longer be supporting previous versions of EventHorizon, and 2) Configuration options will most likely be lost in the transition. Part of the rewrite is to make EventHorizon easier to configure via in-game options so hopefully it will be easy to get back to what you want. I will attempt to let you still use your old configuration options for the new version, but I can't promise you that it will work :(
+
+
+If you have a bug to report, please post it in the comments here.
+If you would like to actively participate in EventHorizon's development and know how to work with Google Code's SVN (or are willing to learn), or if you just want to contact me directly, feel free to send me a PM and I'll reply with my contact details.

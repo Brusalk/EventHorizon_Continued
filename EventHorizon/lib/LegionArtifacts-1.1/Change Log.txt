@@ -1,0 +1,9 @@
+Change Log
+1.1
+* New public function: GetPowerPurchased(artifactID) 
+* Minor optimisation changes
+* Minor fixes on error checks. All functions should now properly return false on error.
+* Various commenting on code
+
+1.0
+* Initial release

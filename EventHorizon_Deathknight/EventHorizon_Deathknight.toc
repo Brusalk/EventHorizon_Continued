@@ -1,0 +1,10 @@
+## Interface: 70300
+## Title: EventHorizon_|c99990000DeathKnight|r
+## Author: Brusalk
+## Dependencies: EventHorizon
+## LoadOnDemand: 1
+## OptDeps: 
+## SavedVariables: 
+
+config.lua
+myconfig.lua

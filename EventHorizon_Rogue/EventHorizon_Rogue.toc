@@ -1,0 +1,10 @@
+## Interface: 70300
+## Title: EventHorizon_|c70fff569Rogue|r
+## Author: Brusalk, PessimiStick
+## Dependencies: EventHorizon
+## LoadOnDemand: 1
+## OptDeps: 
+## SavedVariables: 
+
+config.lua
+myconfig.lua
