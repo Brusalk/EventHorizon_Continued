@@ -1,15 +1,17 @@
 local EHN,ns = ...
 EventHorizon = ns
 
-local class = select(2,UnitClass('player'))
-local playername = UnitName('player')..' - '..GetRealmName('player')
-local Cataclysm = select(4,GetBuildInfo()) >= 40000
-local Mop       = select(4,GetBuildInfo()) >= 50000
-local Wod       = select(4,GetBuildInfo()) >= 60000
-local Legion 	= select(4,GetBuildInfo()) >= 70000
+local class 			= select(2,UnitClass('player'))
+local playername 	= UnitName('player')..' - '..GetRealmName('player')
+
+local Cataclysm 	= select(4,GetBuildInfo()) >= 40000
+local Mop       	= select(4,GetBuildInfo()) >= 50000
+local Wod       	= select(4,GetBuildInfo()) >= 60000
+local Legion 			= select(4,GetBuildInfo()) >= 70000
 
 local DEBUG = true -- Comment out this line by prefixing it with "--" if you want to see the load-spam and debug messages
-local spellIDsEnabled = DEBUG
+local spellIDsEnabled = DEBUG -- Toggles display of spellIDs in tooltips. Useful for working on spell configs
+
 local LA = LibStub:GetLibrary("LegionArtifacts-1.1")
 
 -- Wod Changes
@@ -584,7 +586,7 @@ local mainframeEvents = {
 	['PLAYER_LEVEL_UP'] = true,
 	['PLAYER_TARGET_CHANGED'] = true,
 	['UNIT_AURA'] = true,
-    ['PLAYER_TOTEM_UPDATE'] = true,
+  ['PLAYER_TOTEM_UPDATE'] = true,
 	['PLAYER_ENTERING_WORLD'] = true,
 	['ARTIFACT_UPDATE'] = true
 }
@@ -689,12 +691,12 @@ local mainframe_PLAYER_TOTEM_UPDATE = function( self, slot )
     end
 end
 
-local mainframe_PLAYER_ENTERING_WORLD = function(...)
-	mainframe_ARTIFACT_UPDATE()
-end
-
 local mainframe_ARTIFACT_UPDATE = function(...)
 	ns:CheckTalents()
+end
+
+local mainframe_PLAYER_ENTERING_WORLD = function(...)
+	mainframe_ARTIFACT_UPDATE()
 end
 
 local mainframe_UNIT_AURA = function (self,unit)
@@ -2152,13 +2154,13 @@ function ns:CheckRequirements()
 		local rS = config.requiredTree
 		local rL = config.requiredLevel or 1
 		local rT = config.requiredTalent
-        local nRT = config.requiredTalentUnselected
+		local nRT = config.requiredTalentUnselected
 		local rA = config.requiredArtifactTalent
 		
 		local haveGlyphReq = true
 		local haveSpecReq = true
 		local haveTalentReq = true
-        local haveTalentRequiredUnselected = true
+		local haveTalentRequiredUnselected = true
 		local haveLevelReq = rL <= vars.currentLevel
 		local haveArtifactTalentReq = true
 		
@@ -2227,7 +2229,7 @@ function ns:CheckRequirements()
 					local artTalentID, artMinRank = unpack(artTalentTab)
 					if artTalentID == spellID and curRank >= artMinRank then
 						matches = matches + 1
-						print("Matched " .. spellID .. " | " .. matches .. " / " .. requiredMatches)
+						debug("Matched " .. spellID .. " | " .. matches .. " / " .. requiredMatches)
 					end
 				end
 		    end
@@ -2515,16 +2517,16 @@ function ns:newSpell(config) -- New class config to old class config
 	n.requiredTree = c.requiredTree
 	n.requiredLevel = c.requiredLevel
 	n.requiredTalent = c.requiredTalent
-    n.requiredTalentUnselected = c.requiredTalentUnselected
+	n.requiredTalentUnselected = c.requiredTalentUnselected
 	n.requiredArtifactTalent = c.requiredArtifactTalent
 
 	n.stance = c.stance
 	n.auraunit = c.unitaura
 	n.auraunit = c.auraunit
 	
-    n.totem = c.totem
+	n.totem = c.totem
     
---	print("Debuff is type", type(config.debuff), "and has 1st value of", select(1,config.debuff))
+	--	print("Debuff is type", type(config.debuff), "and has 1st value of", select(1,config.debuff))
 	debug("Adding", n.spellID, n.debuff, n.cast, n.dot, n.cooldown)
 	ns:NewSpell(n)
 	
@@ -3181,22 +3183,22 @@ function ns:Initialize()
 		local toggle = not(msg) or cmd == ''
 		
 		if cmd == 'help' then
-			debug'Use "/eventhorizon" or "/ehz" to show or hide EventHorizon.'
-			debug'To enable or disable a module, use "/ehz ModuleName". For example, "/ehz redshift".'
-			debug'To see a list of currently installed modules and visible bars, use "/ehz status".'
+			print('Use "/eventhorizon" or "/ehz" to show or hide EventHorizon.')
+			print('To enable or disable a module, use "/ehz ModuleName". For example, "/ehz redshift".')
+			print('To see a list of currently installed modules and visible bars, use "/ehz status".')
 			if anchor[2]=='EventHorizonHandle' then
-				debug('  EventHorizon is currently '..(EventHorizonDB.isLocked and 'locked.' or 'movable.'))
-				debug('  To '..(EventHorizonDB.isLocked and 'unlock ' or 'lock ')..'EventHorizon, use "/ehz lock".')
-				debug'  If you are unable see or move EventHorizon, use "/ehz reset".'
+				print('  EventHorizon is currently '..(EventHorizonDB.isLocked and 'locked.' or 'movable.'))
+				print('  To '..(EventHorizonDB.isLocked and 'unlock ' or 'lock ')..'EventHorizon, use "/ehz lock".')
+				print('  If you are unable see or move EventHorizon, use "/ehz reset".')
 			end
 		elseif cmd == 'status' then
 			print('Installed plugins:')
-			for i in pairs(self.modules) do debug('  '..i) end
+			for i in pairs(self.modules) do print('  '..i) end
 			print('Visible bars:')
-			for i,v in pairs(self.frames.shown) do debug('  '..v.spellname) end
+			for i,v in pairs(self.frames.shown) do print('  ' .. v.spellname) end
 		elseif cmd == 'reset' then
 			if anchor[2]=='EventHorizonHandle' then
-				debug'Resetting EventHorizon\'s position.'
+				print('Resetting EventHorizon\'s position.')
 				EventHorizonHandle:SetPoint(unpack(self.defaultDB.point))
 				self:CheckTalents()
 			else
@@ -3470,25 +3472,6 @@ end
 
 frame:SetScript('OnEvent', EventHandler)
 frame:RegisterEvent('PLAYER_LOGIN')
-frame:RegisterEvent('PLAYER_ENTERING_WORLD')
-
-frame.PLAYER_ENTERING_WORLD = function(self)
-	 -- Usage **
-	
-
-	-- ** Example code **
-	--for all artifacts and artifact powers, print the power ranks.
-	for i,artifact in pairs(LA:GetArtifacts()) do
-	   local _,link = GetItemInfo(artifact)
-	   local numRank = LA:GetPowerPurchased(artifact)
-	   print(link, 'Powers purchased: ' .. numRank)
-	   for j,power in pairs(LA:GetPowers(artifact)) do
-		  local x = LA:GetPowerInfo(power,artifact)
-		  local id,_,curRank = unpack(x)
-		  print(GetSpellLink(id),'Rank: ' .. curRank)
-	   end
-	end
-end
 
 frame.PLAYER_ALIVE = function (self)
 	self:SetScript('OnUpdate', UpdateMouseover)
