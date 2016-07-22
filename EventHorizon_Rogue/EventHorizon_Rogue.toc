@@ -1,4 +1,4 @@
-## Interface: 70300
+## Interface: 70000
 ## Title: EventHorizon_|c70fff569Rogue|r
 ## Author: Brusalk, PessimiStick
 ## Dependencies: EventHorizon

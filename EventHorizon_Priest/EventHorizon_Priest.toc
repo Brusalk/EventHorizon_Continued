@@ -1,4 +1,4 @@
-## Interface: 70300
+## Interface: 70000
 ## Title: EventHorizon_|c60ffffffPriest|r
 ## Author: Brusalk, Vaelynn
 ## Dependencies: EventHorizon

@@ -1,4 +1,4 @@
-## Interface: 70300
+## Interface: 70000
 ## Title: EventHorizon_|c6000FF96Monk|r
 ## Author: Brusalk (Config by Thymon)
 ## Dependencies: EventHorizon

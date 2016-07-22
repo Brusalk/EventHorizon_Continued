@@ -1,4 +1,4 @@
-## Interface: 70300
+## Interface: 70000
 ## Title: EventHorizon_|cFFC79C6EWarrior|r
 ## Author: Brusalk
 ## LoadOnDemand: 1

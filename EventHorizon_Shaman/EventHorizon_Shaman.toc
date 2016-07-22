@@ -1,4 +1,4 @@
-## Interface: 70300
+## Interface: 70000
 ## Title: EventHorizon_|c802459ffShaman|r
 ## Author: Brusalk, Binkenstein, Hekili!
 ## Dependencies: EventHorizon
