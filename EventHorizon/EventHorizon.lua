@@ -137,6 +137,7 @@ local LegionSpecIDMapping = {
 local LegionClassConfigStatus = {
 	[62]  = true,
 	[63]  = true,
+	[254] = true,
 	[258] = true,
 	[259] = true,
   [262] = true,
