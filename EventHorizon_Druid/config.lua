@@ -1,4 +1,5 @@
 local usemouseover = true	-- Make this false or nil (or just delete the line altogether) to make your healing bars not change when you mouse over something.
+EventHorizon.config.staticheight = nil
 
 function EventHorizon:InitializeClass()
 	self.config.gcdSpellID = 17057 -- Bear Form
@@ -19,94 +20,96 @@ function EventHorizon:InitializeClass()
 	-- Sunfire
 	self:newSpell({
 	  debuff = {164815,2},
-	  stance = 4,
+	  stance = {0,4},
 	  requiredTree = 1,
-	})	
+	  requiredLevel = 24,
+	})
 
 	-- Stellar Flare
 	self:newSpell({
 	  debuff = {202347,2},
-	  stance = 4,
+	  stance = {0,4},
 	  requiredTree = 1,
 	  requiredTalent = 15,
-	})	
+	})
 
-	-- Starsurge
+	-- Starsurge  -- There are two bars for this as it provides two different buffs stacking up to three, the buffs are then consumed by different spell schools separately so both are needed.
 	self:newSpell({
 	  playerbuff = 164547,
-	  stance = 4,
+	  stance = {0,4},
 	  requiredTree = 1,
-	  recast = true,
-	})	
-	
+	  requiredLevel = 10,
+	})
+
 	self:newSpell({
 	  playerbuff = 164545,
-	  stance = 4,
+	  stance = {0,4},
 	  requiredTree = 1,
-	  recast = true,
-	})	
-	
-	-- Starfall
-	self:newSpell({
-	  debuff = 197637,
-	  refreshable = true,
-	  stance = 4,
-	  requiredTree = 1,
+	  requiredLevel = 10,
 	})
+
+--	-- Starfall  -- Not really sure if this needs to be tracked as the spell area is very obvious and the buff only affects targets within it.
+--	self:newSpell({
+--	  debuff = 197637,
+--	  refreshable = true,
+--	  stance = {0,4},
+--	  requiredTree = 1,
+--	  requiredLevel = 40,
+--	})
 
 	-- Force of Nature
 	self:newSpell({
 	  cooldown = 205636,
-	  stance = 4,
+	  stance = {0,4},
 	  requiredTree = 1,
 	  requiredTalent = 1,
-	})	
+	})
 
 	-- Warrior of Elune
 	self:newSpell({
 	  cooldown = 202425,
 	  playerbuff = 202425,
-	  stance = 4,
+	  stance = {0,1,2,4},
 	  requiredTree = 1,
 	  requiredTalent = 2,
-	})	
+	})
 
 	-- Astral Communion
 	self:newSpell({
 	  cooldown = 202359,
-	  stance = 4,
+	  stance = {0,4},
 	  requiredTree = 1,
 	  requiredTalent = 17,
-	})	
+	})
 
 	-- Celestial Alignment
 	self:newSpell({
 	  cooldown = 194223,
 	  playerbuff = 194223,
-	  stance = 4,
+	  stance = {0,1,2,4},
 	  requiredTree = 1,
-	  requiredTalentUnselected = 17,
-	})	
+	  requiredTalentUnselected = 14,
+	})
 
 	-- Incarnation: Chosen of Elune
 	self:newSpell({
 	  cooldown = 102560,
 	  playerbuff = 102560,
-	  stance = 4,
+	  stance = {0,1,2,4},
 	  requiredTree = 1,
-	  requiredTalent = 17,
-	})	
+	  requiredTalent = 14,
+	})
 
 	-- Fury of Elune
 	self:newSpell({
 	  cooldown = 202770,
-	  stance = 4,
+	  stance = {0,4},
 	  requiredTree = 1,
-	  requiredTalent = 17,
-	})	
+	  requiredTalent = 19,
+	})
 
 	-- Feral Affinity
-	
+
 	-- Rake
 	self:newSpell({
 	   debuff = {1822,3},
@@ -126,14 +129,14 @@ function EventHorizon:InitializeClass()
 	})
 
 	-- Guardian Affinity
-	
+
 	-- Mangle
 	self:newSpell({
 	  cooldown = 33917,
 	  stance = 1,
 	  requiredTree = 1,
 	  requiredTalent = 8,
-	})	
+	})
 
 	-- Trash 
 	self:newSpell({
@@ -162,7 +165,7 @@ function EventHorizon:InitializeClass()
 	})
 
 	-- Restoration Affinity
-	
+
 	-- Rejuvenation
 	self:newSpell({
 	  playerbuff = {774,3},
@@ -194,7 +197,13 @@ function EventHorizon:InitializeClass()
 	  requiredTalent = 9,
 	})
 
-	
+	-- Barkskin
+	self:newSpell({
+	  cooldown = 22812,
+	  stance = {0,1,2,3,4},
+	  requiredTree = 1,
+	})
+
 	-- Feral
 
 	-- Moonfire
@@ -206,7 +215,7 @@ function EventHorizon:InitializeClass()
 	  requiredTalent = 3,
 	  stance = 2,
 	})
-	
+
 	-- Savage Roar
 	self:newSpell({
 	  playerbuff = 52610,
@@ -225,6 +234,7 @@ function EventHorizon:InitializeClass()
 	   requiredTalentUnselected = 17,
 	})
 
+	-- Rake with faster ticks because of Jagged Wounds. The tick time will need to be adjusted if they change the talent, again.
 	self:newSpell({
 	   debuff = {1822,2},
 	   refreshable = true,
@@ -243,6 +253,7 @@ function EventHorizon:InitializeClass()
 	  requiredTalentUnselected = 17,
 	})
 
+	-- Rip with faster ticks because of Jagged Wounds. The tick time will need to be adjusted if they change the talent, again.
 	self:newSpell({
 	  debuff = {1079,1.33},
 	  refreshable = true,
@@ -259,7 +270,8 @@ function EventHorizon:InitializeClass()
 	  requiredTree = 2,
 	  requiredTalentUnselected = 17,
 	})
-	
+
+	-- Thrash with faster ticks because of Jagged Wounds. The tick time will need to be adjusted if they change the talent, again.
 	self:newSpell({
 	  debuff = {106830,2},
 	  refreshable = true,
@@ -267,15 +279,15 @@ function EventHorizon:InitializeClass()
 	  requiredTree = 2,
 	  requiredTalent = 17,
 	})
-	
-	-- Primal Instinct
+
+	-- Primal Instinct, from casting Healing Touch.
 	self:newSpell({
 	  playerbuff = 69369,
 	  requiredTree = 2,
 	  requiredTalent = 20,
 	  stance = 2,
 	})
-	
+
 	-- Bloodtalons
 	self:newSpell({
 	  playerbuff = 155672,
@@ -299,7 +311,7 @@ function EventHorizon:InitializeClass()
 	  stance = 2,
 	  requiredTree = 2,
 	  requiredLevel = 12,
-	})	
+	})
 
 	-- Elune's Guidance
 	self:newSpell({
@@ -307,7 +319,7 @@ function EventHorizon:InitializeClass()
 	  stance = 2,
 	  requiredTree = 2,
 	  requiredTalent = 18,
-	})	
+	})
 
 	-- Beserk
 	self:newSpell({
@@ -316,7 +328,7 @@ function EventHorizon:InitializeClass()
 	  stance = 2,
 	  requiredTree = 2,
 	  requiredTalentUnselected = 14,
-	})	
+	})
 
 	-- Incarnation
 	self:newSpell({
@@ -325,11 +337,11 @@ function EventHorizon:InitializeClass()
 	  stance = 2,
 	  requiredTree = 2,
 	  requiredTalent = 14,
-	})	
+	})
 
 	-- Moment of Clarity/Omen of Clarity
 	self:newSpell({
-	  playerbuff = 16870,
+	  playerbuff = 135700,
 	  stance = 2,
 	  requiredTree = 2,
 	})
@@ -338,47 +350,50 @@ function EventHorizon:InitializeClass()
 
 	-- Sunfire
 	self:newSpell({
-	  debuff = 93402,
+	  debuff = {93402,2},
 	  stance = 4,
 	  requiredTree = 2,
 	  requiredTalent = 7,
-	})	
+	})
 
-	-- Starsurge
+	-- Starsurge  -- There are two bars for this as it provides two different buffs stacking up to three, the buffs are then consumed by different spell schools separately so both are needed.
 	self:newSpell({
 	  cooldown = 197626,
 	  playerbuff = 164547,
+	  icon = 164547,
 	  cast = 197626,
 	  hasted = true,
 	  stance = 4,
 	  requiredTree = 2,
 	  requiredTalent = 7,
 	  recast = true,
-	})	
-	
+	})
+
 	self:newSpell({
 	  cooldown = 197626,
 	  playerbuff = 164545,
+	  icon = 164545,
 	  cast = 197626,
 	  hasted = true,
 	  stance = 4,
 	  requiredTree = 2,
 	  requiredTalent = 7,
 	  recast = true,
-	})	
-	
+	})
+
 	-- Guardian Affinity
-	
+
 	-- Mangle
 	self:newSpell({
 	  cooldown = 33917,
 	  stance = 1,
 	  requiredTree = 2,
 	  requiredTalent = 8,
-	})	
+	})
 
 	-- Trash 
 	self:newSpell({
+	  cooldown = 77758,
 	  debuff = {192090,3},
 	  refreshable = true,
 	  stance = 1,
@@ -387,7 +402,7 @@ function EventHorizon:InitializeClass()
 
 	-- Ironfur
 	self:newSpell({
-	  playerbuff = 192081,
+	  playerbuff = {192081,6},
 	  stance = 1,
 	  requiredTree = 2,
 	  requiredTalent = 8,
@@ -402,7 +417,7 @@ function EventHorizon:InitializeClass()
 	})
 
 	-- Restoration Affinity
-	
+
 	-- Rejuvenation
 	self:newSpell({
 	  playerbuff = {774,3},
@@ -435,7 +450,7 @@ function EventHorizon:InitializeClass()
 	})
 
 	-- Guardian bars
-	
+
 	-- Mangle
 	self:newSpell({
 	  unique = true,
@@ -443,8 +458,9 @@ function EventHorizon:InitializeClass()
 	  hasted = true,
 	  cooldown = 33917,
 	  stance = 1,
-	})	
-	  
+	  requiredTree = 3,
+	})
+
 	-- Thrash
 	self:newSpell({
 	  debuff = {77758,3},
@@ -453,7 +469,7 @@ function EventHorizon:InitializeClass()
 	  cooldown = 77758,
 	  stance = 1,
 	  requiredTree = 3,
-	})	
+	})
 
 	-- Pulverize
 	self:newSpell({
@@ -461,6 +477,13 @@ function EventHorizon:InitializeClass()
 	  requiredTree = 3,
 	  stance = 1,
 	  requiredTalent = 21,
+	})
+
+	-- Maul
+	self:newSpell({
+	  cooldown = 6807,
+	  requiredTree = 3,
+	  stance = 1,
 	})
 
 	-- Earthwarden
@@ -474,7 +497,7 @@ function EventHorizon:InitializeClass()
 	-- Ironfur
 	self:newSpell({
 	  cooldown = 192081,
-	  playerbuff = 192081,
+	  playerbuff = {192081,6},
 	  requiredTree = 3,
 	  stance = 1,
 	})
@@ -486,7 +509,7 @@ function EventHorizon:InitializeClass()
 	  requiredTree = 3,
 	  stance = 1,
 	})
-	
+
 	-- Frenzied Regen
 	self:newSpell({
 	  cooldown = 22842,
@@ -494,7 +517,7 @@ function EventHorizon:InitializeClass()
 	  requiredTree = 3,
 	  stance = 1,
 	})
-	
+
 	-- Balance Affinity
 
 	-- Sunfire
@@ -503,7 +526,7 @@ function EventHorizon:InitializeClass()
 	  stance = 4,
 	  requiredTree = 3,
 	  requiredTalent = 7,
-	})	
+	})
 
 	-- Starsurge
 	self:newSpell({
@@ -515,8 +538,8 @@ function EventHorizon:InitializeClass()
 	  requiredTree = 3,
 	  requiredTalent = 7,
 	  recast = true,
-	})	
-	
+	})
+
 	self:newSpell({
 	  cooldown = 197626,
 	  playerbuff = 164545,
@@ -526,10 +549,10 @@ function EventHorizon:InitializeClass()
 	  requiredTree = 3,
 	  requiredTalent = 7,
 	  recast = true,
-	})	
-	
+	})
+
 	-- Feral Affinity
-	
+
 	-- Rake
 	self:newSpell({
 	   debuff = {1822,3},
@@ -549,13 +572,13 @@ function EventHorizon:InitializeClass()
 	})
 
 	-- Restoration Affinity
-	
+
 	-- Rejuvenation
 	self:newSpell({
 	  playerbuff = {774,3},
 	  auraunit = target and 'mouseover' or 'target',
-	refreshable = true,
-	hasted = true,
+	  refreshable = true,
+	  hasted = true,
 	  stance = 0,
 	  requiredTree = 3,
 	  requiredTalent = 9,
@@ -566,8 +589,8 @@ function EventHorizon:InitializeClass()
 	  playerbuff = {8936,2},
 	  auraunit = target and 'mouseover' or 'target',
 	  refreshable = true,
-	  cast = 8936,
 	  hasted = true,
+	  cast = 8936,
 	  stance = 0,
 	  requiredTree = 3,
 	  requiredTalent = 9,
@@ -589,7 +612,7 @@ function EventHorizon:InitializeClass()
 	  requiredTree = 3,
 	  requiredTalent = 20,
 	})
-	
+
 	-- Barkskin
 	self:newSpell({
 	  cooldown = 22812,
@@ -597,7 +620,7 @@ function EventHorizon:InitializeClass()
 	  requiredTree = 3,
 	  stance = {0,1,2,3,4},
 	})
-	
+
 	-- Survival Instincts
 	self:newSpell({
 	  cooldown = 61336,
@@ -615,45 +638,72 @@ function EventHorizon:InitializeClass()
 	  requiredTalent = 14,
 	})
 
-	
-	-- Resto bars
-	
---	-- Lifebloom
---	self:newSpell({
-	--	playerbuff = {33763,1},
-	--	auraunit = usemouseover and 'mouseover' or 'target',
-	--	hasted = true,
-	--	refreshable = true,
-	--	requiredLevel = 32,
-	--	requiredTree = 4,
-	--	stance = 0,
-	--})
-	
---	-- Rejuvenation + Swiftmend
---	self:newSpell({
-	--	playerbuff = {774,3},
-	--	cooldown = 18562,
-	--	auraunit = usemouseover and 'mouseover' or 'target',
-	--	hasted = true,
-	--	requiredTree = 4,
---	})
 
---	-- Cenarion Ward
---	self:newSpell({
-	--	playerbuff = {102351,102352,2},
-	--	cooldown = 102351,
-	--	auraunit = usemouseover and 'mouseover' or 'target',
-	--	hasted = true,
-	--	requiredTree = 4,
-	--	stance = {0,1,2,3,4},
-	--	requiredTalent = 2,
---	})
-	
---	-- Wild Growth
---	self:newSpell({
-	--	cooldown = 48438,
-	--	requiredTree = 4,
-	--	stance = 0,
---	})	
-    	  
+	-- Resto bars
+
+	-- Lifebloom
+	self:newSpell({
+	  playerbuff = {33763,1},
+	  auraunit = usemouseover and 'mouseover' or 'target',
+	  hasted = true,
+	  refreshable = true,
+	  requiredLevel = 32,
+	  requiredTree = 4,
+	  stance = 0,
+	})
+
+	-- Rejuvenation
+	self:newSpell({
+	  playerbuff = {774,3},
+	  auraunit = usemouseover and 'mouseover' or 'target',
+	  hasted = true,
+	  refreshable = true,
+	  requiredTree = 4,
+	  stance = 0,
+	})
+
+	-- Regroth
+	self:newSpell({
+	  playerbuff = {8936,2},
+	  auraunit = usemouseover and 'mouseover' or 'target',
+	  hasted = true,
+	  refreshable = true,
+	  requiredTree = 4,
+	  stance = 0,
+	})
+
+	-- Swiftmend
+	self:newSpell({
+	  cooldown = 18562,
+	  requiredTree = 4,
+	  stance = 0,
+	})
+
+	-- Cenarion Ward
+	self:newSpell({
+	  playerbuff = {102352,2},
+	  cooldown = 102351,
+	  auraunit = usemouseover and 'mouseover' or 'target',
+	  hasted = true,
+	  requiredTree = 4,
+	  stance = {0,1,2,3,4},
+	  requiredTalent = 2,
+	})
+
+	-- Wild Growth
+	self:newSpell({
+	  cooldown = 48438,
+	  requiredTree = 4,
+	  stance = 0,
+	})
+
+	-- Innervate
+	-- Put "--" at the start of the stance line below to show this bar in both balance and resto or just resto.
+	self:newSpell({
+	  cooldown = 29166,
+	  requiredTree = {1,4},
+	  stance = {0,4}, -- Balance and Resto (default).
+--	  stance = 0, -- Just Resto.
+	})
+
 end
