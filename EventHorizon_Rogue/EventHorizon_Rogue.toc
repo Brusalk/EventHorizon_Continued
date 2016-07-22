@@ -1,6 +1,6 @@
 ## Interface: 70000
 ## Title: EventHorizon_|c70fff569Rogue|r
-## Author: Brusalk, PessimiStick
+## Author: Brusalk, PessimiStick, Neloangelo13
 ## Dependencies: EventHorizon
 ## LoadOnDemand: 1
 ## OptDeps: 

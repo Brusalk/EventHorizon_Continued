@@ -140,6 +140,7 @@ local LegionClassConfigStatus = {
 	[254] = true,
 	[258] = true,
 	[259] = true,
+	[261] = true,
   [262] = true,
 	[265] = true,
 	[266] = true,

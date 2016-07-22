@@ -1,7 +1,7 @@
 function EventHorizon:InitializeClass()
 	self.config.gcdSpellID = 1966
 
--- Assassination
+	-- Assassination
 	
 	-- Rupture
 	self:newSpell({
@@ -56,24 +56,71 @@ function EventHorizon:InitializeClass()
 		requiredTree = 1,
 		requiredTalent = 4,
 	})
+
+	-- Subtlety
+
+	-- Symbols of Death
+	self:newSpell({
+		playerbuff = 212283,
+		requiredTree = 3,
+		requiredLevel = 34,
+	})
+
+	-- Enveloping Shadows
+	self:newSpell({
+		playerbuff = 206237,
+		requiredTree = 3,
+		requiredLevel = 90,
+		requiredTalent = 18, 
+	})
 	
--- Common
+	-- Nightblade
+	self:newSpell({
+		debuff = {195452,2},
+		requiredTree = 3,
+		requiredLevel = 46,
+	})
+
+	-- Vanish
+	self:newSpell({
+		cooldown = 1856,
+		requiredTree = 3,
+		requiredLevel = 34,
+	})
+	
+	-- Shadow Dance
+	self:newSpell({
+		playerbuff = {185313,0},
+		cooldown = 185313,
+		requiredTree = 3,
+		requiredLevel = 5,
+	})   
+
+	-- Shadow Blades
+	self:newSpell({
+		playerbuff = 121471,
+		cooldown = 121471,
+		requiredTree = 3,
+		requiredLevel = 72,
+	})
+	
+	-- Common
 
 	-- 100 Talents
 
-        -- Marked for Death
+	-- Marked for Death
 	self:newSpell({ 
 		debuff = {137619,0},
 		cooldown = 137619,
 		requiredTalent = 20,
 	})
 	
-        -- Death from Above
-        self:newSpell({
-            cooldown = 152150,
-            requiredTalent = 21,
-        })
-	
+	-- Death from Above
+	self:newSpell({
+			cooldown = 152150,
+			requiredTalent = 21,
+	})
+
 	-- Feint
 	self:newSpell({
 		playerbuff = {1966},
