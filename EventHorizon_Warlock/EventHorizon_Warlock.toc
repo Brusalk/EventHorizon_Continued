@@ -1,6 +1,6 @@
 ## Interface: 70300
 ## Title: EventHorizon_|c909482c9Warlock|r
-## Author: Brusalk
+## Author: Brusalk, BackJauer
 ## LoadOnDemand: 1
 ## Dependencies: EventHorizon
 ## OptDeps: 
