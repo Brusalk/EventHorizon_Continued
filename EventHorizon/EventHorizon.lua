@@ -87,11 +87,8 @@ ns.legionf = {
 }
 
 local LegionStatusText = ""
-if Legion then
-    LegionStatusText = LegionStatusText .. "This is a beta release of the Legion version of EventHorizon. As such, expect there to be bugs. "
-else
-    LegionStatusText = LegionStatusText .. "This is the backwards compatible version of the Legion beta version of EventHorizon. Class Configs likely won't work, so you'll need to customize it yourself."
-end
+
+LegionStatusText = LegionStatusText .. "This is a early release of the Legion version of EventHorizon. As such, please don't be too surprised if there are bugs. "
 LegionStatusText = LegionStatusText .. "If you encounter a bug, please copy the whole error message including stack trace and tell me about it on EventHorizon's WowInterface page. \n\n"
 LegionStatusText = LegionStatusText .. "I don't plan on updating every individual class config for every spec. It takes me weeks to play every class and spec to a level I feel comfortable with enough to set the default config for, and I don't have time for that anymore. \n" 
 LegionStatusText = LegionStatusText .. "If you have a class config that you think is good enough for your spec or class, please post it to EventHorizon's WowInterface page so I can add it! \n\n  Thanks! ^.^ \n - Brusalk \n\n"
@@ -140,6 +137,7 @@ local LegionSpecIDMapping = {
 local LegionClassConfigStatus = {
 	[62]  = true,
 	[63]  = true,
+	[258] = true,
 	[259] = true,
   [262] = true,
 	[265] = true,
@@ -155,7 +153,7 @@ local BuildLegionClassConfigStatusText = function()
 		local status = LegionClassConfigStatus[specID] and "Implemented" or "NYI"
 		ret = ret .. name .. " | " .. status .. "\n"
 	end
-	ret = ret .. "\nIf your spec is Not Yet Implemented (NYI), please send me your customized config so I can add it as the default config for your spec!\n"
+	ret = ret .. "\nIf your spec is Not Yet Implemented (NYI), please send me your customized config via WoWInterface or the Discord server, so I can add it as the default config for your spec!\n"
 	return ret
 end
 
@@ -3004,7 +3002,7 @@ function ns:Initialize()
 	--print('initialize')
 	self:InitDB()
 	
-    local popupIn = function(popup_to_show, delay)
+	local popupIn = function(popup_to_show, delay)
 		local popup_f = CreateFrame("frame")
 		local elapsedTime = 0
 		popup_f:SetScript("OnUpdate", function(self, elapsed)
@@ -3029,7 +3027,39 @@ function ns:Initialize()
 		end
 	}
 	
-	
+	StaticPopupDialogs["EH_GithubDialog1"] = {
+		text = "EventHorizon is now on Github! If you encounter any bugs or errors with EventHorizon, please create a new 'issue' on the below Github so I can track and fix it!",
+		hasEditBox = true,
+		OnShow = function(self, data)
+			self.editBox:SetText("https://github.com/Brusalk/EventHorizon_Continued")
+		end,
+		EditBoxOnTextChanged = function(self, data)
+			self:SetText("https://github.com/Brusalk/EventHorizon_Continued") -- Esentially don't allow them to change the value
+		end,
+		OnAccept = function()
+			StaticPopup_Hide("EH_GithubDialog1")
+			EventHorizonDB.__GithubDialog1Notification = true
+		end,
+	}
+
+	StaticPopupDialogs["EH_DiscordDialog1"] = {
+		text = "EventHorizon now has a Discord! Come say hi or ask some questions!",
+		hasEditBox = true,
+		OnShow = function(self, data)
+			self.editBox:SetText("discord.gg/mR8xUUK")
+		end,
+		EditBoxOnTextChanged = function(self, data)
+			self:SetText("discord.gg/mR8xUUK") -- Esentially don't allow them to change the value
+		end,
+		OnAccept = function()
+			EventHorizonDB.__DiscordDialog1Notification = true
+		end,
+		OnHide = function()
+		  StaticPopup_Hide("EH_DiscordDialog1")
+ 			popupIn("EH_GithubDialog1", 0.5)
+		end,
+	}
+
 	StaticPopupDialogs["EH_LegionDialog2"] = {
 		text = BuildLegionClassConfigStatusText(),
 		showAlert = true,
@@ -3037,9 +3067,12 @@ function ns:Initialize()
 		button2 = "Hide",
 		hideOnEscape = 1,
 		OnAccept = function()
-			StaticPopup_Hide("EH_LegionDialog2")
 			EventHorizonDB.__LegionClassConfigStatusNotification2 = true
-		end
+		end,
+		OnHide = function()
+			StaticPopup_Hide("EH_LegionDialog2")
+			popupIn("EH_DiscordDialog1", 0.5)
+		end,
 	}
 		
 	
@@ -3058,13 +3091,22 @@ function ns:Initialize()
 		end,
 	}
 
+
 	if Wod and not Legion then
 		if not EventHorizonDB.__WodClassStatusNotification2 then
 			popupIn("EH_WodDialog", 2)
 		end
 	elseif Legion then
 		if EventHorizonDB.__LegionClassStatusNotification2 then -- Dialog1 hidden
-			if not EventHorizonDB.__LegionClassConfigStatusNotification2 then -- We've not hidden dialog 2
+			if EventHorizonDB.__LegionClassConfigStatusNotification2 then -- We've hidden dialog2
+				if EventHorizonDB.__DiscordDialog1Notification then
+					if not EventHorizonDB.__GithubDialog1Notification then
+						popupIn("EH_GithubDialog1")
+					end
+				else
+					popupIn("EH_DiscordDialog1", 2)
+				end
+			else
 				popupIn("EH_LegionDialog2", 2)
 			end
 		else
