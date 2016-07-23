@@ -2,16 +2,20 @@ Changelog:
 
 v1.9.11
   Brusalk - Sat Jul 23 03:17:26 2016 -0700
-      Merge pull request #5 from Brusalk/v11_wipAdded many class configs kindly provided by the users.
+      Merge pull request #5 from Brusalk/v11_wip
+      
+      Added many class configs kindly provided by the users.
       Fixed Green texture display bug. Greatly improved user experience with empty or nearly-empty
       class configs. Fixed all the bugs.
   Brusalk - Sat Jul 23 03:13:21 2016 -0700
-      Fix green texture display bugBlizzard separated out setting textures from SetTexture into a new
-      SetColorTexture.
+      Fix green texture display bug
+
+      Blizzard separated out setting textures from SetTexture into a new SetColorTexture.
 
   Brusalk - Sat Jul 23 02:40:24 2016 -0700
-      Improved user experience with empty class configsEH now hides the whole frame when there are no
-      active spellbars or an empty spellconfig is present.
+      Improved user experience with empty class configs
+
+      EH now hides the whole frame when there are no active spellbars or an empty spellconfig is present.
 
       If there's no spellconfigs a helpful message is displayed to the user outlining why. Once per
       week, the player is shown a message explaining why EH isn't shown if their spell-config happens
@@ -54,7 +58,7 @@ v1.9.11
   Brusalk - Thu Jul 21 23:37:00 2016 -0700
       Added Aff/Demo to Legion Class Config Status
   Brusalk - Thu Jul 21 23:31:20 2016 -0700
-      Updated Warlock Class Config with Config provided by BackJauer
+      Updated Warlock Class Config with Config provided by BackJauer Warlock Class Config with Config provided by BackJauer
 
 v1.9.10
 *Core
