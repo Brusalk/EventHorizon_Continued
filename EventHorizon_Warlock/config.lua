@@ -96,7 +96,7 @@ function EventHorizon:InitializeClass()
         requiredTree = 1,
     })
     
-    -- Phantom Sing
+    -- Phantom Singularity
     self:newSpell({
         debuff = {205179, 2},
         cooldown = 205179,
@@ -161,7 +161,7 @@ function EventHorizon:InitializeClass()
         cast = 152108,
         cooldown = 152108,
         requiredTree = 3,
-        requiredTalent = 11,
+        requiredTalent = 6,
     })
     
     -- Soul Harvest
