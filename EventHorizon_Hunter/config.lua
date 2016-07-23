@@ -1,155 +1,100 @@
 function EventHorizon:InitializeClass()
-	self.config.gcdSpellID = 3044
+  self.config.gcdSpellID = 982 -- Revive Pet
 
-	-- -- Steady/Cobra/Focusing
-	-- self:newSpell({
-		-- cast = {56641,77767,152245},
-		-- recast = true,
-	-- })
+  --MARKSMANSHIP
+  
+  -- Vulnerable
+  self:newSpell({
+    debuff = 187131, 
+    requiredLevel = 18,
+    requiredTree = 2,
+  })
 
+  -- Marking Targets
+  self:newSpell({
+    playerbuff = 223138, 
+    requiredLevel = 18,
+    requiredTree = 2,
+  })
 
--- --BEAST MASTERY
+  -- Aimed shot
+  self:newSpell({
+    cast = 19434,
+    requiredTree = 2,
+  })
 
-	-- -- Kill Command
-	-- self:newSpell({
-		-- cooldown = 34026,
-		-- requiredTree = 1,
-	-- })
-
-	-- -- Frenzy + Focus Fire (FF buff has the same duration as CD, no real reason to track it)
-	-- self:newSpell({
-		-- playerbuff = 19615,
-		-- cooldown = 82692,
-		-- auraunit = 'pet',
-		-- unique = true,
-		-- refreshable = true,
-		-- --minstacks = 5,
-		-- requiredTree = 1,
-	-- })
-
-	-- -- Bestial Wrath
-	-- self:newSpell({
-		-- playerbuff = 34471,
-		-- cooldown = 19574,
-		-- requiredTree = 1,
-		-- requiredLevel = 40,
-	-- })
+  -- Trueshot
+  self:newSpell({
+    cooldown = 193526,
+    playerbuff = 193526,
+    requiredLevel = 40,
+    requiredTree = 2,
+  })
 
 
--- --MARKSMANSHIP
+  -- MARKSMANSHIP TALENTS
 
-	-- -- Chimaera Shot
-	-- self:newSpell({
-		-- cooldown = 53209,
-		-- requiredTree = 2,
-		-- requiredLevel = 60,
-	-- })
+  -- Level 30 Talents
 
-	-- -- Aimed shot
-	-- self:newSpell({
-		-- cast = 19434,
-		-- requiredTree = 2,
-	-- })
+  -- Lock and Load
+  self:newSpell({
+      playerbuff = 194594,
+      requiredTree = 2, 
+      requiredTalent = 4,
+  })
 
-	-- -- Rapid Fire  
-	-- self:newSpell({
-		-- cooldown = 3045,
-		-- requiredLevel = 54,
-		-- requiredTree = 2,
-	-- })
+  -- Black Arrow
+  self:newSpell({
+    cooldown = 194599,
+    debuff = 194599, -- double-check
+    requiredTree = 2, 
+    requiredTalent = 5,
+  })
 
 
--- --SURVIVAL
+  -- Level 60 Talents
 
-	-- -- Serpent Sting
-	-- self:newSpell({
-		-- debuff = {118253,3},
-		-- refreshable = true,
-		-- requiredTree = 3,
-	-- })
-
-	-- -- Black Arrow
-	-- self:newSpell({
-		-- debuff = {3674,3},
-		-- cooldown = 3674,
-		-- requiredTree = 3,
-		-- requiredLevel = 50,
-	-- })
-
-    -- -- Lock and Load
-    -- self:newSpell({
-        -- playerbuff = 168980,
-        -- requiredTree = 3
-    -- })
-	-- -- Explosive Shot
-	-- self:newSpell({
-		-- debuff = {53301,1},
-		-- cooldown = 53301,
-		-- requiredTree = 3,
-	-- })
+  -- Explosive Shot
+  self:newSpell({
+    cooldown = 212431,
+    requiredTree = 2, 
+    requiredTalent = 10,
+  })
 
 
--- --TALENTS
--- -- Level 60 Talents
+  -- Level 90 Talents
 
-	-- -- Steady Focus
-	-- self:newSpell({
-		-- playerbuff = 177667,
-		-- requiredLevel = 60,
-		-- requiredTalent = 10,
-	-- })
+  -- Barrage
+  self:newSpell({
+    cooldown = 120360,
+    channel = 120360,
+    requiredTree = 2, 
+    requiredTalent = 17,
+  })
 
-	-- --Dire Beast
-	-- self:newSpell({
-		-- cooldown = 120679,
-        -- playerbuff = 120679,
-		-- requiredLevel = 60,
-		-- requiredTalent = 11,
-	-- })
+  -- Level 100 Talents
 
-	-- --Thrill of the Hunt
-	-- self:newSpell({
-		-- playerbuff = 109306,
-		-- requiredLevel = 60,
-		-- requiredTalent = 12,
-	-- })
+  -- Sidewinders
+  self:newSpell({
+    cooldown = 214579,
+    requiredTree = 2, 
+    requiredTalent = 19,
+  })
 
--- -- Level 75 Talents
+  -- Piercing Shot
+  self:newSpell({
+    cooldown = 198670,
+    requiredTree = 2, 
+    requiredTalent = 20,
+  })
 
-	-- -- A Murder of Crows
-	-- self:newSpell({
-		-- debuff = {131894,0},
-		-- cooldown = 131894,
-		-- requiredTalent = 13,
-	-- })
+  -- Level 15 Talents
 
-	-- -- Stampede
-	-- self:newSpell({
-		-- cooldown = 121818,
-		-- requiredTalent = 15
-	-- })
-
--- -- Level 90 Talents
-
-	-- -- Glaive Toss
-	-- self:newSpell({
-		-- cooldown = 117050,
-		-- debuff = {117050,0},
-		-- requiredTalent = 16,
-	-- })
-
-	-- -- Powershot
-	-- self:newSpell({
-		-- cooldown = 109259,
-		-- cast = 109259,
-		-- requiredTalent = 17,
-	-- })
-
-	-- -- Barrage
-	-- self:newSpell({
-		-- cooldown = 120360,
-		-- channel = 120360,
-		-- requiredTalent = 18,
-	-- })
+  -- Steady Focus
+  self:newSpell({
+      playerbuff = 193534,
+      requiredTree = 2,
+      requiredTalent = 2,
+  })
 
 end

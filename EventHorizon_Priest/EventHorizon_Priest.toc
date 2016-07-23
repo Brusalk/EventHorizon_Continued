@@ -1,6 +1,6 @@
-## Interface: 70300
+## Interface: 70000
 ## Title: EventHorizon_|c60ffffffPriest|r
-## Author: Brusalk
+## Author: Brusalk, Vaelynn, Sig
 ## Dependencies: EventHorizon
 ## LoadOnDemand: 1
 ## OptDeps: 
