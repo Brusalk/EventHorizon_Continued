@@ -2256,11 +2256,12 @@ function ns:CheckRequirements()
 				self.frames.frames[i] = spellframe
 			end
 			table.insert(self.frames.active, spellframe)
+
 			if spellframe.usemouseover then
 				table.insert(self.frames.mouseover, spellframe)
 			end
 			
-			if type(config.cooldown)=="table" then -- We need to update the spellID again
+			if type(config.cooldown) == "table" then -- We need to update the spellID again
 				spellframe.cooldownTable = config.cooldown
 			end
 		else
@@ -2274,6 +2275,8 @@ function ns:CheckRequirements()
 	self:Activate(activate)
 	if activate then
 		mainframe:UPDATE_SHAPESHIFT_FORM()
+	else
+		ns:DisplayEmptyFrameTip()
 	end
 	
 	ns:ModuleEvent('CheckTalents')
@@ -2442,9 +2445,6 @@ function ns:NewSpell(config)
 	table.insert(self.frames.config, config)
 end
 
-
-
-
 function ns:newSpell(config) -- New class config to old class config
 	local n = {}
 	local c = config
@@ -2536,14 +2536,6 @@ function ns:newSpell(config) -- New class config to old class config
 	ns:NewSpell(n)
 	
 end
-
-
-
-
-
-
-
-
 
 
 --Set spellframe attributes separately from bar creation. Helps keep things tidy and all, y'know?
@@ -2998,6 +2990,17 @@ function ns:InitDB()
 	self.dbg = EventHorizonDBG
 end
 
+-- We only want to show the empty frame tip if it's been more than 
+function ns:DisplayEmptyFrameTip()
+	if EventHorizonDB.DisplayEmptyFrameTipLastShown == true then return end -- If true, then never show
+
+	EventHorizonDB.DisplayEmptyFrameTipLastShown = EventHorizonDB.DisplayEmptyFrameTipLastShown or 0
+	if time() > EventHorizonDB.DisplayEmptyFrameTipLastShown + (60*60*24*3) then -- Only show every couple days
+		StaticPopup_Show("EH_DisplayEmptyFrameTip")
+	end
+end
+
+
 --[[
 Should only be called after the DB is loaded and spell and talent information is available.
 --]]
@@ -3035,6 +3038,8 @@ function ns:Initialize()
 	StaticPopupDialogs["EH_GithubDialog1"] = {
 		text = "EventHorizon is now on Github! If you encounter any bugs or errors with EventHorizon, please create a new 'issue' on the below Github so I can track and fix it!",
 		hasEditBox = true,
+		button1 = "Okay",
+		hideOnEscape = 1,
 		OnShow = function(self, data)
 			self.editBox:SetText("https://github.com/Brusalk/EventHorizon_Continued")
 		end,
@@ -3048,8 +3053,10 @@ function ns:Initialize()
 	}
 
 	StaticPopupDialogs["EH_DiscordDialog1"] = {
-		text = "EventHorizon now has a Discord! Come say hi or ask some questions!",
+		text = "EventHorizon now has a Discord! Come say hi, and feel free to ask some questions!",
 		hasEditBox = true,
+		button1 = "Okay",
+		hideOnEscape = 1,
 		OnShow = function(self, data)
 			self.editBox:SetText("discord.gg/mR8xUUK")
 		end,
@@ -3061,7 +3068,9 @@ function ns:Initialize()
 		end,
 		OnHide = function()
 		  StaticPopup_Hide("EH_DiscordDialog1")
- 			popupIn("EH_GithubDialog1", 0.5)
+			if not EventHorizonDB.__GithubDialog1Notification then
+ 				popupIn("EH_GithubDialog1", 0.5)
+			end
 		end,
 	}
 
@@ -3076,7 +3085,9 @@ function ns:Initialize()
 		end,
 		OnHide = function()
 			StaticPopup_Hide("EH_LegionDialog2")
-			popupIn("EH_DiscordDialog1", 0.5)
+			if not EventHorizonDB.__DiscordDialog1Notification then
+				popupIn("EH_DiscordDialog1", 0.5)
+			end
 		end,
 	}
 		
@@ -3092,10 +3103,32 @@ function ns:Initialize()
 		end,
 		OnHide = function()
 			StaticPopup_Hide("EH_LegionDialog1")
-			popupIn("EH_LegionDialog2", 0.5)
+			if not EventHorizonDB.__LegionClassConfigStatusNotification2 then
+				popupIn("EH_LegionDialog2", 0.5)
+			end
 		end,
 	}
 
+	StaticPopupDialogs["EH_EmptyConfig"] = {
+		text = "EventHorizon: Failed to load any spell configs for your spec. Either your spec has not been implemented yet, or there was an error loading your config. Consider checking your class config.\n\nEventHorizon will not display until the spell config is fixed",
+		showAlert = true,
+		button1 = "Okay",
+		hideOnEscape = 1
+	}
+
+	StaticPopupDialogs["EH_DisplayEmptyFrameTip"] = {
+		text = "EventHorizon is currently hidden. This is not a bug! This is because your current class config doesn't show any bars for your current talents/stance/level, etc.",
+		showAlert = true,
+		button2 = "Hide",
+		button1 = "Hide Forever",
+		OnAccept = function()
+			EventHorizonDB.DisplayEmptyFrameTipLastShown = true
+		end,
+		OnHide = function()
+			EventHorizonDB.DisplayEmptyFrameTipLastShown = EventHorizonDB.DisplayEmptyFrameTipLastShown == true and true or time()
+		end,
+		hideOnEscape = 1
+	}
 
 	if Wod and not Legion then
 		if not EventHorizonDB.__WodClassStatusNotification2 then
@@ -3106,7 +3139,7 @@ function ns:Initialize()
 			if EventHorizonDB.__LegionClassConfigStatusNotification2 then -- We've hidden dialog2
 				if EventHorizonDB.__DiscordDialog1Notification then
 					if not EventHorizonDB.__GithubDialog1Notification then
-						popupIn("EH_GithubDialog1")
+						popupIn("EH_GithubDialog1", 2)
 					end
 				else
 					popupIn("EH_DiscordDialog1", 2)
@@ -3138,6 +3171,7 @@ function ns:Initialize()
 	self:ApplyConfig()
 
 	self:InitializeClass()
+
 	if self.config.showTrinketBars and self.config.showTrinketBars == true then
 		self:NewSpell({slotID = 13})
 		self:NewSpell({slotID = 14})
@@ -3223,6 +3257,16 @@ function ns:Initialize()
 		end
 	end
 
+	if not(ns.config.hastedSpellID and type(ns.config.hastedSpellID) == 'table') then
+		vars.useOldHaste = true
+	end
+
+	if ns.config.nonAffectingHaste then
+		if type(ns.config.nonAffectingHaste[1]) == 'number' then
+			ns.config.nonAffectingHaste = {ns.config.nonAffectingHaste}
+		end
+	end
+
 	mainframe:SetPoint(unpack(anchor))
 
 	SLASH_EVENTHORIZON1 = '/eventhorizon'
@@ -3271,11 +3315,12 @@ function ns:Initialize()
 			print(string.lower(msg)..' has been turned '..((self.modules[string.lower(msg)].isActive == true) and 'ON' or 'OFF')..'.')
 		elseif toggle then
 			if self.isActive then
-				print('Deactivating EventHorizon. Use "/ehz help" to see what else you can do.')
+				print('Deactivating. Use "/ehz help" to see what else you can do.')
 				self:Deactivate()
 				mainframe:UnregisterEvent('PLAYER_SPECIALIZATION_UPDATE')
 			else
-				print('Activating EventHorizon. Use "/ehz help" to see what else you can do.')
+				print('Activating. Use "/ehz help" to see what else you can do.')
+				print('Will be hidden automatically if there\' no active bars')
 				self:Activate()
 				self:CheckTalents()
 			end
@@ -3292,18 +3337,25 @@ function ns:Initialize()
 	end
 	
 	
+	-- Display helpful error message if there was a problem loading the class config
+	debug("config: " .. #self.frames.config)
+	if #self.frames.config < 1 then
+		StaticPopup_Show("EH_EmptyConfig")
+	end
+
+	ns.mainframe:Hide() -- Hide EH until the config loads
 	ns:DelayLoad()
-	
 
 end
 
 function ns:DelayLoad()
 	local f = CreateFrame("frame")
 	local curElapsed = 0
+	local start = GetTime()
 	f:SetScript("OnUpdate", function(self, elapsed)
 		curElapsed = curElapsed + elapsed
 		if curElapsed >= .2 then
-			if LA:GetArtifacts() ~= false then
+			if LA:GetArtifacts() ~= false or GetTime() - start >= 2 then -- Wait for artifact info or max two seconds
 				ns:DelayedLoad()
 				f:SetScript("OnUpdate", nil)
 			else
@@ -3316,17 +3368,14 @@ end
 function ns:DelayedLoad()
 	self:CheckRequirements()
 	self:LoadModules()
-	
-	if not(ns.config.hastedSpellID and type(ns.config.hastedSpellID) == 'table') then
-		vars.useOldHaste = true
-	end
-	if ns.config.nonAffectingHaste then
-		if type(ns.config.nonAffectingHaste[1]) == 'number' then
-			ns.config.nonAffectingHaste = {ns.config.nonAffectingHaste}
-		end
-	end
-	
 	self.isReady = true
+
+	debug("frames shown " .. #self.frames.shown)
+	if #self.frames.shown < 1 then
+		ns:DisplayEmptyFrameTip()
+	else
+		ns.mainframe:Show()
+	end
 end
 
 function ns:ApplyConfig()

@@ -105,8 +105,8 @@ function EventHorizon:InitializeClass()
         requiredTree = 1,
         requiredTalent = 20,
     })
-    
-    
+
+
     -- *** Destruction *** --
     --Immolate
     self:newSpell({
@@ -185,5 +185,5 @@ function EventHorizon:InitializeClass()
         requiredTalentUnselected = 16, -- Don't show if GoSup
         requiredTree = {1, 2, 3},
     })
-    
+
 end
