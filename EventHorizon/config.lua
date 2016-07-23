@@ -35,11 +35,11 @@ config.LinesColor = {1,1,1,0.5}			-- Standard color syntax {R,G,B,A} (see below)
 
 config.anchor = {"TOPRIGHT", "EventHorizonHandle", "BOTTOMRIGHT"}	-- EventHorizon's position. Format: {'POINT', 'AnchorFrame', 'RELATIVE', Xoffset (optional), Yoffset (optional)}. Set the anchor to something other than EventHorizonHandle to root EH in place and remove the anchor. Default = {"TOPRIGHT", "EventHorizonHandle", "BOTTOMRIGHT"} (anchor the TOPRIGHT of EH to EventHorizonHandle's BOTTOMRIGHT with no offset)
 config.width = 375						-- Width of a single bar, not counting its icon. The actual width of the frame is (width+height+[padding*2]).
-config.height = 18						-- Height of a single bar. If you use config.staticHeight, this is used for the width of the bar icons.
+config.height = 37						-- Height of a single bar. If you use config.staticHeight, this is used for the width of the bar icons.
 config.spacing = 0						-- Vertical spacing between bars.
 config.scale = 1						-- The overall scale of the main frame.
 config.staticheight = 150				-- Changing this to a number will override config.height and tell EH to resize the bars instead of the frame. For example, 'config.staticheight = 150' will make EH 150 pixels tall. With 5 shown bars, each bar will be 30 pixels tall. Spacing is still used in this mode and will act the same as it does otherwise.
-config.staticframes = 0					-- When used with config.staticheight, sets a minimum number of bars to use static height settings with. For example, with staticframes = 4 and 3 bars shown, EventHorizon will use normal variable height settings.
+config.staticframes = 4					-- When used with config.staticheight, sets a minimum number of bars to use static height settings with. For example, with staticframes = 4 and 3 bars shown, EventHorizon will use normal variable height settings.
 config.hideIcons = false				-- Hides the bar icons completely. This will make the frame a little more narrow, as config.height will no longer add to its width.
 
 config.past = -1.5						-- Number of seconds to show in the past. Default = -3 (yes, it's a negative number)
