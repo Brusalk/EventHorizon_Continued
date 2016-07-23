@@ -879,7 +879,7 @@ local SpellFrame_AddIndicator = function (self, typeid, layoutid, time, usetextu
 		indicator:SetTexture(ndtex or vars.bartexture)
 		indicator:SetTexCoord(unpack(layout.texcoords))
 	else
-		indicator:SetTexture(1,1,1,1)
+		indicator:SetColorTexture(1,1,1,1)
 	end
 	indicator:SetVertexColor(unpack(ndcol or color))
 	if ns.config.blendModes[typeid] and type(ns.config.blendModes[typeid]) == 'string' then
@@ -1859,7 +1859,7 @@ local SpellFrame_PLAYER_EQUIPMENT_CHANGED = function (self,slot,equipped)
 		self:SPELL_UPDATE_COOLDOWN()
 	else
 		self.stance = 50 -- More efficient than other methods of hiding the bar.
-		self.icon:SetTexture(0,0,0,0)
+		self.icon:SetColorTexture(0,0,0,0)
 	end
 	
 	-- Throttle equipment checks to every 2 seconds. This should decrease overall cpu load while making equipment checks more reliable on beta/ptr.
@@ -2030,7 +2030,7 @@ function ns:SetFrameDimensions()
 		ns.frames.nowIndicator:SetPoint('BOTTOM',mainframe,'BOTTOM')
 		ns.frames.nowIndicator:SetPoint('TOPLEFT',mainframe,'TOPLEFT', vars.nowleft, 0)
 		ns.frames.nowIndicator:SetWidth(vars.onepixelwide)
-		ns.frames.nowIndicator:SetTexture(unpack(self.colors.nowLine))
+		ns.frames.nowIndicator:SetColorTexture(unpack(self.colors.nowLine))
 	end
 	
 	local shownframes = #ns.frames.shown > 0
@@ -2097,7 +2097,7 @@ function ns:SetFrameDimensions()
 								indicator:SetTexture(ndtex or vars.bartexture)
 								indicator:SetTexCoord(unpack(layout.texcoords))
 							else
-								indicator:SetTexture(1,1,1,1)
+								indicator:SetColorTexture(1,1,1,1)
 							end
 							indicator:SetVertexColor(unpack(ndcol or color))
 							--if typeid == 'casting' then print(unpack(ndcol or color)) end
@@ -3196,7 +3196,7 @@ function ns:Initialize()
 	ns.frames.nowIndicator:SetPoint('BOTTOM',mainframe,'BOTTOM')
 	ns.frames.nowIndicator:SetPoint('TOPLEFT',mainframe,'TOPLEFT', vars.nowleft, 0)
 	ns.frames.nowIndicator:SetWidth(vars.onepixelwide)
-	ns.frames.nowIndicator:SetTexture(unpack(self.colors.nowLine))
+	ns.frames.nowIndicator:SetColorTexture(unpack(self.colors.nowLine))
 	if self.config.blendModes.nowLine and type(self.config.blendModes.nowLine) == 'string' then
 		ns.frames.nowIndicator:SetBlendMode(self.config.blendModes.nowLine)
 	end
@@ -3227,9 +3227,9 @@ function ns:Initialize()
 
 		handle.tex = handle:CreateTexture(nil, 'ARTWORK', nil, 7)
 		handle.tex:SetAllPoints()
-		handle:SetScript('OnEnter',function(frame) frame.tex:SetTexture(1,1,1,1) end)
-		handle:SetScript('OnLeave',function(frame) frame.tex:SetTexture(1,1,1,0.1) end)
-		handle.tex:SetTexture(1,1,1,0.1)
+		handle:SetScript('OnEnter',function(frame) frame.tex:SetColorTexture(1,1,1,1) end)
+		handle:SetScript('OnLeave',function(frame) frame.tex:SetColorTexture(1,1,1,0.1) end)
+		handle.tex:SetColorTexture(1,1,1,0.1)
 		
 		if EventHorizonDB.isLocked then
 			handle:Hide()
@@ -3251,7 +3251,7 @@ function ns:Initialize()
 		end
 
 		local gcdColor = self.colors.gcdColor or {.5,.5,.5,.3}
-		ns.frames.gcd:SetTexture(unpack(gcdColor))
+		ns.frames.gcd:SetColorTexture(unpack(gcdColor))
 		if self.config.blendModes.gcdColor and type(self.config.blendModes.gcdColor) == 'string' then
 			ns.frames.gcd:SetBlendMode(self.config.blendModes.gcdColor)
 		end
@@ -3464,7 +3464,7 @@ function ns:UpdateConfig()
 	--nowI:SetFrameLevel(20)
 	ns.frames.nowIndicator:SetPoint('BOTTOM',mainframe,'BOTTOM')
 	ns.frames.nowIndicator:SetPoint('TOPLEFT',mainframe,'TOPLEFT', vars.nowleft, 0)
-	ns.frames.nowIndicator:SetTexture(unpack(self.colors.nowLine))
+	ns.frames.nowIndicator:SetColorTexture(unpack(self.colors.nowLine))
 
 	local anchor = self.config.anchor or {'TOPRIGHT', 'EventHorizonHandle', 'BOTTOMRIGHT'}
 	if anchor[2]=='EventHorizonHandle' then
@@ -3492,9 +3492,9 @@ function ns:UpdateConfig()
 
 		handle.tex = handle:CreateTexture(nil, 'BORDER')
 		handle.tex:SetAllPoints()
-		handle:SetScript('OnEnter',function(frame) frame.tex:SetTexture(1,1,1,1) end)
-		handle:SetScript('OnLeave',function(frame) frame.tex:SetTexture(1,1,1,0.1) end)
-		handle.tex:SetTexture(1,1,1,0.1)
+		handle:SetScript('OnEnter',function(frame) frame.tex:SetColorTexture(1,1,1,1) end)
+		handle:SetScript('OnLeave',function(frame) frame.tex:SetColorTexture(1,1,1,0.1) end)
+		handle.tex:SetColorTexture(1,1,1,0.1)
 	end
 
 	vars.gcdSpellName = self.config.gcdSpellID and (GetSpellInfo(self.config.gcdSpellID))
@@ -3512,7 +3512,7 @@ function ns:UpdateConfig()
 		end
 
 		local gcdColor = self.colors.gcdColor or {.5,.5,.5,.3}
-		ns.frames.gcd:SetTexture(unpack(gcdColor))
+		ns.frames.gcd:SetColorTexture(unpack(gcdColor))
 	end
 	
 	mainframe:SetPoint(unpack(anchor))
@@ -3809,9 +3809,9 @@ Lines.CreateLines = function ()
 		Lines.line[i] = mainframe:CreateTexture(nil,"OVERLAY")
 		Lines.line[i]:SetPoint('TOPLEFT', mainframe, 'TOPLEFT', position, 0)
 		if multicolor then
-			Lines.line[i]:SetTexture(unpack(color[i]))
+			Lines.line[i]:SetColorTexture(unpack(color[i]))
 		else
-			Lines.line[i]:SetTexture(unpack(color))
+			Lines.line[i]:SetColorTexture(unpack(color))
 		end
 		Lines.line[i]:SetWidth(vars.onepixelwide)
 		Lines.line[i]:SetPoint('BOTTOM', mainframe, 'BOTTOM')
