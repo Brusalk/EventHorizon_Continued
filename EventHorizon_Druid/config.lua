@@ -260,26 +260,16 @@ function EventHorizon:InitializeClass()
 	  refreshable = true,
 	})
 
-	-- Trash 
+	-- Tiger's Fury
 	self:newSpell({
 	  requiredTree = 2,
 	  stance = 2,
-	  requiredLevel = 18,
-	  requiredTalentUnselected = 17,
-	  debuff = {106830,3},
-	  refreshable = true,
+	  requiredLevel = 12,
+	  cooldown = 5217,
+	  playerbuff = 5217,
 	})
 
-	-- Thrash with faster ticks because of Jagged Wounds. The tick time will need to be adjusted if they change the talent, again.
-	self:newSpell({
-	  requiredTree = 2,
-	  stance = 2,
-	  requiredTalent = 17,
-	  debuff = {106830,2},
-	  refreshable = true,
-	})
-
-	-- Primal Instinct, from casting Healing Touch.
+	-- Predatory Swiftness, from casting Healing Touch.
 	self:newSpell({
 	  requiredTree = 2,
 	  stance = 2,
@@ -302,14 +292,24 @@ function EventHorizon:InitializeClass()
 	  requiredTalent = 19,
 	  cooldown = 202028,
 	})
-	
-	-- Tiger's Fury
+
+	-- Trash 
 	self:newSpell({
 	  requiredTree = 2,
 	  stance = 2,
-	  requiredLevel = 12,
-	  cooldown = 5217,
-	  playerbuff = 5217,
+	  requiredLevel = 18,
+	  requiredTalentUnselected = 17,
+	  debuff = {106830,3},
+	  refreshable = true,
+	})
+
+	-- Thrash with faster ticks because of Jagged Wounds. The tick time will need to be adjusted if they change the talent, again.
+	self:newSpell({
+	  requiredTree = 2,
+	  stance = 2,
+	  requiredTalent = 17,
+	  debuff = {106830,2},
+	  refreshable = true,
 	})
 
 	-- Elune's Guidance
