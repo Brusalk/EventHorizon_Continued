@@ -1,7 +1,7 @@
 local usemouseover = true	-- Make this false or nil (or just delete the line altogether) to make your healing bars not change when you mouse over something.
 
 function EventHorizon:InitializeClass()
-	self.config.gcdSpellID = 17057 -- Bear Form
+	self.config.gcdSpellID = 768 -- Cat Form
 	self.config.hastedSpellID = {50769,10} -- Revive
 
 
@@ -168,24 +168,24 @@ function EventHorizon:InitializeClass()
 
 	-- Restoration Affinity
 
-	-- Rejuvenation + Swiftmend CD
+	-- Rejuvenation
 	self:newSpell({
 	  requiredTree = 1,
 	  stance = 0,
 	  requiredTalent = 9,
 	  playerbuff = {774,3},
-	  cooldown = 18562,
 	  auraunit = usemouseover and 'mouseover' or 'target',
 	  refreshable = true,
 	  hasted = true,
 	})
 
---	-- Regrowth
+--	-- Regrowth + Swiftmend CD
 	self:newSpell({
 	  requiredTree = 1,
 	  stance = 0,
 	  requiredTalent = 9,
 	  playerbuff = {8936,2},
+	  cooldown = 18562,
 	  auraunit = usemouseover and 'mouseover' or 'target',
 	  refreshable = true,
 	  cast = 8936,
@@ -339,13 +339,15 @@ function EventHorizon:InitializeClass()
 	  playerbuff = 102543,
 	})
 
-	-- Moment of Clarity/Omen of Clarity
-	self:newSpell({
+	-- Omen of Clarity / Moment of Clarity
+	-- Remove the "--[[" from the next line and "]]--" from the sixth line after it if you'd like OoC/MoC tracking.
+--[[	self:newSpell({
 	  requiredTree = 2,
 	  stance = 2,
 	  requiredLevel = 38,
 	  playerbuff = 135700,
 	})
+]]--
 
 	-- Balance Affinity
 
@@ -429,24 +431,24 @@ function EventHorizon:InitializeClass()
 
 	-- Restoration Affinity
 
-	-- Rejuvenation + Swiftmend CD
+	-- Rejuvenation
 	self:newSpell({
 	  requiredTree = 2,
 	  stance = 0,
 	  requiredTalent = 9,
 	  playerbuff = {774,3},
-	  cooldown = 18562,
 	  auraunit = usemouseover and 'mouseover' or 'target',
 	  refreshable = true,
 	  hasted = true,
 	})
 
-	-- Regrowth
+	-- Regrowth + Swiftmend CD
 	self:newSpell({
 	  requiredTree = 2,
 	  stance = 0,
 	  requiredTalent = 9,
 	  playerbuff = {8936,2},
+	  cooldown = 18562,
 	  auraunit = usemouseover and 'mouseover' or 'target',
 	  refreshable = true,
 	  cast = 8936,
@@ -579,24 +581,24 @@ function EventHorizon:InitializeClass()
 
 	-- Restoration Affinity
 
-	-- Rejuvenation + Swiftmend CD
+	-- Rejuvenation
 	self:newSpell({
 	  requiredTree = 3,
 	  stance = 0,
 	  requiredTalent = 9,
 	  playerbuff = {774,3},
-	  cooldown = 18562,
 	  auraunit = usemouseover and 'mouseover' or 'target',
 	  refreshable = true,
 	  hasted = true,
 	})
 
-	-- Regrowth
+	-- Regrowth + Swiftmend CD
 	self:newSpell({
 	  requiredTree = 3,
 	  stance = 0,
 	  requiredTalent = 9,
 	  playerbuff = {8936,2},
+	  cooldown = 18562,
 	  auraunit = usemouseover and 'mouseover' or 'target',
 	  cast = 8936,
 	  refreshable = true,
@@ -671,8 +673,8 @@ function EventHorizon:InitializeClass()
 	  requiredTree = 4,
 	  stance = 0,
 	  requiredLevel = 10,
-	  cooldown = 18562,
 	  playerbuff = {8936,2},
+	  cooldown = 18562,
 	  auraunit = usemouseover and 'mouseover' or 'target',
 	  cast = 8936,
 	  hasted = true,
