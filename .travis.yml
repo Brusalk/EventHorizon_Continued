@@ -5,4 +5,4 @@ install: true
 script:
 - ./TravisBuild/build.rb
 - echo "Test Message"
-- echo $(BRUSALK_TEST_VAR)
+- echo $BRUSALK_TEST_VAR
