@@ -1,0 +1,8 @@
+language: ruby
+rvm:
+- 2.2.0
+install: true
+script:
+- ./TravisBuild/build.rb
+- echo "Test Message"
+- echo $(BRUSALK_TEST_VAR)

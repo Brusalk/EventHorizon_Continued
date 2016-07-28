@@ -43,6 +43,9 @@ luac.out
 *
 !.gitignore
 !.gitattributes
+!.travis.yml
+!TravisBuild*/
+!TravisBuild*/**
 !LICENSE
 !README.md
 !EventHorizon*/
