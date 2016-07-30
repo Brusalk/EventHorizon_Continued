@@ -225,7 +225,7 @@ function EventHorizon:InitializeClass()
 	self:newSpell({
 	   requiredTree = 2,
 	   stance = 2,
-	   requiredLevel = 6,
+	   requiredLevel = 8,
 	   requiredTalentUnselected = 17,
 	   debuff = {1822,3},
 	   refreshable = true,
@@ -235,7 +235,7 @@ function EventHorizon:InitializeClass()
 	self:newSpell({
 	   requiredTree = 2,
 	   stance = 2,
-	   requiredLevel = 6,
+	   requiredLevel = 8,
 	   requiredTalent = 17,
 	   debuff = {1822,2},
 	   refreshable = true,
