@@ -43,15 +43,17 @@ luac.out
 *
 !.gitignore
 !.gitattributes
-!.travis.env
-!.build.rb
 !.travis.yml
+!build.rb
+!brusalk_public_key.gpg.pub
 !Gemfile
 !Gemfile.lock
 !LICENSE
 !CHANGELOG.md
 !README.md
 !EventHorizon*/
+!travis/
+!travis/**
 !EventHorizon*/**
 
 # We NEVER want to commit a myconfig file ever, lest we overwrite user settings (WHICH IS VERY, VERY, VERY BAD)

@@ -13,7 +13,7 @@
 - V11 wip [\#5](https://github.com/Brusalk/EventHorizon_Continued/pull/5) ([Brusalk](https://github.com/Brusalk))
 - Update config.lua [\#1](https://github.com/Brusalk/EventHorizon_Continued/pull/1) ([Cluuey](https://github.com/Cluuey))
 
-# Historical Changelog:
+# Historical Changelog
 
 ### v1.9.11
   Brusalk - Sat Jul 23 03:17:26 2016 -0700

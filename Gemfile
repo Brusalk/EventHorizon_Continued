@@ -7,4 +7,5 @@ gem 'semantic'
 gem 'byebug'
 gem 'activesupport'
 gem 'github_changelog_generator'
+gem 'rubyzip'
 
