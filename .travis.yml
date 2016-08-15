@@ -3,6 +3,11 @@ rvm:
 - 2.2.0
 install: true
 script:
-- ./TravisBuild/build.rb
-- echo "Test Message"
-- echo $BRUSALK_TEST_VAR
+- ./build.rb
+branches:
+  only:
+    - master
+    - travis_test
+  except:
+    - /^v[0-9]/
+    - /^build-v[0-9]/
