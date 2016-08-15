@@ -337,16 +337,14 @@ class Builder
     # We have to create a replacement gpg that uses our passphrase
     # and tell git to use it
     old_gpg_program = `git config gpg.program`
-    Tempfile.open("pgp-with-passphrase") do |f|
-      path = f.path
-
+    f = Tempfile.open("pgp-with-passphrase")
+    begin
       f.puts "gpg --passphrase \"#{ENV['GPG_KEY_PASSWORD']}\" --batch --no-tty \"$@\""
-      f.flush # Write to the file
+      f.close # Write out the file, and release it for usage
 
       `chmod 755 #{f.path}`
 
-      `git config gpg.program '#{f.path}'`
-
+      `git config gpg.program '#{f.path}'` # Tell git to use our passphrase bypass command
 
       # We need to first commit our changes. This'll be stuff like the TOC version bump, and the changelog
       `git commit -am "#{message}" --gpg-sign="#{gpg_user_id}"`
@@ -365,6 +363,8 @@ class Builder
         `git push --delete origin #{GitHelper.tag_name}`
       end
 
+    ensure
+      f.delete
     end
 
     # Set it back
