@@ -277,8 +277,15 @@ class Builder
   # Each step should return falsey if the step failed
 
   def import_gpg_key
+    # Import the public key
     `gpg --import 'brusalk_public_key.gpg.pub'`
-    $?.success?
+    success = $?.success?
+
+    # Ultimately trust the gpg key to verify key validity
+    gpg_fingerprint = `gpg --with-fingerprint brusalk_public_key.gpg.pub | awk ' /Key fingerprint = / {out=""; for(i=4;i<=NF;i++){out=out""$i}; print out}'`[0...-1]
+    `echo "#{gpg_fingerprint}:6:" | gpg --import-ownertrust`
+
+    success
   end
 
   def verify_build_tag
@@ -325,7 +332,6 @@ class Builder
     `git config --local user.name Brusalk`
     `git config --local user.email <Brusalk@users.noreply.github.com>`
     `git config --local push.default current`
-
 
     # In order to let us create the verified release tag without manually entering our passphrase
     # We have to create a replacement gpg that uses our passphrase
