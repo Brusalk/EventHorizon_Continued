@@ -40,21 +40,26 @@ luac.out
 *.hex
 
 # Ignore all files/folders that are not EventHorzion files or our meta info
+# Blacklist everything
 *
-!.gitignore
+
+# Whitelist
 !.gitattributes
+!.gitignore
 !.travis.yml
-!build.rb
 !brusalk_public_key.gpg.pub
+!build.rb
+!CHANGELOG.md
 !Gemfile
 !Gemfile.lock
 !LICENSE
-!CHANGELOG.md
 !README.md
+!set_env.rb
+
 !EventHorizon*/
+!EventHorizon*/**
 !travis/
 !travis/**
-!EventHorizon*/**
 
 # We NEVER want to commit a myconfig file ever, lest we overwrite user settings (WHICH IS VERY, VERY, VERY BAD)
 EventHorizon*/myconfig.lua
