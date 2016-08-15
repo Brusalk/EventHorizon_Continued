@@ -1,7 +1,6 @@
 language: ruby
 rvm:
 - 2.2.0
-install: true
 script:
 - bundle exec build.rb
 branches:
