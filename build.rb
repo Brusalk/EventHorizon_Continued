@@ -60,11 +60,9 @@ class GitHelper
   end
 
   def self.tag_name(tag_name="")
-    if tag_name.blank? && ENV["TRAVIS_TAG"]
-      ENV["TRAVIS_TAG"]
-    else
-      tag_name
-    end
+    return tag_name if !tag_name.blank?
+    return ENV["TRAVIS_TAG"] if !ENV["TRAVIS_TAG"].blank?
+    `git describe --exact-match --tags $(git log -n1 --pretty='%h')`[0...-1]
   end
 
   def self.previous_tag
@@ -150,7 +148,7 @@ class ChangeLog
   end
 
   def self.generate_changelog
-    `github_changelog_generator --base "#{HISTORY_FILE_LOCATION}" --since-tag "#{HISTORY_FINAL_TAG}"`
+    `github_changelog_generator --base "#{HISTORY_FILE_LOCATION}" --since-tag "#{HISTORY_FINAL_TAG}" --future-release #{GitHelper.verified_tag_name}`
   end
 
 end
