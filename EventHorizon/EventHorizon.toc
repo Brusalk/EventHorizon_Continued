@@ -1,7 +1,7 @@
 ## Interface: 70000
 ## Title: EventHorizon
 ## Author: Brusalk
-## Version: 1.9.11
+## Version: v2.0.0
 ## Dependencies:
 ## OptDeps: SharedMedia
 ## SavedVariables: EventHorizonDBG

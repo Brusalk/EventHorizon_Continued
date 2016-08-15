@@ -1,6 +1,7 @@
 ## Interface: 70000
 ## Title: EventHorizon_|c99A330C9DemonHunter|r
 ## Author: Brusalk
+## Version: v2.0.0
 ## Dependencies: EventHorizon
 ## LoadOnDemand: 1
 ## OptDeps: 

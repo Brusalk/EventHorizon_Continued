@@ -210,8 +210,9 @@ class TOCFile
     with_file do |file, contents|
       if (index = contents.find_index { |line| line.starts_with?("## Version: ") })
         contents[index] = "## Version: #{GitHelper.verified_tag_name}"
-      else
-        raise VersionLineNotFound
+      elsif (index = contents.find_index { |line| line.starts_with?("## Author: ") })
+        # Find Author, and put it right below
+        contents.insert(index+1, "## Version: #{GitHelper.verified_tag_name}")
       end
 
       file.puts contents
@@ -323,6 +324,10 @@ class Builder
     message     = "Official Release of EventHorizon #{version} - #{DateTime.now}"
     gpg_user_id = `gpg --keyid-format long --list-keys Brusalk | awk '/^pub/ { print $2 }' | awk -F "/" '{ print $2 }'`[0...-1]
 
+    `git config --local user.name Brusalk`
+    `git config --local user.email <Brusalk@users.noreply.github.com>`
+    `git config --local push.default current`
+
 
     # In order to let us create the verified release tag without manually entering our passphrase
     # We have to create a replacement gpg that uses our passphrase
@@ -340,16 +345,20 @@ class Builder
 
 
       # We need to first commit our changes. This'll be stuff like the TOC version bump, and the changelog
-      
+      `git commit -am "#{message}" --gpg-sign="#{gpg_user_id}"`
+      success = $?.success?
 
       # Now we can create our tag
-      `git tag -u #{gpg_user_id} #{GitHelper.verified_tag_name} -m "#{message}"`
+      `git tag -u #{gpg_user_id} #{GitHelper.verified_tag_name} -m "#{message}"` if success
       success = $?.success?
-      puts "Success: #{success}"
+
+      # Push updated commit/associated tags to remote
+      `git push --follow-tags` if success
+      success = $?.success?
 
       if success
         # Delete build tag
-        #{ }`git push --delete origin #{GitHelper.tag_name}`
+        `git push --delete origin #{GitHelper.tag_name}`
       end
 
     end

@@ -1,6 +1,7 @@
 ## Interface: 70000
 ## Title: EventHorizon_|c4069ccf0Mage|r
 ## Author: Brusalk, Binkenstein
+## Version: v2.0.0
 ## LoadOnDemand: 1
 ## Dependencies: EventHorizon
 ## OptDeps: 

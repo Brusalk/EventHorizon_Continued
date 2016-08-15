@@ -1,6 +1,7 @@
 ## Interface: 70000
 ## Title: EventHorizon_|cFFC79C6EWarrior|r
 ## Author: Brusalk
+## Version: v2.0.0
 ## LoadOnDemand: 1
 ## Dependencies: EventHorizon
 ## OptDeps: 
