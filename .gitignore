@@ -48,6 +48,7 @@ luac.out
 !.gitignore
 !.travis.yml
 !brusalk_public_key.gpg.pub
+!brusalk_private_key.gpg.pub.enc
 !build.rb
 !CHANGELOG.md
 !Gemfile
