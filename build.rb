@@ -29,6 +29,8 @@ class GitHelper
   SEMVER_REGEX = /\Av{0,1}(\d+\.\d+\.\d+)(-([0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*))?(\+([0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*))?\Z/
   GITHUB_URL = "https://github.com/Brusalk/EventHorizon_Continued/"
 
+  cattr_accessor :build_tag_name
+
   # Needs to be a GPG key verifiable as Brusalk, and the tag should be named `build-<version#>`
   def self.verified_build_tag?(tag_name="")
     with_verified_tag(tag_name) do |name|
@@ -43,20 +45,22 @@ class GitHelper
   end
 
   def self.with_verified_tag(tag_name="")
-    tag_name = self.tag_name(tag_name)
+    self.build_tag_name ||= begin
+      tag_name = self.tag_name(tag_name)
 
-    ret = false
+      ret = false
 
-    if tag_name.starts_with? "build-"
-      if (GIT.tag(tag_name) rescue nil)
-        `git verify-tag '#{tag_name}'`
-        if $?.success?
-          ret = yield tag_name
+      if tag_name.starts_with? "build-"
+        if (GIT.tag(tag_name) rescue nil)
+          `git verify-tag '#{tag_name}'`
+          if $?.success?
+            ret = yield tag_name
+          end
         end
       end
+      ret
     end
-
-    return ret
+    self.build_tag_name
   end
 
   def self.tag_name(tag_name="")
@@ -363,7 +367,7 @@ class Builder
       success = $?.success?
 
       # Push updated commit/associated tags to remote
-      `git push --follow-tags` if success
+      `git push --follow-tags origin HEAD:#{ENV['TRAVIS_BRANCH']}` if success
       success = $?.success?
 
       if success
