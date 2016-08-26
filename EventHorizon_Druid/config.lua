@@ -4,9 +4,8 @@ function EventHorizon:InitializeClass()
 	self.config.gcdSpellID = 768 -- Cat Form
 	self.config.hastedSpellID = {50769,10} -- Revive
 
-
 	-- Balance
-	
+
 	-- Moonfire
 	self:newSpell({
 	  requiredTree = 1,
@@ -47,6 +46,15 @@ function EventHorizon:InitializeClass()
 	  requiredLevel = 10,
 	  playerbuff = 164545,
 	  cast = 190984,
+	})
+
+	--Scythe of Elune
+	self:newSpell({
+	  requiredTree = 1,
+	  stance = {0,4},
+	  requiredArtifactTalent = 202767,
+	  cooldown = 202767,
+	  cast = {202767, 202768, 202771},
 	})
 
 --	-- Starfall  -- Not really sure if this needs to be tracked as the spell area is very obvious and the buff only affects targets within it.
@@ -293,7 +301,7 @@ function EventHorizon:InitializeClass()
 	  cooldown = 202028,
 	})
 
-	-- Trash 
+	-- Thrash
 	self:newSpell({
 	  requiredTree = 2,
 	  stance = 2,
@@ -318,6 +326,15 @@ function EventHorizon:InitializeClass()
 	  stance = 2,
 	  requiredTalent = 18,
 	  cooldown = 202060,
+	})
+
+	-- Ashamane's Frenzy
+	self:newSpell({
+	  requiredTree = 2,
+	  stance = 2,
+	  requiredArtifactTalent = 210722,
+	  cooldown = 210722,
+	  debuff = 210722,
 	})
 
 	-- Beserk
@@ -623,6 +640,15 @@ function EventHorizon:InitializeClass()
 	  playerbuff = 22812,
 	})
 
+	-- Rage of the Sleeper
+	self:newSpell({
+	  requiredTree = 3,
+	  requiredArtifactTalent = 200851,
+	  stance = 1,
+	  cooldown = 200851,
+	  playerbuff = 200851,
+	})
+
 	-- Survival Instincts
 	self:newSpell({
 	  requiredTree = 3,
@@ -639,7 +665,6 @@ function EventHorizon:InitializeClass()
 	  cooldown = 102558,
 	  playerbuff = 102558,
 	})
-
 
 	-- Resto bars
 
@@ -717,6 +742,15 @@ function EventHorizon:InitializeClass()
 	  requiredLevel = 52,
 	  playerbuff = 102342,
 	  cooldown = 102342,
+	})
+
+	-- Essence of G'Hanir
+	self:newSpell({
+	  requiredTree = 4,
+	  stance = 0,
+	  requiredArtifactTalent  = 208253,
+	  playerbuff = 208253,
+	  cooldown = 208253,
 	})
 
 	-- Balance Affinity
