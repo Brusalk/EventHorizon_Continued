@@ -89,7 +89,7 @@ function EventHorizon:InitializeClass()
 	  requiredTree = 1,
 	  requiredTalent = 9,
 	  cooldown = 48707,
-	  playerbuff = {205725},
+	  playerbuff = {205725,5},
 	})
 
 	-- Vampiric Blood
