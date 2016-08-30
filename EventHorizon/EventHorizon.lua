@@ -119,7 +119,7 @@ local LegionSpecIDMapping = {
 	[257] = "Priest: Holy",
 	[258] = "Priest: Shadow",
 	[259] = "Rogue: Assassination",
-	[260] = "Rogue: Combat",
+	[260] = "Rogue: Outlaw",
 	[261] = "Rogue: Subtlety",
 	[262] = "Shaman: Elemental",
 	[263] = "Shaman: Enhancement",
@@ -135,19 +135,34 @@ local LegionSpecIDMapping = {
 }
 
 local LegionClassConfigStatus = {
-	[62]  = true,
-	[63]  = true,
-	[254] = true,
-	[256] = true,
-	[257] = true,
-	[258] = true,
-	[259] = true,
-	[261] = true,
-  [262] = true,
-	[263] = true,
-	[265] = true,
-	[266] = true,
-	[267] = true,
+	[62] = "Mage: Arcane",
+	[63] = "Mage: Fire",
+	[65] = "Paladin: Holy",
+	[66] = "Paladin: Protection",
+	[70] = "Paladin: Retribution",
+	[71] = "Warrior: Arms",
+	[72] = "Warrior: Fury",
+	[102] = "Druid: Balance",
+	[103] = "Druid: Feral",
+	[104] = "Druid: Guardian",
+	[105] = "Druid: Restoration",
+	[250] = "Death Knight: Blood",
+	[251] = "Death Knight: Frost",
+	[252] = "Death Knight: Unholy",
+	[254] = "Hunter: Marksmanship",
+	[256] = "Priest: Discipline",
+	[257] = "Priest: Holy",
+	[258] = "Priest: Shadow",
+	[259] = "Rogue: Assassination",
+	[260] = "Rogue: Outlaw",
+	[261] = "Rogue: Subtlety",
+	[263] = "Shaman: Enhancement",
+	[265] = "Warlock: Affliction",
+	[266] = "Warlock: Demonology",
+	[267] = "Warlock: Destruction",
+	[269] = "Monk: Windwalker",
+	[577] = "Demon Hunter: Havoc",
+	[581] = "Demon Hunter: Vengeance",
 
 }
 
@@ -155,7 +170,7 @@ local BuildLegionClassConfigStatusText = function()
 	local ret = "EventHorizon\nCurrent Class Status \n\n"
 	for specID, classname in pairs(LegionSpecIDMapping) do
 		local id, name, desc, icon, background, role, class = GetSpecializationInfoByID(specID)
-		local status = LegionClassConfigStatus[specID] and "Implemented" or "NYI"
+		local status = (LegionClassConfigStatus[specID] ~= nil) and "Implemented" or "NYI"
 		ret = ret .. name .. " | " .. status .. "\n"
 	end
 	ret = ret .. "\nIf your spec is Not Yet Implemented (NYI), please send me your customized config via WoWInterface or the Discord server, so I can add it as the default config for your spec!\n"
