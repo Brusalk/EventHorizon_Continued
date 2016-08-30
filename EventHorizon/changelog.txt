@@ -1,5 +1,20 @@
 Changelog:
 
+v1.9.12
+  Fixed requiredArtifactTalent option for non-level-100-characters.
+
+  Added the following class configs:
+    Paladin - Holy/Prot/Ret
+    Warrior - Arms/Fury
+    Druid   - Balance/Feral/Guardian/Resto
+    Death Knight - Blood/Frost/Unholy
+    Priest  - Disc/Holy/Discipline
+    Rogue   - Assassination/Outlaw/Sub
+    Monk    - Windwalker
+    Demon Hunter - Havoc/Vengeance
+
+    Major thanks to everyone that helped contribute these class configs!
+
 v1.9.11
   Brusalk - Sat Jul 23 03:17:26 2016 -0700
       Merge pull request #5 from Brusalk/v11_wip

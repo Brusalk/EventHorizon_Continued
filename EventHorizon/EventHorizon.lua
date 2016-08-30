@@ -2228,7 +2228,7 @@ function ns:CheckRequirements()
 		-- Can be a spellID that must have at least one point, OR
 		-- Can be a table {spellID, x} for the spellID that must have at least x points, 
 		-- Can be a list { {spellID1, x1}, {spellID2, x2} ... } such that all spellIDs must have at least their number of points selected
-		if rA then
+		if rA and LA:GetPowers() ~= false then
 			haveArtifactTalentReq = false -- If there's one configured, we want to require all of them
 		
 			if type(rA) == 'number' then

@@ -1,6 +1,12 @@
 function EventHorizon:InitializeClass()
     self.config.gcdSpellID = 17962
     self.config.hastedSpellID = {6201, 3} -- Create Healthstone
+
+
+    self:newSpell({
+        debuff = 348,
+        requiredArtifactTalent = {215183, 2}
+    })
     
     --** Demonology **--
     -- Doom
