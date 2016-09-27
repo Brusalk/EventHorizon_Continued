@@ -159,7 +159,6 @@ function EventHorizon:InitializeClass()
 	  playerbuff = {774,3},
 	  auraunit = usemouseover and 'mouseover' or 'target',
 	  refreshable = true,
-	  hasted = true,
 	})
 
 --	-- Regrowth + Swiftmend CD
@@ -173,7 +172,6 @@ function EventHorizon:InitializeClass()
 	  auraunit = usemouseover and 'mouseover' or 'target',
 	  refreshable = true,
 	  cast = 8936,
-	  hasted = true,
 	  recast = true,
 	})
 
@@ -194,7 +192,6 @@ function EventHorizon:InitializeClass()
 	  requiredTalent = 3,
 	  debuff = {164812,2},
 	  refreshable = true,
-	  hasted = true,
 	})
 
 	-- Moonfire in bear as it always has access to it.
@@ -203,7 +200,6 @@ function EventHorizon:InitializeClass()
 	  stance = 1,
 	  debuff = {164812,2},
 	  refreshable = true,
-	  hasted = true,
 	})
 
 	-- Savage Roar
@@ -366,7 +362,6 @@ function EventHorizon:InitializeClass()
 	  playerbuff = 164547,
 	  icon = 164547,
 	  cast = 197626,
-	  hasted = true,
 	  recast = true,
 	})
 
@@ -378,7 +373,6 @@ function EventHorizon:InitializeClass()
 	  playerbuff = 164545,
 	  icon = 164545,
 	  cast = 197626,
-	  hasted = true,
 	  recast = true,
 	})
 
@@ -428,7 +422,6 @@ function EventHorizon:InitializeClass()
 	  playerbuff = {774,3},
 	  auraunit = usemouseover and 'mouseover' or 'target',
 	  refreshable = true,
-	  hasted = true,
 	})
 
 	-- Regrowth + Swiftmend CD
@@ -442,7 +435,6 @@ function EventHorizon:InitializeClass()
 	  auraunit = usemouseover and 'mouseover' or 'target',
 	  refreshable = true,
 	  cast = 8936,
-	  hasted = true,
 	  recast = true,
 	})
 
@@ -475,7 +467,6 @@ function EventHorizon:InitializeClass()
 	  debuff = {77758,3},
 	  cooldown = 77758,
 	  refreshable = true,
-	  hasted = true,
 	})
 
 	-- Pulverize
@@ -486,7 +477,6 @@ function EventHorizon:InitializeClass()
 	  playerbuff = 158792,
 	})
 
---[[
 	-- Earthwarden
 	self:newSpell({
 	  requiredTree = 3,
@@ -494,7 +484,6 @@ function EventHorizon:InitializeClass()
 	  requiredTalent = 16,
 	  cooldown = 203975,
 	})
-]]--
 
 	-- Three separate lines for this bar so the starting icon reminds you which CD it is tracking, as soon as you use a mitigation ability it will update.
 	-- Ironfur & Mark of Ursol with Mighty Bash cooldown at half height.
@@ -604,7 +593,6 @@ function EventHorizon:InitializeClass()
 	  playerbuff = {774,3},
 	  auraunit = usemouseover and 'mouseover' or 'target',
 	  refreshable = true,
-	  hasted = true,
 	})
 
 	-- Regrowth + Swiftmend CD
@@ -618,7 +606,6 @@ function EventHorizon:InitializeClass()
 	  auraunit = usemouseover and 'mouseover' or 'target',
 	  cast = 8936,
 	  refreshable = true,
-	  hasted = true,
 	  recast = true,
 	})
 
@@ -677,7 +664,6 @@ function EventHorizon:InitializeClass()
 	  requiredLevel = 32,
 	  playerbuff = {33763,1},
 	  auraunit = usemouseover and 'mouseover' or 'target',
-	  hasted = true,
 	  cast = 48438,
 	  refreshable = true,
 	  icon = 33763,
@@ -692,7 +678,6 @@ function EventHorizon:InitializeClass()
 	  requiredTalent = 7,
 	  playerbuff = {33763,1},
 	  auraunit = usemouseover and 'mouseover' or 'target',
-	  hasted = true,
 	  cast = 48438,
 	  refreshable = true,
 	  icon = 33763,
@@ -708,7 +693,6 @@ function EventHorizon:InitializeClass()
 	  requiredLevel = 10,
 	  playerbuff = {774,3},
 	  auraunit = usemouseover and 'mouseover' or 'target',
-	  hasted = true,
 	  refreshable = true,
 	  cooldown = 29166,
 	  smallCooldown = true,
@@ -721,7 +705,6 @@ function EventHorizon:InitializeClass()
 	  requiredTalent = 7,
 	  playerbuff = {774,3},
 	  auraunit = usemouseover and 'mouseover' or 'target',
-	  hasted = true,
 	  refreshable = true,
 	  cooldown = 29166,
 	  smallCooldown = true,
@@ -735,7 +718,6 @@ function EventHorizon:InitializeClass()
 	  requiredTalent = 18,
 	  playerbuff = {155777,3},
 	  auraunit = usemouseover and 'mouseover' or 'target',
-	  hasted = true,
 	  refreshable = true,
 	})
 
@@ -747,7 +729,6 @@ function EventHorizon:InitializeClass()
 	  requiredLevel = 10,
 	  playerbuff = {155777,3},
 	  auraunit = usemouseover and 'mouseover' or 'target',
-	  hasted = true,
 	  refreshable = true,
 	})
 
@@ -762,7 +743,6 @@ function EventHorizon:InitializeClass()
 	  smallCooldown = true,
 	  auraunit = usemouseover and 'mouseover' or 'target',
 	  cast = 8936,
-	  hasted = true,
 	  refreshable = true,
 	  recast = true,
 	})
@@ -777,7 +757,6 @@ function EventHorizon:InitializeClass()
 	  smallCooldown = true,
 	  auraunit = usemouseover and 'mouseover' or 'target',
 	  cast = 8936,
-	  hasted = true,
 	  refreshable = true,
 	  recast = true,
 	})
@@ -789,7 +768,6 @@ function EventHorizon:InitializeClass()
 	  playerbuff = {{102351}, {102352,2}},
 	  cooldown = 102351,
 	  auraunit = usemouseover and 'mouseover' or 'target',
-	  hasted = true,
 	})
 
 --[[
@@ -799,7 +777,6 @@ function EventHorizon:InitializeClass()
 	  stance = 0,
 	  requiredLevel = 83,
 	  debuff = {145205,2},
-	  hasted = true,
 	})
 ]]--
 
