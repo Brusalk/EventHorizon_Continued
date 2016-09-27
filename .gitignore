@@ -41,9 +41,15 @@ luac.out
 
 # Ignore all files/folders that are not EventHorzion files or our meta info
 *
+# Allow specific ones
 !.gitignore
 !.gitattributes
 !LICENSE
 !README.md
 !EventHorizon*/
 !EventHorizon*/**
+
+# Always ignore my config files
+myconfig.lua
+EventHorizon_Configs/
+EventHorizon_Configs/**

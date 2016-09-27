@@ -112,4 +112,45 @@ function EventHorizon:InitializeClass()
         requiredTree = 1,
     })
 
+    -- -- Protection
+ 
+   	-- Ignore Pain
+   	self:newSpell({
+ 		playerbuff = 190456,
+       	requiredTree = 3,
+     })
+ 
+   	-- Shield Block
+   	self:newSpell({
+   		playerbuff = 132404,
+       	requiredTree = 3,
+     })
+ 
+   	-- Shield Slam
+   	self:newSpell({
+       	cooldown = 23922,
+   		requiredTree = 3,
+     })
+   
+   	-- Focused Rage
+    -- self:newSpell({
+	--     	playerbuff = 204488,
+    --   	requiredTree = 3,
+    -- })
+   
+   	-- Demoralizing Shout
+   	self:newSpell({
+       	cooldown = 1160,
+       	debuff = 1160, 
+   		requiredTree = 3,
+    })
+   
+   	-- Battle Cry
+   	self:newSpell({
+       cooldown = 1719,
+   		playerbuff = 1719,
+   		requiredTree = 3,
+    })
+
+
 end

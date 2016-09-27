@@ -9,10 +9,11 @@ local Mop       	= select(4,GetBuildInfo()) >= 50000
 local Wod       	= select(4,GetBuildInfo()) >= 60000
 local Legion 			= select(4,GetBuildInfo()) >= 70000
 
-local DEBUG = true -- Comment out this line by prefixing it with "--" if you want to see the load-spam and debug messages
+local DEBUG = true 
+DEBUG = UnitName("player") == "Brusalk" -- Comment out this line by prefixing it with "--" if you want to see the load-spam and debug messages
 local spellIDsEnabled = DEBUG -- Toggles display of spellIDs in tooltips. Useful for working on spell configs
 
-local LA = LibStub:GetLibrary("LegionArtifacts-1.1")
+local LA = LibStub("LibArtifactData-1.0")
 
 -- Wod Changes
 local _GetSpellInfo, _GetTalentInfo, _GetNumTalents, _GetAddOnInfo = GetSpellInfo, GetTalentInfo, GetNumTalents, GetAddOnInfo
@@ -142,6 +143,7 @@ local LegionClassConfigStatus = {
 	[70] = "Paladin: Retribution",
 	[71] = "Warrior: Arms",
 	[72] = "Warrior: Fury",
+	[73] = "Warrior: Protection",
 	[102] = "Druid: Balance",
 	[103] = "Druid: Feral",
 	[104] = "Druid: Guardian",
@@ -156,6 +158,7 @@ local LegionClassConfigStatus = {
 	[259] = "Rogue: Assassination",
 	[260] = "Rogue: Outlaw",
 	[261] = "Rogue: Subtlety",
+	[262] = "Shaman: Elemental",
 	[263] = "Shaman: Enhancement",
 	[265] = "Warlock: Affliction",
 	[266] = "Warlock: Demonology",
@@ -608,7 +611,6 @@ local mainframeEvents = {
 	['UNIT_AURA'] = true,
   ['PLAYER_TOTEM_UPDATE'] = true,
 	['PLAYER_ENTERING_WORLD'] = true,
-	['ARTIFACT_UPDATE'] = true
 }
 
 local reloadEvents = {
@@ -625,7 +627,6 @@ local reloadEvents = {
 	['PLAYER_SPECIALIZATION_CHANGED'] = true,
 	['ACTIVE_TALENT_GROUP_CHANGED'] = true,
 	['PLAYER_ENTERING_WORLD'] = true,
-	['ARTIFACT_UPDATE'] = true
 	
 }
 
@@ -709,14 +710,6 @@ local mainframe_PLAYER_TOTEM_UPDATE = function( self, slot )
             C_Timer.After( 0.1, function () spellframe:PLAYER_TOTEM_UPDATE( slot ) end )
         end
     end
-end
-
-local mainframe_ARTIFACT_UPDATE = function(...)
-	ns:CheckTalents()
-end
-
-local mainframe_PLAYER_ENTERING_WORLD = function(...)
-	mainframe_ARTIFACT_UPDATE()
 end
 
 local mainframe_UNIT_AURA = function (self,unit)
@@ -2002,7 +1995,7 @@ end
 local timer = 0
 local checkInProgress
 function ns:CheckTalents()
-	if checkInProgress then return end
+	if not self.isReady or checkInProgress then return end
 	checkInProgress = true
 	frame3:SetScript('OnUpdate', function (f,elapsed)
 		timer = timer + elapsed
@@ -2138,6 +2131,8 @@ function ns:AddCheckedTalent(tab,index)
 end
 ]]
 function ns:CheckRequirements()
+	if not ns.isReady then return end
+
 	--print('CheckTalents')
 	table.wipe(self.frames.active)
 	table.wipe(self.frames.mouseover)
@@ -2228,7 +2223,7 @@ function ns:CheckRequirements()
 		-- Can be a spellID that must have at least one point, OR
 		-- Can be a table {spellID, x} for the spellID that must have at least x points, 
 		-- Can be a list { {spellID1, x1}, {spellID2, x2} ... } such that all spellIDs must have at least their number of points selected
-		if rA and LA:GetPowers() ~= false then
+		if rA then
 			haveArtifactTalentReq = false -- If there's one configured, we want to require all of them
 		
 			if type(rA) == 'number' then
@@ -2238,23 +2233,33 @@ function ns:CheckRequirements()
 			if type(rA[1]) == 'number' then -- case 2 (simple table)
 				rA = { rA } -- Convert to known case three of an array of talent tables
 			end
-			
-			local requiredMatches = #rA -- We need to have this many matches for all talents to have matched
+
+			-- Special logic to handle cases where minimum rank is 0 or less
+			-- In such a situation we basically ignore it.
+			local emptyMatches = 0
+			for _, artTalentTab in ipairs(rA) do
+				if artTalentTab[2] < 1 then
+				  emptyMatches = emptyMatches + 1
+				end
+			end
+			local requiredMatches = #rA - emptyMatches -- We need to have this many matches for all talents to have matched
 			local matches = 0
 			
-			for j, power in pairs(LA:GetPowers()) do
-				local spellID, upgradeCost, curRank, maxRank, bonusRank, xpos, ypos, prereqsMet, isStart, isGoldMedal, isFinal = unpack(LA:GetPowerInfo(power))
-				
+			local artifactID, traits = LA:GetArtifactTraits()
+			for i, traitData in pairs(traits or {}) do
+				debug("traitData", inspect(traitData))
+
 				for _, artTalentTab in ipairs(rA) do
-					local artTalentID, artMinRank = unpack(artTalentTab)
-					if artTalentID == spellID and curRank >= artMinRank then
+					local artifactTalentSpellID, requiredMinimumRank = unpack(artTalentTab)
+					debug("artTalentTab", inspect(artTalentTab), artifactTalentSpellID, requiredMinimumRank)
+					if traitData.spellID == artifactTalentSpellID and traitData.currentRank >= requiredMinimumRank then
 						matches = matches + 1
-						debug("Matched " .. spellID .. " | " .. matches .. " / " .. requiredMatches)
+						debug("Matched " .. traitData.spellID .. " | " .. matches .. " / " .. requiredMatches)
 					end
 				end
-		    end
+			end
 			
-			if matches == requiredMatches then
+			if matches >= requiredMatches then
 				haveArtifactTalentReq = true
 			end
 		end
@@ -3364,26 +3369,53 @@ function ns:Initialize()
 end
 
 function ns:DelayLoad()
-	local f = CreateFrame("frame")
-	local curElapsed = 0
-	local start = GetTime()
-	f:SetScript("OnUpdate", function(self, elapsed)
-		curElapsed = curElapsed + elapsed
-		if curElapsed >= .2 then
-			if LA:GetArtifacts() ~= false or GetTime() - start >= 2 then -- Wait for artifact info or max two seconds
-				ns:DelayedLoad()
-				f:SetScript("OnUpdate", nil)
-			else
-				curElapsed = 0
-			end
-		end
+
+	-- Talent Checking -- This is super ugly and I hate Blizzard for shipping without an Artifact Addon API
+
+	-- Optimization for people who can't possibly have talents
+	if UnitLevel("PLAYER") <= 99 then ns:DelayedLoad() return end
+
+	LA.RegisterCallback(ns, "ARTIFACT_ADDED", function()
+		LA.UnregisterCallback(ns, "ARTIFACT_ADDED")
+		debug("ADDED", LA:GetActiveArtifactID())
+		LA.RegisterCallback(ns, "ARTIFACT_ACTIVE_CHANGED", function() ns:DelayedLoad(); LA.UnregisterCallback(ns, "ARTIFACT_ACTIVE_CHANGED") end)
 	end)
+
+	-- Wait at most 10 seconds for artifact talent data -- if none then oh well
+	C_Timer.After(10, function()
+		ns:DelayedLoad();
+		LA.UnregisterCallback(ns, "ARTIFACT_ACTIVE_CHANGED")
+		LA.UnregisterCallback(ns, "ARTIFACT_ADDED")
+	end)
+
 end
 
 function ns:DelayedLoad()
+	print("Delayed Load", self.isReady)
+	if self.isReady then return end
+	self.isReady = true
+
+	-- Artifact checkRequirements events
+	local interestingArtifactLibEvents = {
+		["ARTIFACT_ADDED"] = ns.CheckTalents, -- Fires if no artifact equipped on load
+		["ARTIFACT_ACTIVE_CHANGED"] = ns.CheckTalents,
+		--"ARTIFACT_DATA_MISSING",
+		["ARTIFACT_EQUIPPED_CHANGED"] = ns.CheckTalents,
+		--"ARTIFACT_KNOWLEDGE_CHANGED",
+		--"ARTIFACT_POWER_CHANGED",
+		--"ARTIFACT_RELIC_CHANGED",
+		["ARTIFACT_TRAITS_CHANGED"] = ns.CheckTalents
+	}
+
+	for event, handler in pairs(interestingArtifactLibEvents) do
+		LA.RegisterCallback(ns, event, function()
+			debug("called ", event, "handler")
+			handler(ns)
+		end)
+	end
+
 	self:CheckRequirements()
 	self:LoadModules()
-	self.isReady = true
 
 	debug("frames shown " .. #self.frames.shown)
 	if #self.frames.shown < 1 then
@@ -3633,7 +3665,6 @@ mainframe.PLAYER_TARGET_CHANGED = mainframe_PLAYER_TARGET_CHANGED
 mainframe.UNIT_AURA = mainframe_UNIT_AURA
 mainframe.PLAYER_TOTEM_UPDATE = mainframe_PLAYER_TOTEM_UPDATE
 mainframe.PLAYER_ENTERING_WORLD = mainframe_PLAYER_ENTERING_WORLD
-mainframe.ARTIFACT_UPDATE = mainframe_ARTIFACT_UPDATE
 
 SpellFrame.NotInteresting = SpellFrame_NotInteresting
 SpellFrame.AddSegment = SpellFrame_AddSegment

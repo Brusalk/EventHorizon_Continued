@@ -8,3 +8,10 @@
 
 config.lua
 myconfig.lua
+
+# Custom myconfigs not in existing folder
+# You can specify class configs in the below files, but due to the Curse Client deleting all folders before unzip
+# it'll delete any myconfig.lua files that exist.
+# Thus, if you create an EventHorizon_Configs folder along side EventHorizon's folders, you can stick specific configs there
+# and they'll be used over config/myconfigs.
+..\EventHorizon_Configs\deathknight_my_config.lua
