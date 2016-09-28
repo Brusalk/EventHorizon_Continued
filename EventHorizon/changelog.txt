@@ -1,5 +1,8 @@
 Changelog:
 
+v1.9.15
+ * Fixed inspect Lua error
+
 v1.9.14
  * Updated forgotten changelog
 

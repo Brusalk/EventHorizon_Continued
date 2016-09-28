@@ -2247,11 +2247,11 @@ function ns:CheckRequirements()
 			
 			local artifactID, traits = LA:GetArtifactTraits()
 			for i, traitData in pairs(traits or {}) do
-				debug("traitData", inspect(traitData))
+				debug("traitData", traitData)
 
 				for _, artTalentTab in ipairs(rA) do
 					local artifactTalentSpellID, requiredMinimumRank = unpack(artTalentTab)
-					debug("artTalentTab", inspect(artTalentTab), artifactTalentSpellID, requiredMinimumRank)
+					debug("artTalentTab", artTalentTab, artifactTalentSpellID, requiredMinimumRank)
 					if traitData.spellID == artifactTalentSpellID and traitData.currentRank >= requiredMinimumRank then
 						matches = matches + 1
 						debug("Matched " .. traitData.spellID .. " | " .. matches .. " / " .. requiredMatches)
