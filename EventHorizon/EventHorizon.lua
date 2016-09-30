@@ -2550,6 +2550,7 @@ function ns:newSpell(config) -- New class config to old class config
 	n.auraunit = c.auraunit
 	
 	n.totem = c.totem
+	n.pandemic = c.pandemic
     
 	--	print("Debuff is type", type(config.debuff), "and has 1st value of", select(1,config.debuff))
 	debug("Adding", n.spellID, n.debuff, n.cast, n.dot, n.cooldown)
@@ -2660,7 +2661,18 @@ local function SetSpellAttributes(spellframe,config)
 		interestingEvent['SPELL_UPDATE_COOLDOWN'] = true
 	end
 
-    
+        -- Draws pandemic indicator lines (by Broquel/CaioErtai)
+	if (config.debuff or config.playerbuff) and config.pandemic then
+		local pandemicPos = 20 + (ns.config.width + ns.config.height)* config.pandemic / ns.config.future -- I'm sure there are better ways to calculate the position based on seconds, but this is what I could come up with. (by Broquel/CaioErtai)
+		-- !!!! The hard 20 in the above line will probably only work on my layout configs, which are: static, 375 width, 25 height, past -1, future 18. (by Broquel/CaioErtai)
+		ns.frames.panIndicator = spellframe:CreateTexture(nil, 'ARTWORK', nil, draworder.nowI)
+		ns.frames.panIndicator:SetPoint('CENTER',spellframe,'LEFT')
+		ns.frames.panIndicator:SetPoint('CENTER',spellframe,'LEFT', pandemicPos, 0)
+		ns.frames.panIndicator:SetHeight(15) -- Should be dynamic height, based on the number of lines on EHZ. (by Broquel/CaioErtai)
+		ns.frames.panIndicator:SetWidth(vars.onepixelwide)
+		ns.frames.panIndicator:SetColorTexture(255,255,255,0.2) -- Could use nowIndicator settings, or have its own settings on config.lua. (by Broquel/CaioErtai)
+	end
+
 	if config.debuff then
 		spellframe.isType = 'debuffmine'
 		spellframe.AuraFunction = UnitDebuff
