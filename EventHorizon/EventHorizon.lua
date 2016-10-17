@@ -761,6 +761,10 @@ local GetAura = function (self)
 		for k,aura in pairs(a) do
 			for i = 1,#self.auraname do
 				if (aura.name == self.auraname[i]) and (aura.source == 'player' or self.unique) and (not(self.uniqueID) or self.uniqueID == aura.spellID) then
+				  if aura.expirationTime == 0 and aura.duration == 0 then
+						aura.duration = 86400 -- Pretend it's actually gonna last a full day. Probably long enough
+						aura.expirationTime = GetTime() + aura.duration
+					end
 					return aura.name, aura.icon, aura.count, aura.duration, aura.expirationTime, aura.source, aura.spellID
 				end
 			end
@@ -768,6 +772,10 @@ local GetAura = function (self)
 	else
 		for k,aura in pairs(a) do
 			if (aura.name == self.auraname) and (aura.source == 'player' or self.unique) and (not(self.uniqueID) or self.uniqueID == aura.spellID) then
+					if aura.expirationTime == 0 and aura.duration == 0 then
+						aura.duration = 86400 -- Pretend it's actually gonna last a full day. Probably long enough
+						aura.expirationTime = GetTime() + aura.duration
+					end
 				return aura.name, aura.icon, aura.count, aura.duration, aura.expirationTime, aura.source, aura.spellID
 			end
 		end
@@ -783,6 +791,10 @@ ns.GetAura = function (self,auralist,auratype,unit)
 			for i = 1,#auralist do
 				local t = type(auralist[i])
 				if (t == 'string' and aura.name or t == 'number' and aura.spellID) == auralist[i] then
+					if aura.expirationTime == 0 and aura.duration == 0 then
+						aura.duration = 86400 -- Pretend it's actually gonna last a full day. Probably long enough
+						aura.expirationTime = GetTime() + aura.duration
+					end
 					return aura.name, aura.icon, aura.count, aura.duration, aura.expirationTime, aura.source, aura.spellID
 				end
 			end
@@ -791,6 +803,10 @@ ns.GetAura = function (self,auralist,auratype,unit)
 		for k,aura in pairs(a) do
 			local t = type(auralist)
 			if (t == 'string' and aura.name or t == 'number' and aura.spellID) == auralist then
+				if aura.expirationTime == 0 and aura.duration == 0 then
+					aura.duration = 86400 -- Pretend it's actually gonna last a full day. Probably long enough
+					aura.expirationTime = GetTime() + aura.duration
+				end
 				return aura.name, aura.icon, aura.count, aura.duration, aura.expirationTime, aura.source, aura.spellID
 			end
 		end
@@ -1141,6 +1157,7 @@ local SpellFrame_UNIT_AURA = function (self, unitid)
 		return
 	end
 	
+	--[[
 	if self.aurasegment and expirationTime == 0 and duration == 0 then	-- Timeless aura, bar exists (Overkill)
 		for i = #self.indicators,1,-1 do
 			self:Remove(i)
@@ -1154,7 +1171,8 @@ local SpellFrame_UNIT_AURA = function (self, unitid)
 	if expirationTime == 0 then
 		return
 	end
-	
+	]]
+
 	if afflicted then
 		start = expirationTime-duration
 		if icon and not(self.cast or self.slotID or self.keepIcon) then self.icon:SetTexture(icon) end
