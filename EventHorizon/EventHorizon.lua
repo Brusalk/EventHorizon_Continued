@@ -1576,8 +1576,6 @@ local SpellFrame_UpdateDoT = function (self, addnew, source, now, start, expirat
 		
 		if isHasted and self.expectedTicks then		-- Using expectedTicks
 			self.dotMod = (expirationTime - start)/self.expectedTicks
-			local magearmor = UnitBuff(self.auraunit, "Mage Armor")
-			if self.dot and magearmor and self.dotMod <= 1.5 then self.dotMod = self.dotMod * 2 end		-- Adjust for mage armor rank 5+ 50% duration reduction, use number comparison to make sure we're not changing something that shouldn't be.
 		elseif isHasted then
 			local bct = ns.config.hastedSpellID[2]
 			local hct = select(7, GetSpellInfo(ns.config.hastedSpellID[1]))/1000
@@ -1620,7 +1618,7 @@ local SpellFrame_UpdateDoT = function (self, addnew, source, now, start, expirat
 				self.lasttick = self.stop
 				break
 			end
-			if now+vars.past<=nexttick then
+			if now+vars.past<=nexttick then 
 				-- The next tick is visible.
 				local tick = self:AddIndicator('tick', 'tick', nexttick)
 				if nexttick<=now then
@@ -1701,8 +1699,6 @@ local SpellFrame_UpdateTotem = function (self, addnew, source, now, start, expir
 		
 		if isHasted and self.expectedTicks then		-- Using expectedTicks
 			self.dotMod = (expirationTime - start)/self.expectedTicks
-			local magearmor = UnitBuff(self.auraunit, "Mage Armor")
-			if self.dot and magearmor and self.dotMod <= 1.5 then self.dotMod = self.dotMod * 2 end		-- Adjust for mage armor rank 5+ 50% duration reduction, use number comparison to make sure we're not changing something that shouldn't be.
 		elseif isHasted then
 			local bct = ns.config.hastedSpellID[2]
 			local hct = select(7, GetSpellInfo(ns.config.hastedSpellID[1]))/1000
@@ -1801,11 +1797,9 @@ local SpellFrame_SPELL_UPDATE_COOLDOWN = function (self)
 		ready = enabled==1 and start~=0 and duration and start+duration
 	end
 	--print(start, duration, enabled, ready)
-	if ready and duration>1.5 then
+	local _, gcdDuration = GetSpellCooldown(ns.config.gcdSpellID)
+	if ready and duration>gcdDuration then
 		-- The spell is on cooldown, but not just because of the GCD.
-		if self.cooldownID then
-			
-		end
 		if self.cooldown ~= ready then		-- The CD has changed since last check
 			if not(self.coolingdown) then	-- No CD bar exists.
 				self.coolingdown = self:AddSegment('cooldown', self.smallCooldown and 'smallCooldown' or 'cooldown', start, ready)
@@ -2677,7 +2671,6 @@ local function SetSpellAttributes(spellframe,config)
 		spellframe.CooldownFunction = GetSpellCooldown
 		interestingEvent['SPELL_UPDATE_COOLDOWN'] = true
 	end
-
     
 	if config.debuff then
 		spellframe.isType = 'debuffmine'
