@@ -820,8 +820,8 @@ end
 --Indicators represent a point or range of time. There are different types. The type determines the color and position.
 local typeparent = {}
 
-local SetStacks = function (self,count)
-	if count>1 then
+local SpellFrame_SetStacks = function (self,count)
+	if type(count) == "number" then
 		self.stacks:SetFormattedText('%d',count)
 	elseif self.glyphstacks then
 		if self.glyphstacks[guid] and (self.glyphstacks[guid] > 0) then
@@ -1156,7 +1156,7 @@ local SpellFrame_PLAYER_TOTEM_UPDATE = function ( self, slot )
 				self:AddSegment('cooldown', 'cooldown', start, stop)
 			end
 		end
-		SetStacks(self,1)
+		self:SetStacks(1)
 	else
 		if self.aurasegment then
 			if math.abs(self.aurasegment.stop - now)>0.3 then
@@ -1167,7 +1167,7 @@ local SpellFrame_PLAYER_TOTEM_UPDATE = function ( self, slot )
 			end
 			self:RemoveTicksAfter(now)
 			self.aurasegment = nil
-			self.stacks:SetText()
+			self:SetStacks()
 		end
 	end
     self:UpdateTotem(addnew, source, now, start, expirationTime, duration, name)
@@ -1250,7 +1250,7 @@ local SpellFrame_UNIT_AURA = function (self, unitid)
 				self:AddSegment('cooldown', 'cooldown', start, stop)
 			end
 		end
-		SetStacks(self,count)
+		self:SetStacks(count)
 	else
 		if self.aurasegment then
 			if math.abs(self.aurasegment.stop - now)>0.3 then
@@ -1261,7 +1261,7 @@ local SpellFrame_UNIT_AURA = function (self, unitid)
 			end
 			self:RemoveTicksAfter(now)
 			self.aurasegment = nil
-			self.stacks:SetText()
+			self:SetStacks()
 		end
 	end
 	self:UpdateDoT(addnew, source, now, start, expirationTime, duration, name)
@@ -1286,7 +1286,7 @@ local mainframe_PLAYER_TARGET_CHANGED = function (self)
 				spellframe.targetdebuff = nil
 				spellframe.nexttick = nil
 				spellframe.recenttick = nil
-				spellframe.stacks:SetText()
+				spellframe:SetStacks()
 			end
 			
 			if spellframe.refreshable then
@@ -1356,7 +1356,7 @@ local mainframe_CLEU_OtherInterestingSpell = function (self, time, event, hideCa
 					if gr and (gr[3] == spellname) then
 						if gs[destguid] then
 							gs[destguid] = gs[destguid] - 1
-							bf[i].stacks:SetText(gs[destguid] > 0 and gs[destguid] or nil)
+							bf[i]:SetStacks(gs[destguid] > 0 and gs[destguid] or nil)
 						end
 						--debug("SUCCESS! "..gr[3].." has triggered "..frame[i].auraname)
 					end
@@ -1413,14 +1413,6 @@ local SpellFrame_COMBAT_LOG_EVENT_UNFILTERED = function (self, timestamp, event,
 		--debug('SPELL_CAST_SUCCESS',destguid)
 		self.castsuccess[destguid] = now
 
-		if self.glyphrefresh then
-			for i = 1,6 do
-				if ns.glyphs[i] == self.glyphrefresh[2] then
-					self.glyphstacks[destguid] = self.glyphrefresh[1]
-					SetStacks()
-				end
-			end
-		end
 	elseif tickevents[event] then
 				local isInvalid = not(self.dot) and (self.cast and self.cast[spellname] and not(self.cast[spellname].numhits))	-- filter out cast+channel bars
 		if isInvalid then return end
@@ -1520,7 +1512,7 @@ local SpellFrame_UNIT_AURA_refreshable = function (self, unitid)
 		else
 			addnew = true
 		end
-		SetStacks(self,count)
+		self:SetStacks(count)
 	else
 		if self.aurasegment then
 			if math.abs(self.aurasegment.stop - now)>0.3 then
@@ -1535,7 +1527,7 @@ local SpellFrame_UNIT_AURA_refreshable = function (self, unitid)
 			self.cantcast = nil
 			self.targetdebuff = nil
 			self.recenttick = nil
-			self.stacks:SetText()
+			self:SetStacks()
 		end
 	end
 	self:UpdateDoT(addnew, source, now, start, expirationTime, duration, name, refresh, guid)
@@ -1844,6 +1836,9 @@ local SpellFrame_SPELL_UPDATE_CHARGES = function(self)
 			--  debug("adding indicator", "charge", charge, "current", current, "displayMax", displayMax, "chargeStart", chargeStart, "chargeStop", chargeStop, "topPercent", topPercent, "bottomPercent", bottomPercent, "indicatorTime", self.rechargeIndicators[charge].time, "indicatorStart", self.rechargeIndicators[charge].start, "indicatorStop", self.rechargeIndicators[charge].stop)
 		end
 	end
+
+	-- Set the stacks on the icon to be the current number of charges
+	self:SetStacks(current)
 end
 
 local SpellFrame_UNIT_SPELL_HASTE = SpellFrame_SPELL_UPDATE_CHARGES
@@ -1912,7 +1907,7 @@ local SpellFrame_PLAYER_EQUIPMENT_CHANGED = function (self,slot,equipped)
 	
 	self.aurasegment = nil
 	self.nexttick = nil
-	self.stacks:SetText()
+	self:SetStacks()
 	
 	self.cooldown = nil
 	self.coolingdown = nil
@@ -2024,7 +2019,7 @@ local SpellFrame_UPDATE_MOUSEOVER_UNIT = function (self)
 		end
 		self.aurasegment = nil
 		self.nexttick = nil
-		self.stacks:SetText()
+		self:SetStacks()
 	end
 	
 	if self.refreshable then
@@ -2041,7 +2036,7 @@ local SpellFrame_UPDATE_MOUSEOVER_UNIT = function (self)
 					
 					local count = self.glyphstacks[guid]
 					if self.glyphstacks[guid] and ( count > 0) then
-						self.stacks:SetText(self.glyphstacks[UnitGUID(self.auraunit)])
+						self:SetStacks(self.glyphstacks[UnitGUID(self.auraunit)])
 					end
 				end
 			end
@@ -3732,6 +3727,7 @@ SpellFrame.UpdateTotem = SpellFrame_UpdateTotem
 SpellFrame.Activate = SpellFrame_Activate
 SpellFrame.Deactivate = SpellFrame_Deactivate
 SpellFrame.FindItemInfo = SpellFrame_FindItemInfo
+SpellFrame.SetStacks = SpellFrame_SetStacks
 
 SpellFrame.UNIT_AURA = SpellFrame_UNIT_AURA
 SpellFrame.UNIT_AURA_refreshable = SpellFrame_UNIT_AURA_refreshable
