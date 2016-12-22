@@ -74,6 +74,7 @@ c.channeltick = {0,1,0.2,0.25}					-- Tick markers for channeled spells. Default
 c.casting = {0,1,0.2,0.25}							-- Casting bars. Default = {0,1,0,0.25} (green, 0.25 unmodified alpha)
 c.castLine = {0,1,0,0.3}						-- The end-of-cast line, shown for casts and channels over 1.5 seconds. Default = {0,1,0,0.3} (green, 0.3 unmodified alpha)
 c.cooldown = {0.6,0.8,1,0.3}						-- Cooldown bars. Default = {0.6,0.8,1,0.3} (mute teal, 0.3 unmodified alpha)
+c.recharge = {0.6,0.8,1,0.3}
 c.debuffmine = {true,Priest and 0.7 or 1,0.3}	-- YOUR debuff bars. Default = {true,Priest and 0.7 or 1,0.3} (class colored, dimmed a bit if you're a Priest, 0.3 unmodified alpha)
 c.debuff = {true,0.5,0.3}						-- OTHER PLAYERS' debuff bars. Default = {true,0.5,0.3} (class colored, darkened by 50%, 0.3 unmodified alpha)
 c.playerbuff = {true,Priest and 0.7 or 1,0.3}	-- Buff bars. Default = {true,Priest and 0.7 or 1,0.3} (class colored, dimmed a bit if you're a Priest, 0.3 unmodified alpha)
