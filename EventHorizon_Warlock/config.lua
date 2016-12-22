@@ -1,5 +1,5 @@
 function EventHorizon:InitializeClass()
-    self.config.gcdSpellID = 17962
+    self.config.gcdSpellID = 1454
     self.config.hastedSpellID = {6201, 3} -- Create Healthstone
 
     --** Demonology **--
@@ -85,13 +85,14 @@ function EventHorizon:InitializeClass()
     self:newSpell({
         cast = 48181,
         cooldown = 48181,
+        debuff = 48181,
         requiredTree = 1,
         requiredTalent = 1,
     })
     
-    --Drain Soul Life
+    --Drain Life/Malefic Grasp
     self:newSpell({
-        channel = {{198590, 6}, {689, 6}},
+        channel = {{198590, 6}},
         hasted = true,
         requiredTree = 1,
     })
@@ -121,16 +122,15 @@ function EventHorizon:InitializeClass()
         playerbuff = 117828,
         cooldown = 17962,
         cast = {116858, 29722, 5740},
-        channeled = {689, 6},
         icon = 17962,
         requiredTree = 3,
     })
 
-    -- Chaos Bolt/Eradication
+    -- Eradication
     self:newSpell({
         debuff = 196414,
         requiredTree = 3,
-        requiredTalent = 10,
+        requiredTalent = 5,
     })
     
     -- Channel Demonfire
@@ -147,11 +147,10 @@ function EventHorizon:InitializeClass()
         debuff = {80240, 0},
         cooldown = 80240,
         requiredTree = 3,
-    })
-    
-    --Mana Tap (BLIZZARD PLEASE REMOVE, FOR THE LOVE OF GOD)
+
+    -- Empowered Life Tap
     self:newSpell({
-        playerbuff = 196104,
+        playerbuff = 235156,
         requiredTree = 3,
         requiredTalent = 6,
     })
@@ -161,7 +160,7 @@ function EventHorizon:InitializeClass()
         cast = 152108,
         cooldown = 152108,
         requiredTree = 3,
-        requiredTalent = 5,
+        requiredTalent = 10,
     })
     
     -- Soul Harvest
