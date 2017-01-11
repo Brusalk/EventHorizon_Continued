@@ -5,7 +5,7 @@ function EventHorizon:InitializeClass()
 
 	-- Discipline
 
-	-- Shadow Word: Pain with Smite and Penance CD at half height.
+	-- Shadow Word: Pain with Smite cast and Penance CD at half height.
 	self:newSpell({
 	  requiredTree = 1,
 	  requiredLevel = 4,
@@ -18,7 +18,7 @@ function EventHorizon:InitializeClass()
 	  smallCooldown = true,
 	})
 
-	-- Purge the Wicked with Smite and Penance CD at half height.
+	-- Purge the Wicked with Smite cast and Penance CD at half height.
 	self:newSpell({
 	  requiredTree = 1,
 	  requiredLevel = 4,
@@ -172,36 +172,22 @@ function EventHorizon:InitializeClass()
 	  requiredLevel = 4,
 	  debuff = {589, 3},
 	  cooldown = 205448,
---	  smallCooldown = true,
 	})
 
-	-- Mind Blast/Mind Flay/Mind Sear
+	-- Mind Blast/Mind Flay
 	self:newSpell({
 	  requiredTree = 3,
-	  requiredTalentUnselected = 20,
 	  cast = 8092,
-	  channel = {{15407, 3}, {48045, 3}},
+	  channel = {15407, 3},
 	  cooldown = 8092,
 	  icon = 8092,
-	})
-
-	-- Mind Blast/Mind Sear/Mind Spike
-	self:newSpell({
-	  requiredTree = 3,
-	  requiredTalent = 20,
-	  cast = {8092, 73510},
-	  channel = {{15407, 3}, {48045, 3}},
-	  cooldown = 8092,
-	  debuff = 217673,
-	  icon = 8092,
-	  smallCooldown = true,
 	})
 
 	-- Shadow Word: Death
 	self:newSpell({
 	  requiredTree = 3,
 	  requiredLevel = 46,
-	  cooldown = 32379,
+	  recharge = 32379,
 	})
 
 	-- Shadow Word: Void
@@ -209,13 +195,13 @@ function EventHorizon:InitializeClass()
 	  requiredTree = 3,
 	  requiredTalent = 3,
 	  cast = 205351,
-	  cooldown = 205351,
+	  recharge = 205351,
 	})
 
 	-- Shadow Crash
 	self:newSpell({
 	  requiredTree = 3,
-	  requiredTalent = 17,
+	  requiredTalent = 20,
 	  cast = 205385,
 	  cooldown = 205385,
 	})
