@@ -1,5 +1,8 @@
 Changelog:
 
+v1.9.17
+ * Updated Destro Class Config to fix faulty merge commit
+
 v1.9.16
  * Updated Class Configs to match talent/spell ID changes for 7.1.5. 
 
