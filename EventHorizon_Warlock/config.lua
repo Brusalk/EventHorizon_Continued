@@ -109,7 +109,7 @@ function EventHorizon:InitializeClass()
 
 
     -- *** Destruction *** --
-    --Immolate
+    -- Immolate
     self:newSpell({
         cast = 348,
         debuff = {348, 3},
@@ -117,12 +117,16 @@ function EventHorizon:InitializeClass()
         requiredTree = 3,
     })
     
-    --Conflag/backdraft/incinerate/chaos bolt
+    -- Conflag
+    self:newSpell({
+        recharge = 17962,
+        requiredTree = 3,
+    })
+
+    -- Backdraft/Incinerate
     self:newSpell({
         playerbuff = 117828,
-        cooldown = 17962,
         cast = {116858, 29722, 5740},
-        icon = 17962,
         requiredTree = 3,
     })
 
@@ -148,6 +152,14 @@ function EventHorizon:InitializeClass()
         cooldown = 80240,
         requiredTree = 3,
 
+    -- Dimensional Rift
+    self:newSpell({
+        recharge = 196586,
+        -- rechargeMaxDisplayCount = 2, -- Uncomment if you only want to see charges 1/2
+        requiredTree = 3,
+        requiredArtifactTalent = 196586,
+    })
+  
     -- Empowered Life Tap
     self:newSpell({
         playerbuff = 235156,

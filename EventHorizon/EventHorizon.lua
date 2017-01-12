@@ -530,13 +530,15 @@ local handle
 
 
 local function printhelp(...) if select('#',...)>0 then return tostring((select(1,...))), printhelp(select(2,...)) end end
+
+local function print(...)
+	ChatFrame1:AddMessage('EventHorizon | '..strjoin(' | ',printhelp(...)))
+end
+
 local function debug(...)
 	if DEBUG then
-		print(...)
+		print("DEBUG | ", ...)
 	end
-end
-local function print(...)
-	ChatFrame1:AddMessage('EventHorizon: '..strjoin(',',printhelp(...)))
 end
 
 local draworder = {
@@ -761,6 +763,10 @@ local GetAura = function (self)
 		for k,aura in pairs(a) do
 			for i = 1,#self.auraname do
 				if (aura.name == self.auraname[i]) and (aura.source == 'player' or self.unique) and (not(self.uniqueID) or self.uniqueID == aura.spellID) then
+				  if aura.expirationTime == 0 and aura.duration == 0 then
+						aura.duration = 86400 -- Pretend it's actually gonna last a full day. Probably long enough
+						aura.expirationTime = GetTime() + aura.duration
+					end
 					return aura.name, aura.icon, aura.count, aura.duration, aura.expirationTime, aura.source, aura.spellID
 				end
 			end
@@ -768,6 +774,10 @@ local GetAura = function (self)
 	else
 		for k,aura in pairs(a) do
 			if (aura.name == self.auraname) and (aura.source == 'player' or self.unique) and (not(self.uniqueID) or self.uniqueID == aura.spellID) then
+					if aura.expirationTime == 0 and aura.duration == 0 then
+						aura.duration = 86400 -- Pretend it's actually gonna last a full day. Probably long enough
+						aura.expirationTime = GetTime() + aura.duration
+					end
 				return aura.name, aura.icon, aura.count, aura.duration, aura.expirationTime, aura.source, aura.spellID
 			end
 		end
@@ -783,6 +793,10 @@ ns.GetAura = function (self,auralist,auratype,unit)
 			for i = 1,#auralist do
 				local t = type(auralist[i])
 				if (t == 'string' and aura.name or t == 'number' and aura.spellID) == auralist[i] then
+					if aura.expirationTime == 0 and aura.duration == 0 then
+						aura.duration = 86400 -- Pretend it's actually gonna last a full day. Probably long enough
+						aura.expirationTime = GetTime() + aura.duration
+					end
 					return aura.name, aura.icon, aura.count, aura.duration, aura.expirationTime, aura.source, aura.spellID
 				end
 			end
@@ -791,6 +805,10 @@ ns.GetAura = function (self,auralist,auratype,unit)
 		for k,aura in pairs(a) do
 			local t = type(auralist)
 			if (t == 'string' and aura.name or t == 'number' and aura.spellID) == auralist then
+				if aura.expirationTime == 0 and aura.duration == 0 then
+					aura.duration = 86400 -- Pretend it's actually gonna last a full day. Probably long enough
+					aura.expirationTime = GetTime() + aura.duration
+				end
 				return aura.name, aura.icon, aura.count, aura.duration, aura.expirationTime, aura.source, aura.spellID
 			end
 		end
@@ -802,8 +820,8 @@ end
 --Indicators represent a point or range of time. There are different types. The type determines the color and position.
 local typeparent = {}
 
-local SetStacks = function (self,count)
-	if count>1 then
+local SpellFrame_SetStacks = function (self,count)
+	if type(count) == "number" then
 		self.stacks:SetFormattedText('%d',count)
 	elseif self.glyphstacks then
 		if self.glyphstacks[guid] and (self.glyphstacks[guid] > 0) then
@@ -837,85 +855,111 @@ local SpellFrame_FindItemInfo = function (self,slotID)
 	end
 end
 
-local SpellFrame_AddIndicator = function (self, typeid, layoutid, time, usetexture)
+local SpellFrame_AddIndicator = function (self, typeid, layoutid, time, usetexture, top, bottom)
 	local indicator
 	local parent = typeparent[typeid]
-	local ndtex, ndcol
-	if usetexture and self.bartexture then ndtex = self.bartexture end
-	if typeid and customColors[typeid] then
-		if self.barcolorunique and typeid == 'debuff' then
-			ndcol = self.barcolorunique
-		elseif self.barcolor then
-			ndcol = self.barcolor
-		end			
-	end
 	
 	if not parent then
-		--print'creating indicator parent'
 		parent = {}
 		parent.unused = {}
 		typeparent[typeid] = parent
 		--if DEBUG and typeid=='tick'  then parent.numchildren=0 end--]]
 	end
+
 	if #parent.unused>0 then
 		indicator = tremove(parent.unused)
 		indicator:ClearAllPoints()
-		indicator.time = nil
-		indicator.start = nil
-		indicator.stop = nil
-		indicator.happened = nil
-		--if DEBUG and typeid=='tick'  then debug('reusing indicator',indicator.frameindex) end--]]
+		indicator.start 		= nil
+		indicator.stop 			= nil
+		indicator.happened 	= nil
+		-- if DEBUG and typeid=='tick'  then debug('reusing indicator',indicator.frameindex) end--]]
 	else
 		indicator = mainframe:CreateTexture(nil, 'ARTWORK', nil, draworder[typeid])
 		indicator.parent = parent
-		--if DEBUG and typeid=='tick' then parent.numchildren=parent.numchildren+1 indicator.frameindex=parent.numchildren debug('adding indicator',indicator.frameindex) end--]]
+		-- if DEBUG and typeid=='tick' then parent.numchildren=parent.numchildren+1 indicator.frameindex=parent.numchildren debug('adding indicator',indicator.frameindex) end--]]
 	end
+
+	indicator:Hide()
+	indicator:SetWidth(vars.onepixelwide)
+
+	indicator.typeid 			= typeid
+	indicator.layoutid 		= layoutid
+	indicator.time 				= time
+	indicator.usetexture 	= usetexture
+	indicator.top 				= top
+	indicator.bottom 			= bottom
+
+	self:StyleIndicator(indicator)
+
+	tinsert(self.indicators, indicator)
+	debug("SpellFrame_AddIndicator", indicator, self.indicators[#self.indicators])
+	return indicator
+end
+
+local SpellFrame_StyleIndicator = function(self, indicator)
+	local parent = typeparent[indicator.typeid]
+	local ndtex, ndcol
+
+	if self.bartexture and (indicator.usetexture or not exemptColors[indicator.typeid]) then
+		ndtex = self.bartexture
+	end
+
+	if indicator.typeid and customColors[indicator.typeid] then
+		if self.barcolorunique and indicator.typeid == 'debuff' then
+			ndcol = self.barcolorunique
+		elseif self.barcolor then
+			ndcol = self.barcolor
+		end			
+	end
+
 	-- Layout
 	local layouts = ns.layouts
-	local layout = layouts[layoutid] or layouts.default
-	local color = ndcol or ns.colors[typeid] or ns.colors.default
-	if layoutid == 'frameline' then
-		color = typeid == 'sent' and ns.colors.castLine or ns.colors[typeid]
-		indicator:SetPoint('TOP',ns.mainframe)
-		indicator:SetPoint('BOTTOM',ns.mainframe)
-	else
-		indicator:SetPoint('TOP',self, 'TOP', 0, -layout.top*vars.barheight)
-		indicator:SetPoint('BOTTOM',self, 'TOP', 0, -layout.bottom*vars.barheight)
+	local layout = layouts[indicator.layoutid] or layouts.default
+	local color = ndcol or ns.colors[indicator.typeid] or ns.colors.default
+
+	local topOffset, bottomOffset = -layout.top*vars.barheight, -layout.bottom*vars.barheight
+	local parentFrame = self
+
+	if layoutid == 'frameline' then -- frameline layout is fullheight of the mainframe
+	  color = indicator.typeid == 'sent' and ns.colors.castLine or ns.colors[indicator.typeid]
+		topOffset 		= 0
+		bottomOffset 	= 0
+		parentFrame 	= ns.mainframe
+	elseif indicator.top and indicator.bottom then -- custom top/bottom
+			 topOffset = -indicator.top		*vars.barheight
+		bottomOffset = -indicator.bottom*vars.barheight
 	end
+
+	indicator:SetPoint('TOP',    parentFrame, 'TOP', 0, topOffset)
+	indicator:SetPoint('BOTTOM', parentFrame, 'TOP', 0, bottomOffset)
 	
-	if usetexture then
+	if indicator.usetexture then
 		indicator:SetTexture(ndtex or vars.bartexture)
 		indicator:SetTexCoord(unpack(layout.texcoords))
 	else
 		indicator:SetColorTexture(1,1,1,1)
 	end
-	indicator:SetVertexColor(unpack(ndcol or color))
-	if ns.config.blendModes[typeid] and type(ns.config.blendModes[typeid]) == 'string' then
-		indicator:SetBlendMode(ns.config.blendModes[typeid])
+
+	indicator:SetVertexColor(unpack(color))
+
+	if ns.config.blendModes[indicator.typeid] and type(ns.config.blendModes[indicator.typeid]) == 'string' then
+		indicator:SetBlendMode(ns.config.blendModes[indicator.typeid])
 	end
 
-	indicator:Hide()
-	indicator:SetWidth(vars.onepixelwide)
-	indicator.time = time
-	indicator.typeid = typeid
-	indicator.layoutid = layoutid
-	if indicator then
-		tinsert(self.indicators, indicator)
-	end
-	return indicator
 end
 
-local SpellFrame_AddSegment = function (self, typeid, layoutid, start, stop, start2)
+local SpellFrame_AddSegment = function(self, typeid, layoutid, start, stop, start2, top, bottom)
 	if stop<start then return end
-	local indicator = self:AddIndicator(typeid, layoutid, start, vars.texturedbars)
+	local indicator = self:AddIndicator(typeid, layoutid, start, vars.texturedbars, top, bottom)
 	indicator.time = nil
 	indicator.start = start
 	indicator.stop = stop
-	--debug(start,stop)
+	-- debug("SpellFrame_AddSegment", indicator, indicator.start, indicator.stop, indicator.time)
 	return indicator
 end
 
 local SpellFrame_Remove = function (self,indicator)
+	-- debug("SpellFrame_Remove", indicator)
 	if type(indicator)=='number' then
 		local index, indicator = indicator, self.indicators[indicator]
 		indicator:Hide()
@@ -959,10 +1003,12 @@ local SpellFrame_OnUpdate = function (self,elapsed)
 			local p = (time-diff)*vars.scale
 			local remove = p<0 or (time<=now and indicator.typeid=='tick' and not indicator.happened)
 			if remove then
+				-- debug("OnUpdate - remove", indicator, indicator.time, indicator.start, indicator.stop)
 				indicator:Hide()
 				--if DEBUG and indicator.typeid=='tick' then debug('deleting',indicator.frameindex) end--]]
 				tinsert(indicator.parent.unused, tremove(self.indicators,k))
 			elseif p<=1 then
+			  -- debug("OnUpdate - p<=1", indicator, indicator.time, indicator.start, indicator.stop)
 				indicator:SetPoint('LEFT', self, 'LEFT', p*vars.barwidth, 0)
 				indicator:Show()
 			end
@@ -971,10 +1017,12 @@ local SpellFrame_OnUpdate = function (self,elapsed)
 			local p1 = (start-diff)*vars.scale
 			local p2 = (stop-diff)*vars.scale
 			if p2<0 then
+			 -- debug("OnUpdate - p2<0")
 				indicator:Hide()
 				--if DEBUG and indicator.typeid=='tick' then debug('deleting',indicator.frameindex) end--]]
 				tinsert(indicator.parent.unused, tremove(self.indicators,k))
 			elseif 1<p1 then
+				-- debug("OnUpdate - p1>1")
 				indicator:Hide()
 			else
 				indicator:Show()
@@ -1108,7 +1156,7 @@ local SpellFrame_PLAYER_TOTEM_UPDATE = function ( self, slot )
 				self:AddSegment('cooldown', 'cooldown', start, stop)
 			end
 		end
-		SetStacks(self,1)
+		self:SetStacks(1)
 	else
 		if self.aurasegment then
 			if math.abs(self.aurasegment.stop - now)>0.3 then
@@ -1119,7 +1167,7 @@ local SpellFrame_PLAYER_TOTEM_UPDATE = function ( self, slot )
 			end
 			self:RemoveTicksAfter(now)
 			self.aurasegment = nil
-			self.stacks:SetText()
+			self:SetStacks()
 		end
 	end
     self:UpdateTotem(addnew, source, now, start, expirationTime, duration, name)
@@ -1141,6 +1189,7 @@ local SpellFrame_UNIT_AURA = function (self, unitid)
 		return
 	end
 	
+	--[[
 	if self.aurasegment and expirationTime == 0 and duration == 0 then	-- Timeless aura, bar exists (Overkill)
 		for i = #self.indicators,1,-1 do
 			self:Remove(i)
@@ -1154,7 +1203,8 @@ local SpellFrame_UNIT_AURA = function (self, unitid)
 	if expirationTime == 0 then
 		return
 	end
-	
+	]]
+
 	if afflicted then
 		start = expirationTime-duration
 		if icon and not(self.cast or self.slotID or self.keepIcon) then self.icon:SetTexture(icon) end
@@ -1200,7 +1250,7 @@ local SpellFrame_UNIT_AURA = function (self, unitid)
 				self:AddSegment('cooldown', 'cooldown', start, stop)
 			end
 		end
-		SetStacks(self,count)
+		self:SetStacks(count)
 	else
 		if self.aurasegment then
 			if math.abs(self.aurasegment.stop - now)>0.3 then
@@ -1211,7 +1261,7 @@ local SpellFrame_UNIT_AURA = function (self, unitid)
 			end
 			self:RemoveTicksAfter(now)
 			self.aurasegment = nil
-			self.stacks:SetText()
+			self:SetStacks()
 		end
 	end
 	self:UpdateDoT(addnew, source, now, start, expirationTime, duration, name)
@@ -1236,7 +1286,7 @@ local mainframe_PLAYER_TARGET_CHANGED = function (self)
 				spellframe.targetdebuff = nil
 				spellframe.nexttick = nil
 				spellframe.recenttick = nil
-				spellframe.stacks:SetText()
+				spellframe:SetStacks()
 			end
 			
 			if spellframe.refreshable then
@@ -1306,7 +1356,7 @@ local mainframe_CLEU_OtherInterestingSpell = function (self, time, event, hideCa
 					if gr and (gr[3] == spellname) then
 						if gs[destguid] then
 							gs[destguid] = gs[destguid] - 1
-							bf[i].stacks:SetText(gs[destguid] > 0 and gs[destguid] or nil)
+							bf[i]:SetStacks(gs[destguid] > 0 and gs[destguid] or nil)
 						end
 						--debug("SUCCESS! "..gr[3].." has triggered "..frame[i].auraname)
 					end
@@ -1363,14 +1413,6 @@ local SpellFrame_COMBAT_LOG_EVENT_UNFILTERED = function (self, timestamp, event,
 		--debug('SPELL_CAST_SUCCESS',destguid)
 		self.castsuccess[destguid] = now
 
-		if self.glyphrefresh then
-			for i = 1,6 do
-				if ns.glyphs[i] == self.glyphrefresh[2] then
-					self.glyphstacks[destguid] = self.glyphrefresh[1]
-					SetStacks()
-				end
-			end
-		end
 	elseif tickevents[event] then
 				local isInvalid = not(self.dot) and (self.cast and self.cast[spellname] and not(self.cast[spellname].numhits))	-- filter out cast+channel bars
 		if isInvalid then return end
@@ -1470,7 +1512,7 @@ local SpellFrame_UNIT_AURA_refreshable = function (self, unitid)
 		else
 			addnew = true
 		end
-		SetStacks(self,count)
+		self:SetStacks(count)
 	else
 		if self.aurasegment then
 			if math.abs(self.aurasegment.stop - now)>0.3 then
@@ -1485,7 +1527,7 @@ local SpellFrame_UNIT_AURA_refreshable = function (self, unitid)
 			self.cantcast = nil
 			self.targetdebuff = nil
 			self.recenttick = nil
-			self.stacks:SetText()
+			self:SetStacks()
 		end
 	end
 	self:UpdateDoT(addnew, source, now, start, expirationTime, duration, name, refresh, guid)
@@ -1558,8 +1600,6 @@ local SpellFrame_UpdateDoT = function (self, addnew, source, now, start, expirat
 		
 		if isHasted and self.expectedTicks then		-- Using expectedTicks
 			self.dotMod = (expirationTime - start)/self.expectedTicks
-			local magearmor = UnitBuff(self.auraunit, "Mage Armor")
-			if self.dot and magearmor and self.dotMod <= 1.5 then self.dotMod = self.dotMod * 2 end		-- Adjust for mage armor rank 5+ 50% duration reduction, use number comparison to make sure we're not changing something that shouldn't be.
 		elseif isHasted then
 			local bct = ns.config.hastedSpellID[2]
 			local hct = select(7, GetSpellInfo(ns.config.hastedSpellID[1]))/1000
@@ -1602,7 +1642,7 @@ local SpellFrame_UpdateDoT = function (self, addnew, source, now, start, expirat
 				self.lasttick = self.stop
 				break
 			end
-			if now+vars.past<=nexttick then
+			if now+vars.past<=nexttick then 
 				-- The next tick is visible.
 				local tick = self:AddIndicator('tick', 'tick', nexttick)
 				if nexttick<=now then
@@ -1683,8 +1723,6 @@ local SpellFrame_UpdateTotem = function (self, addnew, source, now, start, expir
 		
 		if isHasted and self.expectedTicks then		-- Using expectedTicks
 			self.dotMod = (expirationTime - start)/self.expectedTicks
-			local magearmor = UnitBuff(self.auraunit, "Mage Armor")
-			if self.dot and magearmor and self.dotMod <= 1.5 then self.dotMod = self.dotMod * 2 end		-- Adjust for mage armor rank 5+ 50% duration reduction, use number comparison to make sure we're not changing something that shouldn't be.
 		elseif isHasted then
 			local bct = ns.config.hastedSpellID[2]
 			local hct = select(7, GetSpellInfo(ns.config.hastedSpellID[1]))/1000
@@ -1755,6 +1793,56 @@ local SpellFrame_PLAYER_REGEN_ENABLED = function (self)
 	end
 end
 
+local SpellFrame_SPELL_UPDATE_CHARGES = function(self)
+	if not self.rechargeTable then return end
+
+	local current, max, startTime, duration, unknown = GetSpellCharges(self.rechargeTable.spellID)
+	local displayMax = math.min(self.rechargeTable.maxDisplayCount or max, max)
+
+	self.rechargeIndicators = self.rechargeIndicators or {}
+
+	-- We want to show an indicator for each charge that ends when _that_ charge is available
+
+	-- Since current is the number of charges currently available, all of the charge indicators in this loop
+	-- are available and so should be removed
+	for charge=1, current do
+		local chargeIndicator = self.rechargeIndicators[charge]
+		if chargeIndicator then
+			--  debug("removing indicator", "charge", charge, "current", current, "displayMax", displayMax)
+			self.rechargeIndicators[charge] = nil
+		end
+	end
+
+	-- These all need to have indicators, or the indicators need to be updated to match new values
+	for charge=current+1, displayMax do
+		local chargeIndicator = self.rechargeIndicators[charge]
+
+		local chargeStart = startTime
+		local chargeStop  = startTime + duration*(charge-current)
+		-- debug("chargeStop", chargeStop)
+
+		if chargeIndicator then
+			-- debug("updating indicator", "charge", charge, "current", current, "displayMax", displayMax, "chargeStart", chargeStart, "chargeStop", chargeStop)
+			-- UpdateCharges event will set the start time of the higher-order charge to be chargeStop - duration
+			-- Thus, in order to preserve continuity in the past, we want to disallow updating the start time to a newer value
+			chargeIndicator.start = math.min(chargeStart, chargeIndicator.start)
+			chargeIndicator.stop  = chargeStop
+		else -- We need to make one
+			-- Want largest charge on bottom
+			local topPercent 		= (charge - 1) / displayMax
+			local bottomPercent =  charge			 / displayMax
+			self.rechargeIndicators[charge] = self:AddSegment('recharge', 'recharge', chargeStart, chargeStop, nil, topPercent, bottomPercent)
+			
+			--  debug("adding indicator", "charge", charge, "current", current, "displayMax", displayMax, "chargeStart", chargeStart, "chargeStop", chargeStop, "topPercent", topPercent, "bottomPercent", bottomPercent, "indicatorTime", self.rechargeIndicators[charge].time, "indicatorStart", self.rechargeIndicators[charge].start, "indicatorStop", self.rechargeIndicators[charge].stop)
+		end
+	end
+
+	-- Set the stacks on the icon to be the current number of charges
+	self:SetStacks(current)
+end
+
+local SpellFrame_UNIT_SPELL_HASTE = SpellFrame_SPELL_UPDATE_CHARGES
+
 local SpellFrame_SPELL_UPDATE_COOLDOWN = function (self)
 --	print(self.spellname,self.cooldownID,'SPELL_UPDATE_COOLDOWN')
 	if self.slotID and self.cooldownID and not(self.spellname) then	-- item is equipped but has none of the needed info, so rescan it.
@@ -1783,12 +1871,10 @@ local SpellFrame_SPELL_UPDATE_COOLDOWN = function (self)
 		ready = enabled==1 and start~=0 and duration and start+duration
 	end
 	--print(start, duration, enabled, ready)
-	if ready and duration>1.5 then
+	local _, gcdDuration = GetSpellCooldown(ns.config.gcdSpellID)
+	if ready and duration>gcdDuration then
 		-- The spell is on cooldown, but not just because of the GCD.
-		if self.cooldownID then
-			
-		end
-		if self.cooldown ~= ready then		-- The CD has changed since last check
+		if self.cooldown ~= ready then	-- The CD has changed since last check
 			if not(self.coolingdown) then	-- No CD bar exists.
 				self.coolingdown = self:AddSegment('cooldown', self.smallCooldown and 'smallCooldown' or 'cooldown', start, ready)
 			elseif self.coolingdown.stop and self.coolingdown.stop ~= ready then	-- cd exists but has changed
@@ -1821,7 +1907,7 @@ local SpellFrame_PLAYER_EQUIPMENT_CHANGED = function (self,slot,equipped)
 	
 	self.aurasegment = nil
 	self.nexttick = nil
-	self.stacks:SetText()
+	self:SetStacks()
 	
 	self.cooldown = nil
 	self.coolingdown = nil
@@ -1933,7 +2019,7 @@ local SpellFrame_UPDATE_MOUSEOVER_UNIT = function (self)
 		end
 		self.aurasegment = nil
 		self.nexttick = nil
-		self.stacks:SetText()
+		self:SetStacks()
 	end
 	
 	if self.refreshable then
@@ -1950,7 +2036,7 @@ local SpellFrame_UPDATE_MOUSEOVER_UNIT = function (self)
 					
 					local count = self.glyphstacks[guid]
 					if self.glyphstacks[guid] and ( count > 0) then
-						self.stacks:SetText(self.glyphstacks[UnitGUID(self.auraunit)])
+						self:SetStacks(self.glyphstacks[UnitGUID(self.auraunit)])
 					end
 				end
 			end
@@ -1981,10 +2067,11 @@ local SpellFrame_Activate = function (self)
 	if self.isActive then return end
 	--debug('registering events for', self.spellname)
 	for event in pairs(self.interestingEvent) do
+		-- debug("Registering Event", event)
 		self:RegisterEvent(event)
 	end
 	if self.interestingCLEU and self.spellname then
-        debug(self.spellname)
+    debug(self.spellname)
 		mainframe.framebyspell[self.spellname] = self
 	end
 
@@ -2041,79 +2128,27 @@ function ns:SetFrameDimensions()
 		ns.frames.nowIndicator:SetColorTexture(unpack(self.colors.nowLine))
 	end
 	
-	local shownframes = #ns.frames.shown > 0
-	if shownframes then
-		for i = 1,#ns.frames.shown do
-			local spellframe = ns.frames.shown[i]
-			if spellframe then
-				--spellframe:ClearAllPoints()
-				spellframe:SetHeight(vars.barheight)
-				spellframe:SetWidth(vars.barwidth)
-				
-				spellframe.icon:ClearAllPoints()
-				spellframe:SetPoint('RIGHT', mainframe, 'RIGHT')
-				if i == 1 then
-					spellframe:SetPoint('TOPLEFT', mainframe, 'TOPLEFT', sfi and 0 or barheight2, 0)
-				else
-					spellframe:SetPoint('TOPLEFT', ns.frames.shown[i-1], 'BOTTOMLEFT', 0, -vars.barspacing)
-				end
-				if not(sfi) then
-					spellframe.icon:SetPoint('TOPRIGHT',spellframe,'TOPLEFT')
-					spellframe.icon:SetWidth(barheight2)
-					spellframe.icon:SetHeight(modHeight)
-					spellframe.icon:SetTexCoord(left,right,top,bottom)
-				end
-				
-				local indicators = #spellframe.indicators > 0
-				if indicators then
-					for i=1,#spellframe.indicators do
-						local indicator = spellframe.indicators[i]
-						if indicator then
-							local ndtex, ndcol
-							local typeid = indicator.typeid
-							local layoutid = indicator.layoutid
-							local usetexture
-							
-							if not(exemptColors[typeid]) and self.bartexture then ndtex = self.bartexture end
-							if typeid and customColors[typeid] then
-								usetexture = true
-								if spellframe.barcolorunique and typeid == 'debuff' then
-									ndcol = spellframe.barcolorunique
-								elseif spellframe.barcolor then
-									ndcol = spellframe.barcolor
-								end
-							elseif typeid == 'cooldown' then
-								usetexture = true
-							end
-							usetexture = usetexture and vars.texturedbars
-							
-							-- Layout
-							local layouts = ns.layouts
-							local layout = layouts[layoutid] or layouts.default
-							local color = ndcol or ns.colors[typeid] or ns.colors.default
-							
-							if layoutid == 'frameline' then
-								color = typeid == 'sent' and ns.colors.castLine or ns.colors[typeid]
-								indicator:SetPoint('TOP',ns.mainframe)
-								indicator:SetPoint('BOTTOM',ns.mainframe)
-							else
-								indicator:SetPoint('TOP',spellframe, 'TOP', 0, -layout.top*vars.barheight)
-								indicator:SetPoint('BOTTOM',spellframe, 'TOP', 0, -layout.bottom*vars.barheight)
-							end
-							
-							if usetexture then
-								indicator:SetTexture(ndtex or vars.bartexture)
-								indicator:SetTexCoord(unpack(layout.texcoords))
-							else
-								indicator:SetColorTexture(1,1,1,1)
-							end
-							indicator:SetVertexColor(unpack(ndcol or color))
-							--if typeid == 'casting' then print(unpack(ndcol or color)) end
-						end
-					end
-				end
-			
-			end
+	for i, spellframe in ipairs(ns.frames.shown) do
+		--spellframe:ClearAllPoints()
+		spellframe:SetHeight(vars.barheight)
+		spellframe:SetWidth(vars.barwidth)
+		
+		spellframe.icon:ClearAllPoints()
+		spellframe:SetPoint('RIGHT', mainframe, 'RIGHT')
+		if i == 1 then
+			spellframe:SetPoint('TOPLEFT', mainframe, 'TOPLEFT', sfi and 0 or barheight2, 0)
+		else
+			spellframe:SetPoint('TOPLEFT', ns.frames.shown[i-1], 'BOTTOMLEFT', 0, -vars.barspacing)
+		end
+		if not(sfi) then
+			spellframe.icon:SetPoint('TOPRIGHT',spellframe,'TOPLEFT')
+			spellframe.icon:SetWidth(barheight2)
+			spellframe.icon:SetHeight(modHeight)
+			spellframe.icon:SetTexCoord(left,right,top,bottom)
+		end
+		
+		for i, indicator in ipairs(spellframe.indicators) do
+			spellframe:StyleIndicator(indicator)
 		end
 	end
 end
@@ -2469,13 +2504,15 @@ function ns:newSpell(config) -- New class config to old class config
 	local n = {}
 	local c = config
  
-	n.spellID = (type(config.debuff)=="table" and (type(config.debuff[1])=="table" and config.debuff[1][1] or config.debuff[1]) or config.debuff) or (type(config.cast)=="table" and config.cast[1] or config.cast) or (type(config.cooldown)=="table" and config.cooldown[1] or config.cooldown) or (type(config.playerbuff)=="table" and (type(config.playerbuff[1])=="table" and config.playerbuff[1][1] or config.playerbuff[1]) or config.playerbuff) or EventHorizon.config.gcdSpellID
+	n.spellID = (type(config.debuff)=="table" and (type(config.debuff[1])=="table" and config.debuff[1][1] or config.debuff[1]) or config.debuff) or (type(config.cast)=="table" and config.cast[1] or config.cast) or (type(config.cooldown)=="table" and config.cooldown[1] or config.cooldown) or (config.recharge) or (type(config.playerbuff)=="table" and (type(config.playerbuff[1])=="table" and config.playerbuff[1][1] or config.playerbuff[1]) or config.playerbuff) or EventHorizon.config.gcdSpellID
 	
 	n.itemID = c.itemID
 	n.slotID = c.slotID
 	n.cast = c.cast
 	n.channeled = c.channel or c.channeled
 	n.cooldown = c.cooldown
+	n.recharge = c.recharge
+	n.rechargeMaxDisplayCount = c.rechargeMaxDisplayCount
 	n.refreshable = c.refreshable == false and false or true
 	
 	if type(c.debuff) == "table" then
@@ -2658,8 +2695,19 @@ local function SetSpellAttributes(spellframe,config)
 		end
 		spellframe.CooldownFunction = GetSpellCooldown
 		interestingEvent['SPELL_UPDATE_COOLDOWN'] = true
+	elseif config.recharge then
+		-- Handles tracking of spells with charges
+		local maxCharges = config.rechargeMaxDisplayCount
+		if not maxCharges or type(maxCharges) ~= "number" or maxCharges < 1 then
+			maxCharges = false
+		end
+		spellframe.rechargeTable = {
+			spellID = config.recharge,
+			maxDisplayCount = config.rechargeMaxDisplayCount
+		}
+		interestingEvent['SPELL_UPDATE_CHARGES'] = true
+		interestingEvent['UNIT_SPELL_HASTE']		 = true
 	end
-
     
 	if config.debuff then
 		spellframe.isType = 'debuffmine'
@@ -3669,6 +3717,7 @@ mainframe.PLAYER_ENTERING_WORLD = mainframe_PLAYER_ENTERING_WORLD
 SpellFrame.NotInteresting = SpellFrame_NotInteresting
 SpellFrame.AddSegment = SpellFrame_AddSegment
 SpellFrame.AddIndicator = SpellFrame_AddIndicator
+SpellFrame.StyleIndicator = SpellFrame_StyleIndicator
 SpellFrame.Remove = SpellFrame_Remove
 SpellFrame.RemoveTicksAfter = SpellFrame_RemoveTicksAfter
 SpellFrame.RemoveChannelTicksAfter = SpellFrame_RemoveChannelTicksAfter
@@ -3678,6 +3727,7 @@ SpellFrame.UpdateTotem = SpellFrame_UpdateTotem
 SpellFrame.Activate = SpellFrame_Activate
 SpellFrame.Deactivate = SpellFrame_Deactivate
 SpellFrame.FindItemInfo = SpellFrame_FindItemInfo
+SpellFrame.SetStacks = SpellFrame_SetStacks
 
 SpellFrame.UNIT_AURA = SpellFrame_UNIT_AURA
 SpellFrame.UNIT_AURA_refreshable = SpellFrame_UNIT_AURA_refreshable
@@ -3694,6 +3744,8 @@ SpellFrame.UNIT_SPELLCAST_DELAYED = Cast_Update
 SpellFrame.PLAYER_REGEN_ENABLED = SpellFrame_PLAYER_REGEN_ENABLED
 SpellFrame.SPELL_UPDATE_COOLDOWN = SpellFrame_SPELL_UPDATE_COOLDOWN
 SpellFrame.BAG_UPDATE_COOLDOWN = SpellFrame_SPELL_UPDATE_COOLDOWN
+SpellFrame.SPELL_UPDATE_CHARGES = SpellFrame_SPELL_UPDATE_CHARGES
+SpellFrame.UNIT_SPELL_HASTE = SpellFrame_UNIT_SPELL_HASTE
 SpellFrame.PLAYER_EQUIPMENT_CHANGED = SpellFrame_PLAYER_EQUIPMENT_CHANGED
 SpellFrame.UPDATE_MOUSEOVER_UNIT = SpellFrame_UPDATE_MOUSEOVER_UNIT
 SpellFrame.PLAYER_TOTEM_UPDATE = SpellFrame_PLAYER_TOTEM_UPDATE

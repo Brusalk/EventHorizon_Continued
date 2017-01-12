@@ -211,23 +211,21 @@ function EventHorizon:InitializeClass()
 	  cooldown = 194918,
 	})
 
-	-- Death and Decay & Sudden Doom
+	-- Death and Decay, Sudden Doom and Dark Succor
 	self:newSpell({
 	  requiredTree = 3,
 	  requiredLevel = 74,
 	  requiredTalentUnselected = 20,
 	  cooldown = 43265,
-	  playerbuff = 49530,
-	  --icon = 47541,
+	  playerbuff = {{101568}, {49530}},
 	})
 
-	-- Defile & Sudden Doom
+	-- Defile, Sudden Doom and Dark Succor
 	self:newSpell({
 	  requiredTree = 3,
 	  requiredTalent = 20,
 	  cooldown = 152280,
-	  playerbuff = 49530,
-	  --icon = 47541,
+	  playerbuff = {{101568}, {49530}},
 	})
 
 	-- Dark Transformation
