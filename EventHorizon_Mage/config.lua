@@ -52,7 +52,6 @@ function EventHorizon:InitializeClass()
         self:newSpell({
             cooldown = 205025,
             playerbuff = 205025,
-			requiredTalent = 2,
             requiredTree = 1
         })
         
@@ -125,14 +124,7 @@ function EventHorizon:InitializeClass()
             icon = 108853,
             requiredTree = 2,
         })
-		
-		-- Flame On
-        self:newSpell({
-            cooldown = 205029,
-            requiredTalent = 11,
-            requiredTree = 2,
-        })
-        
+		       
         -- Blast Wave
         self:newSpell({
             cooldown = 157981,
