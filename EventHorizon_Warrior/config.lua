@@ -131,13 +131,7 @@ function EventHorizon:InitializeClass()
        	cooldown = 23922,
    		requiredTree = 3,
      })
-   
-   	-- Focused Rage
-    -- self:newSpell({
-	--     	playerbuff = 204488,
-    --   	requiredTree = 3,
-    -- })
-   
+
    	-- Demoralizing Shout
    	self:newSpell({
        	cooldown = 1160,
@@ -147,7 +141,7 @@ function EventHorizon:InitializeClass()
    
    	-- Battle Cry
    	self:newSpell({
-       cooldown = 1719,
+        cooldown = 1719,
    		playerbuff = 1719,
    		requiredTree = 3,
     })

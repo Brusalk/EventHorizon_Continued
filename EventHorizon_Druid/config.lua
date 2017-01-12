@@ -11,7 +11,7 @@ function EventHorizon:InitializeClass()
 	  requiredTree = 1,
 	  stance = {0,4},
 	  requiredArtifactTalent = 202767,
-	  cooldown = 202767,
+	  recharge = 202767,
 	  cast = {202767, 202768, 202771},
 	})
 
@@ -104,7 +104,7 @@ function EventHorizon:InitializeClass()
 	  cooldown = 33917,
 	})
 
-	-- Trash 
+	-- Thrash 
 	self:newSpell({
 	  requiredTree = 1,
 	  stance = 1,
@@ -127,6 +127,7 @@ function EventHorizon:InitializeClass()
 	  requiredTree = 1,
 	  stance = 1,
 	  requiredTalent = 8,
+	  recharge = 22842,
 	  playerbuff = 22842,
 	})
 
@@ -175,24 +176,18 @@ function EventHorizon:InitializeClass()
 	  recast = true,
 	})
 
---	-- Barkskin - uncomment this section if you want it viewable on your Balance bars.
---	self:newSpell({
---	  requiredTree = 1,
---	  stance = {0,1,2,3,4},
---	  requiredLevel = 36,
---	  cooldown = 22812,
---	})
+	-- Barkskin
+	-- Delete the next line and the seventh line, after it, if you'd like to have Barskin displayed in Balance spec.
+--[[
+	self:newSpell({
+	  requiredTree = 1,
+	  stance = {0,1,2,3,4},
+	  requiredLevel = 36,
+	  cooldown = 22812,
+	})
+]]--
 
 	-- Feral bars
-
-	-- Moonfire in cat form with talent.
-	self:newSpell({
-	  requiredTree = 2,
-	  stance = 2,
-	  requiredTalent = 3,
-	  debuff = {164812,2},
-	  refreshable = true,
-	})
 
 	-- Moonfire in bear as it always has access to it.
 	self:newSpell({
@@ -210,7 +205,7 @@ function EventHorizon:InitializeClass()
 	  playerbuff = 52610,
 	})
 
-	-- Rake with tier two talent cooldowns at half height.
+	-- Rake with Ashamane's Frenzy CD at half height once you get it.
 	self:newSpell({
 	  requiredTree = 2,
 	  stance = 2,
@@ -218,7 +213,7 @@ function EventHorizon:InitializeClass()
 	  requiredTalentUnselected = 17,
 	  debuff = {1822,3},
 	  refreshable = true,
-	  cooldown = {108238, 102280, 102401},
+	  cooldown = 210722,
 	  smallCooldown = true,
 	})
 
@@ -230,11 +225,20 @@ function EventHorizon:InitializeClass()
 	  requiredTalent = 17,
 	  debuff = {1822,2},
 	  refreshable = true,
-	  cooldown = {108238, 102280, 102401},
+	  cooldown = 210722,
 	  smallCooldown = true,
 	})
 
-	-- Rip & Elune's Guidance if talent chosen.
+	-- Moonfire in cat form with talent.
+	self:newSpell({
+	  requiredTree = 2,
+	  stance = 2,
+	  requiredTalent = 3,
+	  debuff = {164812,2},
+	  refreshable = true,
+	})
+
+	-- Rip with tier two talent cooldowns at half height.
 	self:newSpell({
 	  requiredTree = 2,
 	  stance = 2,
@@ -242,7 +246,7 @@ function EventHorizon:InitializeClass()
 	  requiredTalentUnselected = 17,
 	  debuff = {1079,2},
 	  refreshable = true,
-	  cooldown = 202060,
+	  cooldown = {108238, 102280, 102401},
 	  smallCooldown = true,
 	})
 
@@ -253,7 +257,7 @@ function EventHorizon:InitializeClass()
 	  requiredTalent = 17,
 	  debuff = {1079,1.33},
 	  refreshable = true,
-	  cooldown = 202060,
+	  cooldown = {108238, 102280, 102401},
 	  smallCooldown = true,
 	})
 
@@ -266,7 +270,7 @@ function EventHorizon:InitializeClass()
 	  playerbuff = 5217,
 	})
 
-	-- Bloodtalons & Predatory Swiftness, triggered by Healing Touch.
+	-- Bloodtalons & Predatory Swiftness, triggered by Regrowth.
 	self:newSpell({
 	  requiredTree = 2,
 	  stance = 2,
@@ -274,15 +278,7 @@ function EventHorizon:InitializeClass()
 	  playerbuff = {{69369},{155672}},
 	})
 
-	-- Brutal Slash
-	self:newSpell({
-	  requiredTree = 2,
-	  stance = {2},
-	  requiredTalent = 19,
-	  cooldown = 202028,
-	})
-
-	-- Thrash with Ashamane's Frenzy CD at half height once you get it.
+	-- Thrash with Brutal Slash.
 	self:newSpell({
 	  requiredTree = 2,
 	  stance = 2,
@@ -290,8 +286,7 @@ function EventHorizon:InitializeClass()
 	  requiredTalentUnselected = 17,
 	  debuff = {106830,3},
 	  refreshable = true,
-	  cooldown = 210722,
-	  smallCooldown = true,
+	  recharge = 202028,
 	})
 
 	-- Thrash with faster ticks because of Jagged Wounds. The tick time will need to be adjusted if they change the talent, again.
@@ -301,11 +296,18 @@ function EventHorizon:InitializeClass()
 	  requiredTalent = 17,
 	  debuff = {106830,2},
 	  refreshable = true,
-	  cooldown = 210722,
-	  smallCooldown = true,
+	  recharge = 202028,
 	})
 
-	-- Beserk
+	-- Elune's Guidance
+	self:newSpell({
+	  requiredTree = 2,
+	  stance = 2,
+	  requiredTalent = 18,
+	  cooldown = 202060,
+	})
+
+	-- Berserk
 	self:newSpell({
 	  requiredTree = 2,
 	  stance = 2,
@@ -321,12 +323,13 @@ function EventHorizon:InitializeClass()
 	  stance = 2,
 	  requiredTalent = 14,
 	  cooldown = 102543,
-	  playerbuff = 102543,
+	  playerbuff = 106951,
 	})
 
 	-- Omen of Clarity / Moment of Clarity
-	-- Remove the "--[[" from the next line and "]]--" from the sixth line after it if you'd like OoC/MoC tracking.
---[[	self:newSpell({
+	-- Delete the next line and the seventh line, after it, if you'd like OoC/MoC tracking.
+--[[
+	self:newSpell({
 	  requiredTree = 2,
 	  stance = 2,
 	  requiredLevel = 38,
@@ -409,6 +412,7 @@ function EventHorizon:InitializeClass()
 	  requiredTree = 2,
 	  stance = 1,
 	  requiredTalent = 8,
+	  recharge = 22842,
 	  playerbuff = 22842,
 	})
 
@@ -440,23 +444,13 @@ function EventHorizon:InitializeClass()
 
 	-- Guardian bars
 
-	-- Moonfire with tier two talent cooldowns at half height.
-	self:newSpell({
-	  requiredTree = 3,
-	  stance = {0,1,3,4,5,6},
-	  requiredLevel = 10,
-	  debuff = {164812,2},
-	  refreshable = true,
-	  cooldown = {102280, 102401},
-	  smallCooldown = true,
-	})
-
 	-- Mangle
 	self:newSpell({
 	  requiredTree = 3,
 	  stance = 1,
 	  requiredLevel = 10,
 	  cooldown = 33917,
+	  playerbuff = {{93622}, {213708}},
 	})
 
 	-- Thrash
@@ -477,12 +471,23 @@ function EventHorizon:InitializeClass()
 	  playerbuff = 158792,
 	})
 
+	-- Moonfire with tier two talent cooldowns at half height.
+	self:newSpell({
+	  requiredTree = 3,
+	  stance = {0,1,3,4,5,6},
+	  requiredLevel = 10,
+	  debuff = {164812,2},
+	  refreshable = true,
+	  cooldown = {102280, 102401},
+	  smallCooldown = true,
+	})
+
 	-- Earthwarden
 	self:newSpell({
 	  requiredTree = 3,
 	  stance = 1,
 	  requiredTalent = 16,
-	  cooldown = 203975,
+	  playerbuff = 203975,
 	})
 
 	-- Three separate lines for this bar so the starting icon reminds you which CD it is tracking, as soon as you use a mitigation ability it will update.
@@ -519,12 +524,12 @@ function EventHorizon:InitializeClass()
 	  smallCooldown = true,
 	})
 
-	-- Frenzied Regen
+	-- Frenzied Regeneration
 	self:newSpell({
 	  requiredTree = 3,
 	  stance = 1,
 	  requiresLevel = 50,
-	  cooldown = 22842,
+	  recharge = 22842,
 	  playerbuff = 22842,
 	})
 
@@ -639,7 +644,7 @@ function EventHorizon:InitializeClass()
 	self:newSpell({
 	  requiredTree = 3,
 	  stance = {0,1,2,3,4},
-	  cooldown = 61336,
+	  recharge = 61336,
 	  playerbuff = 61336,
 	})
 
@@ -653,7 +658,7 @@ function EventHorizon:InitializeClass()
 	})
 
 	-- Restoration bars
-	--Note that there are two entries for the same spell for many of these bars, this is to have them show up in the correct stances with or without Balance Affinity taken.
+	--Note that there are two, or more, entries for the same spell for many of these bars, this is to have them show up in the correct stances with or without Balance Affinity taken.
 	--I'm sure there will be a few players out there who prefer to be a treant, all this effort was for you.
 
 	-- Lifebloom + Wild Growth CD
@@ -736,6 +741,7 @@ function EventHorizon:InitializeClass()
 	self:newSpell({
 	  requiredTree = 4,
 	  stance = {0,4},
+	  requiredTalent = 2,
 	  requiredTalentUnselected = 7,
 	  requiredLevel = 10,
 	  playerbuff = {8936,2},
@@ -750,11 +756,56 @@ function EventHorizon:InitializeClass()
 	-- Regrowth + Swiftmend
 	self:newSpell({
 	  requiredTree = 4,
-	  stance = {0,5},
-	  requiredTalent = 7,
+	  stance = {0,4},
+	  requiredTalent = 3,
+	  requiredTalentUnselected = 7,
+	  requiredLevel = 10,
 	  playerbuff = {8936,2},
 	  cooldown = 18562,
 	  smallCooldown = true,
+	  auraunit = usemouseover and 'mouseover' or 'target',
+	  cast = 8936,
+	  refreshable = true,
+	  recast = true,
+	})
+
+	-- Regrowth + Swiftmend
+	self:newSpell({
+	  requiredTree = 4,
+	  stance = {0,4},
+	  requiredTalent = 1,
+	  requiredTalentUnselected = 7,
+	  requiredLevel = 10,
+	  playerbuff = {8936,2},
+	  recharge = 18562,
+	  auraunit = usemouseover and 'mouseover' or 'target',
+	  cast = 8936,
+	  refreshable = true,
+	  recast = true,
+	})
+
+	-- Regrowth + Swiftmend
+	self:newSpell({
+	  requiredTree = 4,
+	  stance = {0,5},
+	  requiredTalent = 7,
+	  requiredTalentUnselected = 1,
+	  playerbuff = {8936,2},
+	  cooldown = 18562,
+	  smallCooldown = true,
+	  auraunit = usemouseover and 'mouseover' or 'target',
+	  cast = 8936,
+	  refreshable = true,
+	  recast = true,
+	})
+
+	-- Regrowth + Swiftmend
+	self:newSpell({
+	  requiredTree = 4,
+	  stance = {0,5},
+	  requiredTalent = {1,7},
+	  playerbuff = {8936,2},
+	  recharge = 18562,
 	  auraunit = usemouseover and 'mouseover' or 'target',
 	  cast = 8936,
 	  refreshable = true,
@@ -940,6 +991,7 @@ function EventHorizon:InitializeClass()
 	  requiredTree = 4,
 	  stance = 1,
 	  requiredTalent = 9,
+	  recharge = 22842,
 	  playerbuff = 22842,
 	})
 

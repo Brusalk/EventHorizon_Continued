@@ -42,7 +42,7 @@ function EventHorizon:InitializeClass()
         cast = 117014,
         cooldown = 117014,
         playerbuff = 117014,
-        requiredTalent = 10,
+        requiredTalent = 15,
         requiredTree = 1  
     })
        
@@ -51,7 +51,7 @@ function EventHorizon:InitializeClass()
         cast = 210714,
         cooldown = 210714,
         playerbuff = 210714,
-        requiredTalent = 20,
+        requiredTalent = 21,
         requiredTree = 1  
     })
    
@@ -72,7 +72,7 @@ function EventHorizon:InitializeClass()
     -- Liquid Magma, currently unable to track totem uptime
     self:newSpell({
         cooldown = 192222,
-        requiredTalent = 21,
+        requiredTalent = 16,
         requiredTree = 1
     })
  

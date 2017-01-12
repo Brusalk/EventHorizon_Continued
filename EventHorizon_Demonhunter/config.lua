@@ -22,7 +22,7 @@ function EventHorizon:InitializeClass()
 	self:newSpell({
 	  requiredTree = 1,
 	  requiredTalent = 7,
-	  cooldown = 213241,
+	  cooldown = 232893,
 	})
 
 	-- Vengeful Retreat
@@ -189,12 +189,11 @@ function EventHorizon:InitializeClass()
 	  cooldown = 212084,
 	})
 
-	-- Nether Bond
+	-- Demonic Infusion
 	self:newSpell({
 	  requiredTree = 2,
 	  requiredTalent = 20,
-	  playerbuff = 207810,
-	  cooldown = 207810,
+	  cooldown = 236189,
 	})
 
 	-- Empower Wards
