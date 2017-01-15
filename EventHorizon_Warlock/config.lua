@@ -151,6 +151,7 @@ function EventHorizon:InitializeClass()
         debuff = {80240, 0},
         cooldown = 80240,
         requiredTree = 3,
+    })
 
     -- Dimensional Rift
     self:newSpell({
