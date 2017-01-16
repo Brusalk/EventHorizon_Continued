@@ -898,30 +898,22 @@ end
 
 local SpellFrame_StyleIndicator = function(self, indicator)
 	local parent = typeparent[indicator.typeid]
-	local ndtex, ndcol
+	local custom_bar_texture
 
 	if self.bartexture and (indicator.usetexture or not exemptColors[indicator.typeid]) then
-		ndtex = self.bartexture
-	end
-
-	if indicator.typeid and customColors[indicator.typeid] then
-		if self.barcolorunique and indicator.typeid == 'debuff' then
-			ndcol = self.barcolorunique
-		elseif self.barcolor then
-			ndcol = self.barcolor
-		end			
+		custom_bar_texture = self.bartexture
 	end
 
 	-- Layout
 	local layouts = ns.layouts
 	local layout = layouts[indicator.layoutid] or layouts.default
-	local color = ndcol or ns.colors[indicator.typeid] or ns.colors.default
+	local color = ns:getColor(self, indicator.typeid) or ns.colors.default
 
 	local topOffset, bottomOffset = -layout.top*vars.barheight, -layout.bottom*vars.barheight
 	local parentFrame = self
 
 	if layoutid == 'frameline' then -- frameline layout is fullheight of the mainframe
-	  color = indicator.typeid == 'sent' and ns.colors.castLine or ns.colors[indicator.typeid]
+		color = indicator.typeid == 'sent' and ns:getColor(self, 'castLine') or ns:getColor(self, indicator.typeid)
 		topOffset 		= 0
 		bottomOffset 	= 0
 		parentFrame 	= ns.mainframe
@@ -934,7 +926,7 @@ local SpellFrame_StyleIndicator = function(self, indicator)
 	indicator:SetPoint('BOTTOM', parentFrame, 'TOP', 0, bottomOffset)
 	
 	if indicator.usetexture then
-		indicator:SetTexture(ndtex or vars.bartexture)
+		indicator:SetTexture(custom_bar_texture or vars.bartexture)
 		indicator:SetTexCoord(unpack(layout.texcoords))
 	else
 		indicator:SetColorTexture(1,1,1,1)
@@ -2587,6 +2579,9 @@ function ns:newSpell(config) -- New class config to old class config
 	n.auraunit = c.auraunit
 	
 	n.totem = c.totem
+
+	n.bartexture = c.bartexture
+	n.barcolors = c.barcolors
     
 	--	print("Debuff is type", type(config.debuff), "and has 1st value of", select(1,config.debuff))
 	debug("Adding", n.spellID, n.debuff, n.cast, n.dot, n.cooldown)
@@ -2597,11 +2592,47 @@ end
 
 --Set spellframe attributes separately from bar creation. Helps keep things tidy and all, y'know?
 local function SetSpellAttributes(spellframe,config)
+	local slotname, spellname, tex, _
 	local interestingEvent = {}
 	local interestingCLEU = {}
-	local config = config
 	local otherids = ns.otherIDs
-	local spellname = spellframe.spellname
+
+	if config.spellID then
+		spellname, _, tex = GetSpellInfo(config.spellID)
+	elseif config.itemID then
+		spellname,_,_,_,_,_,_,_,_,tex,_ = GetItemInfo(config.itemID)
+	elseif config.slotID then
+		slotname = GetSlotName(config.slotID)
+		spellframe.slotID = config.slotID
+		spellframe.slotName = slotname
+		local itemID = GetInventoryItemID('player', config.slotID)
+		if itemID then
+			spellname,_,_,_,_,_,_,_,_,tex,_ = GetItemInfo(itemID)
+		else
+			spellname = slotName
+			tex = nil
+		end
+	end
+	--debug('creating frame for ',spellname)
+	spellframe.spellname = spellname
+
+	-- Create and set the spell icon.
+	if config.icon then
+		local t = type(config.icon)
+		if t == 'number' then
+			if config.spellID then
+				_,_,tex = GetSpellInfo(config.icon)
+			elseif config.itemID then
+				tex = select(10,GetItemInfo(config.icon))
+			end
+		elseif t == 'string' then
+			tex = config.icon
+		end
+		config.keepIcon = true
+	end
+
+	spellframe.iconTexture = tex
+
 	interestingEvent['UNIT_SPELLCAST_SENT'] = true
 	
 	if config.itemID or config.slotID then
@@ -2793,14 +2824,14 @@ local function SetSpellAttributes(spellframe,config)
 		end
         
 	elseif config.totem then
-        spellframe.totem = config.totem
-        spellframe.isType = 'playerbuff'
-        spellframe.auraunit = config.auraunit or 'player'
-        spellframe.AuraFunction = 'GetTotemInfo'
-        vars.buff[spellframe.auraunit] = {}
-        spellframe.alwaysrefresh = true
-        spellframe.auraname = GetSpellInfo(config.totem)
-    end
+		spellframe.totem = config.totem
+		spellframe.isType = 'playerbuff'
+		spellframe.auraunit = config.auraunit or 'player'
+		spellframe.AuraFunction = 'GetTotemInfo'
+		vars.buff[spellframe.auraunit] = {}
+		spellframe.alwaysrefresh = true
+		spellframe.auraname = GetSpellInfo(config.totem)
+	end
 
 	
 	if config.cleu or config.event then -- Register custom CLEU events.
@@ -2834,8 +2865,7 @@ local function SetSpellAttributes(spellframe,config)
 	spellframe.notstance = config.notstance
 	spellframe.internalcooldown = config.internalcooldown
 	spellframe.bartexture = config.bartexture
-	spellframe.barcolor = config.barcolor
-	spellframe.barcolorunique = config.barcolorunique
+	spellframe.barcolors = config.barcolors or {}
 	spellframe.unique = config.unique
 	spellframe.uniqueID = config.uniqueID
 	spellframe.keepIcon = config.keepIcon
@@ -2845,59 +2875,28 @@ local function SetSpellAttributes(spellframe,config)
 	return interestingEvent
 end
 
+function ns:getColor(config, typeid)
+	debug("getColor", config, typeid, config.barcolors[typeid] and typeid or "default color")
+	return config.barcolors[typeid] or self.colors[typeid]
+end
 
 function ns:CreateSpellBar(config)
-	local spellid = config.spellID
-	local invid = config.itemID
-	local csid = config.slotID
 	local slotname, spellname, tex, _
 	
 	local spellframe = CreateFrame('Frame', nil, mainframe)
 	mainframe.numframes = mainframe.numframes+1
-	
-	if spellid then
-		spellname, _, tex = GetSpellInfo(spellid)
-	elseif invid then
-		spellname,_,_,_,_,_,_,_,_,tex,_ = GetItemInfo(invid)
-	elseif csid then
-		slotname = GetSlotName(csid)
-		spellframe.slotID = csid
-		spellframe.slotName = slotname
-		local itemID = GetInventoryItemID('player',csid)
-		if itemID then
-			spellname,_,_,_,_,_,_,_,_,tex,_ = GetItemInfo(itemID)
-		else
-			spellname = slotName
-			tex = nil
-		end
-	end
-	local basename = slotname or spellname
-	--debug('creating frame for ',spellname)
-	spellframe.spellname = spellname
 
+	spellframe.interestingEvent = SetSpellAttributes(spellframe,config)
+	
 	-- Create the bar.
 	spellframe.indicators = {}
 	if ns.config.barbg then
 		spellframe:SetBackdrop{bgFile = vars.bartexture}
-		spellframe:SetBackdropColor(unpack(ns.colors.barbgcolor))
+		spellframe:SetBackdropColor(unpack(self:getColor(spellframe, "barbgcolor")))
 	end
 
-	-- Create and set the spell icon.
-	if config.icon then
-		local t = type(config.icon)
-		if t == 'number' then
-			if spellid then
-				_,_,tex = GetSpellInfo(config.icon)
-			elseif invid then
-				tex = select(10,GetItemInfo(config.icon))
-			end
-		elseif t == 'string' then
-			tex = config.icon
-		end
-		config.keepIcon = true
-	end
 	spellframe.icon = spellframe:CreateTexture(nil, 'BORDER')
-	spellframe.icon:SetTexture(tex)
+	spellframe.icon:SetTexture(spellframe.iconTexture)
 
 	spellframe.stacks = spellframe:CreateFontString(nil, 'OVERLAY')
 	if vars.stackFont then
@@ -2914,8 +2913,6 @@ function ns:CreateSpellBar(config)
 	for k,v in pairs(SpellFrame) do
 		if not spellframe[k] then spellframe[k] = v end
 	end
-	
-	spellframe.interestingEvent = SetSpellAttributes(spellframe,config)
 	
 	spellframe:SetScript('OnEvent', EventHandler)
 	spellframe:SetScript('OnUpdate', spellframe.OnUpdate)
