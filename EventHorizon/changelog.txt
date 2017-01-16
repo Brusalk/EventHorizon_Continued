@@ -1,5 +1,28 @@
 Changelog:
 
+v1.9.18
+  * Issue #17 -- Added support for per-bar configuration of colors and texture options
+  * * This allows you to set most colors on a bar-by-bar basis by adding a "barcolors" option to the config for a spellbar. This option accepts a table of color IDs to the color table (RGBA). 
+  * * Here is an example for Immolate (a DOT with a cast time):
+    -- Immolate
+    self:newSpell({
+        cast = 348,
+        debuff = {348, 3},
+        recast = true,
+        requiredTree = 3,
+        barcolors = {
+            casting    = { 0, 1, 0, 1 },
+            debuffmine = { 1, 0, 0, 1 }
+        }
+    })
+    
+  * * This spellbar will have a cast bar shown as a green bar. The debuff will display as red.
+  * * A full list of color typeIDs can be found in the main EventHorizon config.lua file under the colors section. Any color which is specific to a bar (IE not a global color such as gcdColor) can be configured on a bar-by-bar basis with this option.
+  * Issue #3 -- Added `recharge` option, which displays a segmented bar which shows all charges of an ability, and when each charge will be available. Also displays current number of charges on the icon.
+  * Issue #34 -- Fix low udration CDs being ignored incorrectly. Mainly for shadow priest
+  * Issue #2 -- Cope with buffs with unlimited duration. Buffs with unlimited duration are now treated as if they last about 24 hours. (For all intents and purposes infinite)
+  * Issue #36 -- Update LibArtifactData to v1.1.1
+
 v1.9.17
  * Updated Destro Class Config to fix faulty merge commit
 
