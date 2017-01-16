@@ -1,14 +1,13 @@
 ## Interface: 70100
 ## Title: EventHorizon
 ## Author: Brusalk
-## Version: 1.9.17
+## Version: 1.9.18
 ## Dependencies:
-## OptDeps: SharedMedia
+## OptDeps: SharedMedia, LibArtifactData-1.0
+## OptionalDepts: LibArtifactData-1.0
 ## SavedVariables: EventHorizonDBG
 ## SavedVariablesPerCharacter: EventHorizonDB
 
-lib\LibStub\LibStub.lua
-lib\CallbackHandler-1.0\CallbackHandler-1.0\CallbackHandler-1.0.lua
 lib\LibArtifactData-1.0\LibArtifactData-1.0.lua
 
 EventHorizon.lua
