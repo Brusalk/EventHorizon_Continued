@@ -1,24 +1,11 @@
 ## Interface: 70100
 ## Title: EventHorizon
 ## Author: Brusalk
-## Version: 1.9.18
-## Dependencies:
-## OptDeps: SharedMedia, LibArtifactData-1.0
-## OptionalDepts: LibArtifactData-1.0
-## SavedVariables: EventHorizonDBG
-## SavedVariablesPerCharacter: EventHorizonDB
+## Version: 2.0.0
+## OptionalDepts: SharedMedia, LibArtifactData-1.0
+## SavedVariables: EventHorizonGlobal
+## SavedVariablesPerCharacter: EventHorizonCharacter
 
 lib\LibArtifactData-1.0\LibArtifactData-1.0.lua
 
 EventHorizon.lua
-config.lua
-myconfig.lua
-trinkets.lua
-
-# Custom myconfigs not in existing folder
-# You can specify class configs in the below files, but due to the Curse Client deleting all folders before unzip
-# it'll delete any myconfig.lua files that exist.
-# Thus, if you create an EventHorizon_Configs folder along side EventHorizon's folders, you can stick specific configs there
-# and they'll be used over config/myconfigs.
-..\EventHorizon_Configs\core_my_config.lua
-
