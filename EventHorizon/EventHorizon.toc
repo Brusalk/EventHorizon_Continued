@@ -8,4 +8,11 @@
 
 lib\LibArtifactData-1.0\LibArtifactData-1.0.lua
 
+lib\init.lua
+
+lib\assert.lua
+lib\class.lua
+lib\iterators.lua
+lib\print.lua
+
 EventHorizon.lua
