@@ -1,5 +1,4 @@
 local _, ns = ...
-EH = ns
 
 --[[
     SpellBar
