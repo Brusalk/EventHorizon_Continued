@@ -3,6 +3,10 @@ local _, ns = ...
 local class_color = "EE99FF"
 local instance_color = "99FFEE"
 
+-- Holds all created classes.
+-- string => class
+ns.classes = setmetatable({}, {__mode="kv"}) -- Weak-table. Doesn't prevent garbage collection. 
+
 function ns.utils.NewClass(name)
   ns.utils:assert(name and type(name) == "string", "NewClass(name) must be given a name (string) for the class")
 
@@ -56,11 +60,13 @@ function ns.utils.NewClass(name)
     -- Call the init method if it exists
     if class.initialize then class.initialize(self, ...) end
 
-    -- Bookkeeping
+    -- Book-keeping
     instance_counter = instance_counter + 1
     table.insert(class.__instances, instance)
     return instance
   end
 
+  -- Book-keeping
+  ns.classes[name] = class
   return class
 end
