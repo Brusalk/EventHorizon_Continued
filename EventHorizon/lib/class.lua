@@ -12,7 +12,7 @@ function ns.utils.NewClass(name)
 
   -- List of all current instances of the class
   local instance_counter = 0
-  class.__instances = setmetatable({}, {__mode="k"}) -- Weak-table. Doesn't prevent garbage collection
+  class.__instances = setmetatable({}, {__mode="v"}) -- Weak-table. Doesn't prevent garbage collection
 
   function class_metatable:__tostring()
     return "EventHorizon::" .. name -- EventHorizon::SpellFrame
@@ -40,7 +40,6 @@ function ns.utils.NewClass(name)
       end
       if key:find("__") == 1 then return end -- These are private/class methods, so we shouldn't return anything
       if class[key] ~= nil then return class[key] end -- Instance method defined on class
-      if ns.utils[key] ~= nil then return ns.utils[key] end -- Fall back to ns.utils for utility common functions
     end
 
     function instance_metatable:__tostring()
