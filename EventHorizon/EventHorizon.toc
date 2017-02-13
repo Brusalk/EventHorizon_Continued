@@ -6,13 +6,17 @@
 ## SavedVariables: EventHorizonGlobal
 ## SavedVariablesPerCharacter: EventHorizonCharacter
 
+## X-Debug: true
+
 lib\LibArtifactData-1.0\LibArtifactData-1.0.lua
 
 lib\init.lua
-
-lib\assert.lua
 lib\class.lua
-lib\iterators.lua
-lib\print.lua
+
+# Classes
+classes\Object.lua
+classes\Behavior.lua
+classes\SpellBar.lua
+classes\SpellFrame.lua
 
 EventHorizon.lua
