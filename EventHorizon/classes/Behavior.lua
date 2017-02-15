@@ -9,5 +9,5 @@ ns.watch_leaked_globals()
 local Behavior = ns.NewClass("Behavior")
 
 function Behavior:initialize()
-
+    
 end

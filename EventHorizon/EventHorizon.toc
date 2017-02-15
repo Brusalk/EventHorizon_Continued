@@ -16,7 +16,6 @@ lib\class.lua
 # Classes
 classes\Object.lua
 classes\Behavior.lua
-classes\SpellBar.lua
-classes\SpellFrame.lua
+
 
 EventHorizon.lua

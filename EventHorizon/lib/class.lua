@@ -31,6 +31,36 @@ local function normalize_parent_class(parent_class)
   return parent_class
 end
 
+-- Metatable madness which proxies a function to allow the body of that function
+-- to call super(), which is the function on the parent class.
+-- MUST NOT BE CALLED AS A TAIL CALL -- If ever used as a tail call getfenv will be at the wrong level
+-- This is because a tail call doesn't add onto the call stack so as a tail call we actually want the
+-- environment of our function execution, rather than one up the call stack as one would normally expect
+local function wrap_super(class, instance, function_name)
+  local previous_fenv = getfenv(2)
+  local super_env = setmetatable({
+    super = function(...)
+      if type(class.parent[function_name]) == "function" then
+        local rets = {wrap_super(class.parent, instance, function_name)(instance, ...)} -- Continue the fun all the way up the super chain
+        return unpack(rets) -- Have to do this so we don't have a tail call, and we properly add to the stack
+      else
+        error("Attempted to call super() in " .. tostring(class) .. ":" .. function_name .. " when parent class " .. tostring(class.parent) .. " does not have that method", 2)
+      end
+    end
+  }, {
+    __index = previous_fenv,
+    __newindex = function(_, key, value)
+      previous_fenv[key] = value
+    end
+  })
+  -- We wrap the function execution inside a new function so that we aren't directly modifying the execution environment of
+  -- the function being called, and are instead relying on upvaluing past the inner function call into our temp function
+  -- which is _actually_ the function whose environment has the super function
+  -- Otherwise we run into terrible issues with super calls executing in the wrong context on the wrong instance when
+  -- multiple super calls are made on the same class
+  return setfenv(class[function_name], super_env)
+end
+
 local function create_instance_table(class, ...)
   local instance = {}
   local instance_metatable = {__metatable=false} -- Disallow overriding of the metatable of the instance
@@ -43,7 +73,15 @@ local function create_instance_table(class, ...)
       return
     end
     if key:find("__") == 1 then return end -- These are private/class methods, so we shouldn't return anything
-    if class[key] ~= nil then return class[key] end -- Instance method defined on class
+     -- Instance method defined on class
+    if class[key] ~= nil then 
+      if type(class[key])=="function" then
+        local super = wrap_super(class, instance, key) -- Give the method access to calling super
+        return super -- Have to do this so we don't have a tail call, and we properly add to the stack
+      else
+        return class[key]
+      end
+    end
   end
 
   function instance_metatable:__tostring()
@@ -58,20 +96,7 @@ local function create_instance_table(class, ...)
   instance.class = class
 
   -- Call the init method
-  -- Metatable madness to allow the use of super() within the init method
-  local prev_init_fenv = getfenv()
-  local init_env = setmetatable({
-    super = function(...)
-      class.parent.initialize(instance, ...)
-    end
-  }, {
-    __index = prev_init_fenv,
-    __newindex = function(table, key, value)
-      prev_init_fenv[key] = value
-    end
-  })
-  setfenv(class.initialize, init_env)
-  class.initialize(instance, ...)
+  wrap_super(class, instance, 'initialize')(instance, ...)
 
   -- Book-keeping
   class.__instance_counter = class.__instance_counter + 1
