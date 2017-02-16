@@ -2,20 +2,15 @@
 ## Title: EventHorizon
 ## Author: Brusalk
 ## Version: 2.0.0
-## OptionalDepts: SharedMedia, LibArtifactData-1.0
+## OptionalDeps: SharedMedia, LibArtifactData-1.0
 ## SavedVariables: EventHorizonGlobal
 ## SavedVariablesPerCharacter: EventHorizonCharacter
 
 ## X-Debug: true
 
-lib\LibArtifactData-1.0\LibArtifactData-1.0.lua
-
-lib\init.lua
-lib\class.lua
-
-# Classes
-classes\Object.lua
-classes\Behavior.lua
-
-
+# X-Includes
+lib/init.lua
+lib/class.lua
+classes/Behavior.lua
+classes/Object.lua
 EventHorizon.lua

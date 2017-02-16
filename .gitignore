@@ -46,6 +46,9 @@ luac.out
 !.gitattributes
 !LICENSE
 !README.md
+!generate_includes.rb
+!.vscode/
+!.vscode/tasks.json
 !EventHorizon*/
 !EventHorizon*/**
 
