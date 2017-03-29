@@ -11,6 +11,6 @@
 # X-Includes
 lib/init.lua
 lib/class.lua
-classes/Behavior.lua
 classes/Object.lua
+classes/Behavior.lua
 EventHorizon.lua

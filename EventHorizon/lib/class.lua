@@ -53,11 +53,6 @@ local function wrap_super(class, instance, function_name)
       previous_fenv[key] = value
     end
   })
-  -- We wrap the function execution inside a new function so that we aren't directly modifying the execution environment of
-  -- the function being called, and are instead relying on upvaluing past the inner function call into our temp function
-  -- which is _actually_ the function whose environment has the super function
-  -- Otherwise we run into terrible issues with super calls executing in the wrong context on the wrong instance when
-  -- multiple super calls are made on the same class
   return setfenv(class[function_name], super_env)
 end
 
@@ -73,7 +68,7 @@ local function create_instance_table(class, ...)
       return
     end
     if key:find("__") == 1 then return end -- These are private/class methods, so we shouldn't return anything
-     -- Instance method defined on class
+    -- Instance method defined on class
     if class[key] ~= nil then 
       if type(class[key])=="function" then
         local super = wrap_super(class, instance, key) -- Give the method access to calling super

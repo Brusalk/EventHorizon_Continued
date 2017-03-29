@@ -1,12 +1,11 @@
 # Generates the include.xml files for every folder in the project
 # And adds them to the main toc file
 
-require 'byebug'
-
 # List of files in specific load order
 CUSTOM_ORDERED_FILES = [
   ["lib", "init.lua"],
-  ["lib", "class.lua"]
+  ["lib", "class.lua"],
+  ["classes", "Object.lua"]
 ].map {|file_array| File.join(*file_array)}
 
 TOC_FILE = File.join("EventHorizon", "EventHorizon.toc")
