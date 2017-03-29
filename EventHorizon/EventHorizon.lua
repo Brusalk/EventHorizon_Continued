@@ -824,7 +824,7 @@ end
 local typeparent = {}
 
 local SpellFrame_SetStacks = function (self,count)
-  if type(count) == "number" then
+  if type(count) == "number" and (count > 0) then
     self.stacks:SetFormattedText('%d',count)
   elseif self.glyphstacks then
     if self.glyphstacks[guid] and (self.glyphstacks[guid] > 0) then

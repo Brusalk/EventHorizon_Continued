@@ -1,5 +1,11 @@
 Changelog:
 
+v1.9.19
+ * Issue #35 - Updated for Patch 7.2
+ * Added BM/Survival Class Configs (Thanks Cluey!!!)
+ * Many class-config updates, plus new styling (Huge thanks Cluey!!!)
+ * Fix for debuffs showing charge counts by mistake (Thanks Ikuria!)
+
 v1.9.18
   * Issue #17 -- Added support for per-bar configuration of colors and texture options
   * * This allows you to set most colors on a bar-by-bar basis by adding a "barcolors" option to the config for a spellbar. This option accepts a table of color IDs to the color table (RGBA). 
