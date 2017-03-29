@@ -1830,7 +1830,7 @@ local SpellFrame_SPELL_UPDATE_CHARGES = function(self)
 	end
 
 	-- Set the stacks on the icon to be the current number of charges
-	self:SetStacks(current)
+--	self:SetStacks(current)
 end
 
 local SpellFrame_UNIT_SPELL_HASTE = SpellFrame_SPELL_UPDATE_CHARGES
