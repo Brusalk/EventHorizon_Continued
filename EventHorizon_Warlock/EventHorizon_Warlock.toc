@@ -1,4 +1,4 @@
-## Interface: 70000
+## Interface: 70200
 ## Title: EventHorizon_|c909482c9Warlock|r
 ## Author: Brusalk, BackJauer
 ## LoadOnDemand: 1

@@ -1,0 +1,51 @@
+tag 13ba9bfc87408e7379bb027cb98a1d71d0fcdc44 1.2-beta
+Author:	Rainrider <rainrider.wow@gmail.com>
+Date:	Tue Mar 28 16:30:32 2017 +0200
+
+Compatible with both 7.1 and 7.2
+
+commit 98d22f3cc0eac2fa8e5f4d5532a7305555a24be2
+Author: Rainrider <rainrider.wow@gmail.com>
+Date:   Tue Mar 28 16:25:21 2017 +0200
+
+    Bump interface version
+
+commit 8d86551449e1ea1375fdc791d2ee4d37f0cc3d1d
+Author: Rainrider <rainrider.wow@gmail.com>
+Date:   Wed Mar 22 21:11:20 2017 +0100
+
+    Account for possible false values
+    
+    Failed at Lua basics :thumbsdown:
+
+commit f8cea1e1b13dc3f5db460f7e47c9c54a4bbb0816
+Author: Rainrider <rainrider.wow@gmail.com>
+Date:   Wed Mar 22 07:22:22 2017 +0100
+
+    Properly account for changed `C_ArtifactUI.GetPowerInfo`
+    
+    Add the current artifact tier
+
+commit 0a5024c8fd971c6009083e8b29b12a8fc5d47909
+Author: Rainrider <rainrider.wow@gmail.com>
+Date:   Sat Mar 18 15:32:14 2017 +0100
+
+    Some more 7.2 compat
+    
+    Dry coded
+
+commit 28ef3b8a06004295479a9409eb79e4265482d873
+Author: Rainrider <rainrider.wow@gmail.com>
+Date:   Wed Jan 25 02:43:14 2017 +0100
+
+    Add some compat for patch 7.2
+    
+    Closes https://github.com/Rainrider/LibArtifactData-1.0/issues/11
+    Thanks Gethe
+
+commit a606911ffe7ee285da52f4d5c78601eeb0b9dd39
+Author: Rainrider <rainrider.wow@gmail.com>
+Date:   Mon Dec 19 04:12:34 2016 +0100
+
+    Transition to github repo
+

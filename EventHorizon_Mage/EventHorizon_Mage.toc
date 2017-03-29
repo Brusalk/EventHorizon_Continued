@@ -1,4 +1,4 @@
-## Interface: 70000
+## Interface: 70200
 ## Title: EventHorizon_|c4069ccf0Mage|r
 ## Author: Brusalk, Binkenstein
 ## LoadOnDemand: 1

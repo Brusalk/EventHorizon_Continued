@@ -1,4 +1,4 @@
-## Interface: 70000
+## Interface: 70200
 ## Title: EventHorizon_|c99990000DeathKnight|r
 ## Author: Brusalk
 ## Dependencies: EventHorizon
