@@ -11,7 +11,7 @@ v1.9.18
         recast = true,
         requiredTree = 3,
         barcolors = {
-            casting    = { 0, 1, 0, 1 },
+            casting = { 0, 1, 0, 1 },
             debuffmine = { 1, 0, 0, 1 }
         }
     })

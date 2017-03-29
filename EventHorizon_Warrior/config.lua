@@ -1,76 +1,76 @@
 function EventHorizon:InitializeClass()
-	self.config.gcdSpellID = 100
+  self.config.gcdSpellID = 100
 
-	-- -- Fury
+  -- -- Fury
 
-	-- bloodthirst
-	self:newSpell({
+  -- bloodthirst
+  self:newSpell({
         cooldown = 23881,
         requiredTree = 2,
-	})
+  })
 
-	-- raging blow
-	self:newSpell({
+  -- raging blow
+  self:newSpell({
         cooldown = 85288,
         requiredTree = 2,
-	})
+  })
 
-	-- enrage
-	self:newSpell({
+  -- enrage
+  self:newSpell({
         playerbuff = 184362,
         requiredTree = 2,
-	}) 	
+  })
 
     -- battlecry
-	self:newSpell({
+  self:newSpell({
         cooldown = 1719,
         requiredTree = 2,
-	}) 
+  })
 
-	-- wrecking ball
-	self:newSpell({
+  -- wrecking ball
+  self:newSpell({
         playerbuff = 215570,
         requiredTree = 2,
-		requiredTalent = 7,
-	}) 
+    requiredTalent = 7,
+  })
 
-	-- frothing berserker
-	self:newSpell({
+  -- frothing berserker
+  self:newSpell({
         playerbuff = 215572,
         requiredTree = 2,
-		requiredTalent = 14,
-	}) 
-		
+    requiredTalent = 14,
+  })
+
     -- dragons roar
-	self:newSpell({
+  self:newSpell({
         cooldown = 118000,
         requiredTree = 2,
-		requiredTalent = 21,
-	}) 
+    requiredTalent = 21,
+  })
 
     -- bladestorm  fury
-	self:newSpell({
+  self:newSpell({
         cooldown = 46924,
         requiredTree = 2,
-		requiredTalent = 19,
-	}) 
+    requiredTalent = 19,
+  })
 
 
     -- -- Arms
 
-	-- Collosal Smash
-	self:newSpell({
-		debuff = 208086,
+  -- Collosal Smash
+  self:newSpell({
+    debuff = 208086,
         cooldown = 167105,
-		requiredTree = 1,
+    requiredTree = 1,
     })
 
-	-- Mortal Strike
-	self:newSpell({
+  -- Mortal Strike
+  self:newSpell({
         cooldown = 12294,
         requiredTree = 1,
     })
-        
+
     -- -- Rend
     self:newSpell({
         debuff = {772, 3},
@@ -78,72 +78,72 @@ function EventHorizon:InitializeClass()
         requiredTalent = 8,
     })
 
-	-- overpower
-	self:newSpell({
-		playerbuff = 60503,
+  -- overpower
+  self:newSpell({
+    playerbuff = 60503,
         requiredTree = 1,
-		requiredTalent = 2,
+    requiredTalent = 2,
     })
-	
-	-- Deadly Calm
-	self:newSpell({
+
+  -- Deadly Calm
+  self:newSpell({
         cooldown = 1719,
         playerbuff = 1719,
         requiredTree = 1,
     })
 
-	-- Avatar
-	self:newSpell({
+  -- Avatar
+  self:newSpell({
         cooldown = 107574,
-		playerbuff = 107574,
+    playerbuff = 107574,
         requiredTree = {1, 2},
-		requiredTalent = 9,
+    requiredTalent = 9,
     })
 
-	-- Cleave
-	self:newSpell({
+  -- Cleave
+  self:newSpell({
         cooldown = 845,
         requiredTree = 1,
     })
 
-	-- Bladestorm arms
-	self:newSpell({
+  -- Bladestorm arms
+  self:newSpell({
         cooldown = {227847, 152277},
         requiredTree = 1,
     })
 
     -- -- Protection
- 
-   	-- Ignore Pain
-   	self:newSpell({
- 		playerbuff = 190456,
-       	requiredTree = 3,
-     })
- 
-   	-- Shield Block
-   	self:newSpell({
-   		playerbuff = 132404,
-       	requiredTree = 3,
-     })
- 
-   	-- Shield Slam
-   	self:newSpell({
-       	cooldown = 23922,
-   		requiredTree = 3,
+
+     -- Ignore Pain
+     self:newSpell({
+     playerbuff = 190456,
+         requiredTree = 3,
      })
 
-   	-- Demoralizing Shout
-   	self:newSpell({
-       	cooldown = 1160,
-       	debuff = 1160, 
-   		requiredTree = 3,
+     -- Shield Block
+     self:newSpell({
+       playerbuff = 132404,
+         requiredTree = 3,
+     })
+
+     -- Shield Slam
+     self:newSpell({
+         cooldown = 23922,
+       requiredTree = 3,
+     })
+
+     -- Demoralizing Shout
+     self:newSpell({
+         cooldown = 1160,
+         debuff = 1160,
+       requiredTree = 3,
     })
-   
-   	-- Battle Cry
-   	self:newSpell({
+
+     -- Battle Cry
+     self:newSpell({
         cooldown = 1719,
-   		playerbuff = 1719,
-   		requiredTree = 3,
+       playerbuff = 1719,
+       requiredTree = 3,
     })
 
 
