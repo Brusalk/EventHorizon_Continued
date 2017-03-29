@@ -15,13 +15,13 @@ function EventHorizon:InitializeClass()
 	self:newSpell({
 	  requiredTree = 1,
 	  requiredLevel = 98,
-	  cooldown = 195072,
+	  recharge = 195072,
 	})
 
 	-- Felblade
 	self:newSpell({
 	  requiredTree = 1,
-	  requiredTalent = 7,
+	  requiredTalent = 2,
 	  cooldown = 232893,
 	})
 
@@ -37,7 +37,7 @@ function EventHorizon:InitializeClass()
 	  requiredTree = 1,
 	  requiredLevel = 99,
 	  debuff = 206478,
-	  cooldown = 185123,
+	  recharge = 185123,
 	})
 
 	-- Fel Eruption
@@ -59,7 +59,7 @@ function EventHorizon:InitializeClass()
 	self:newSpell({
 	  requiredTree = 1,
 	  requiredTalent = 20,
-	  cooldown = 211053,
+	  recharge = 211053,
 	})
 
 	-- Fury of the Illidari
@@ -113,12 +113,28 @@ function EventHorizon:InitializeClass()
 ]]--
 
 	-- Vengeance
+
+	-- Soul Fragments
+	self:newSpell({
+	  requiredTree = 2,
+	  playerbuff = 203981,
+	  recharge = 189110,
+	  barcolors = {
+		playerbuff	= {128/255, 025/255, 157/255, 0.7},
+		recharge	= {171/255, 191/255, 181/255, 0.5}
+	  },
+	})
+
 	-- Immolation Aura
 	self:newSpell({
 	  requiredTree = 2,
 	  requiredLevel = 100,
 	  playerbuff = 178740,
 	  cooldown = 178740,
+	  barcolors = {
+		playerbuff	= {205/255, 237/255, 069/255, 0.7},
+		cooldown	= {171/255, 191/255, 181/255, 0.5}
+	  },
 	})
 
 	-- Demon Spikes
@@ -126,7 +142,11 @@ function EventHorizon:InitializeClass()
 	  requiredTree = 2,
 	  requiredLevel = 100,
 	  playerbuff = 203720,
-	  cooldown = 203720,
+	  recharge = 203720,
+	  barcolors = {
+		playerbuff = {232/255, 202/255, 000/255, 0.7},
+		recharge = {171/255, 191/255, 181/255, 0.4}
+	  },
 	})
 
 	-- Felblade
@@ -156,6 +176,10 @@ function EventHorizon:InitializeClass()
 	  requiredTree = 2,
 	  debuff = 204596,
 	  cooldown = 204596,
+	  barcolors = {
+		playerbuff	= {070/255, 101/255, 009/255, 0.7},
+		cooldown	= {171/255, 191/255, 181/255, 0.5}
+	  },
 	})
 
 	-- Soul Barrier
@@ -171,6 +195,11 @@ function EventHorizon:InitializeClass()
 	  requiredTree = 2,
 	  requiredArtifactTalent = 207407,
 	  cooldown = 207407,
+	  debuff = 207407,
+	  barcolors = {
+		debuffmine	= {202/255, 161/255, 055/255, 0.9},
+		cooldown	= {202/255, 161/255, 055/255, 0.5}
+	  },
 	})
 
 	-- Sigil of Chains
@@ -199,17 +228,25 @@ function EventHorizon:InitializeClass()
 	-- Empower Wards
 	self:newSpell({
 	  requiredTree = 2,
-	  requiredLevel = 100,
+	  requiredLevel = 103,
 	  playerbuff = 218256,
 	  cooldown = 218256,
+	  barcolors = {
+		playerbuff	= {040/255, 050/255, 050/255, 0.7},
+		cooldown	= {171/255, 191/255, 181/255, 0.5}
+	  },
 	})
 
 	-- Fiery Brand
 	self:newSpell({
 	  requiredTree = 2,
 	  requiredLevel = 100,
-	  debuff = 204021,
+	  debuff = 207744,
 	  cooldown = 204021,
+	  barcolors = {
+		debuffmine	= {151/255, 252/255, 131/255, 0.7},
+		cooldown	= {171/255, 191/255, 181/255, 0.5}
+	  },
 	})
 
 	-- Metamorphosis
@@ -218,6 +255,10 @@ function EventHorizon:InitializeClass()
 	  requiredLevel = 98,
 	  playerbuff = 187827,
 	  cooldown = 187827,
+	  barcolors = {
+		playerbuff	= {040/255, 050/255, 050/255, 0.7},
+		cooldown	= {171/255, 191/255, 181/255, 0.5}
+	  },
 	})
 
 	end
