@@ -12,5 +12,5 @@
 lib/init.lua
 lib/class.lua
 classes/Object.lua
-classes/Behavior.lua
+
 EventHorizon.lua
