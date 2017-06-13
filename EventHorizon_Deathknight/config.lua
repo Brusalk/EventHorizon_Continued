@@ -185,6 +185,10 @@ function EventHorizon:InitializeClass()
 	requiredLevel = 57,
 	cooldown = 196770,
 	debuff = 196770,
+	barcolors = {
+	 cooldown	= {151/255, 222/255, 252/255, 0.6},
+	 debuffmine	= {151/255, 222/255, 252/255, 0.7}
+	 },
   })
 
   -- Pillar of Frost
@@ -194,6 +198,7 @@ function EventHorizon:InitializeClass()
 	cooldown = 51271,
 	playerbuff = 51271,
 	barcolors = {
+	 cooldown	= {171/255, 191/255, 181/255, 0.6},
 	 playerbuff	= {181/255, 252/255, 252/255, 0.6}
 	 },
   })
@@ -231,8 +236,12 @@ function EventHorizon:InitializeClass()
   self:newSpell({
 	requiredTree = 2,
 	requiredTalent = 8,
-	recharge = 207127,
+	cooldown = 207127,
 	playerbuff = 207127,
+	barcolors = {
+	 cooldown	= {070/255, 252/255, 252/255, 0.5},
+	 playerbuff	= {070/255, 252/255, 252/255, 0.7}
+	 },
   })
 
   -- Breath of Sindragosa
@@ -240,6 +249,12 @@ function EventHorizon:InitializeClass()
 	requiredTree = 2,
 	requiredTalent = 20,
 	cooldown = 152279,
+	playerbuff = 152279,
+	barcolors = {
+	 cooldown	= {171/255, 191/255, 181/255, 0.6},
+	 playerbuff	= {050/255, 090/255, 111/255, 0.7}
+	 },
+
   })
 
 --[[ Not included by default as it's a five minute CD, feedback has told us this is too long to track. Uncomment if wanted.
@@ -322,7 +337,7 @@ function EventHorizon:InitializeClass()
 	 },
   })
 
-  -- Death and Decay, Sudden Doom and Dark Succor
+  -- Death and Decay, Sudden Doom and Dark Succor. The icon changes but buff colour can't (yet I hope).
   self:newSpell({
 	requiredTree = 3,
 	requiredLevel = 74,
