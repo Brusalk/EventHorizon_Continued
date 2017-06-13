@@ -222,6 +222,10 @@ function EventHorizon:InitializeClass()
 	requiredTalent = 19,
 	cooldown = 207256,
 	playerbuff = 207256,
+	barcolors = {
+	 cooldown	= {171/255, 191/255, 181/255, 0.6},
+	 playerbuff	= {050/255, 090/255, 111/255, 0.7}
+	 },
   })
 
   -- Empower Rune Weapon
@@ -230,6 +234,10 @@ function EventHorizon:InitializeClass()
 	requiredLevel = 57,
 	requiredTalentUnselected = 8,
 	recharge = 47568,
+	barcolors = {
+	 cooldown	= {070/255, 252/255, 252/255, 0.5},
+	 playerbuff	= {070/255, 252/255, 252/255, 0.7}
+	 },
   })
 
   -- Hungering Rune Weapon
@@ -254,7 +262,6 @@ function EventHorizon:InitializeClass()
 	 cooldown	= {171/255, 191/255, 181/255, 0.6},
 	 playerbuff	= {050/255, 090/255, 111/255, 0.7}
 	 },
-
   })
 
 --[[ Not included by default as it's a five minute CD, feedback has told us this is too long to track. Uncomment if wanted.
