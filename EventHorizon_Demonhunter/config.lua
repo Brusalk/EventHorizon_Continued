@@ -59,7 +59,7 @@ function EventHorizon:InitializeClass()
   self:newSpell({
     requiredTree = 1,
     requiredTalent = 20,
-    recharge = 211053,
+    cooldown = 211053,
   })
 
   -- Fury of the Illidari
@@ -160,7 +160,7 @@ function EventHorizon:InitializeClass()
   self:newSpell({
     requiredTree = 2,
     requiredTalent = 18,
-    debuff = 224509,
+    debuff = 247456,
   })
 
   -- Fel Eruption
@@ -230,10 +230,10 @@ function EventHorizon:InitializeClass()
     requiredTree = 2,
     requiredLevel = 103,
     playerbuff = 218256,
-    cooldown = 218256,
+    recharge = 218256,
     barcolors = {
       playerbuff = {040/255, 050/255, 050/255, 0.7},
-      cooldown = {171/255, 191/255, 181/255, 0.5}
+      recharge = {171/255, 191/255, 181/255, 0.5}
     },
   })
 
