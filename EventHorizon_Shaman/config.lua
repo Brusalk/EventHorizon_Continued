@@ -46,6 +46,15 @@ function EventHorizon:InitializeClass()
 	  },
   })
 
+  -- Icefury
+  self:newSpell({
+	requiredTree = 1,
+	requiredTalent = 21,
+	cast = 210714,
+	cooldown = 210714,
+	playerbuff = 210714,
+  })
+
   -- Stormkeeper (Artifact) CD and Power of the Maelstrom buff, CD at half height for less ambiguity.
   self:newSpell({
 	requiredTree = 1,
@@ -58,15 +67,6 @@ function EventHorizon:InitializeClass()
 		cooldown	= {202/255, 161/255, 055/255, 0.7},
 		playerbuff	= {080/255, 141/255, 191/255, 0.6}
 	  },
-  })
-
-  -- Icefury
-  self:newSpell({
-	requiredTree = 1,
-	requiredTalent = 21,
-	cast = 210714,
-	cooldown = 210714,
-	playerbuff = 210714,
   })
 
   -- Liquid Magma Totem, currently unable to track totem uptime
@@ -154,6 +154,7 @@ function EventHorizon:InitializeClass()
   -- Flametongue
   self:newSpell({
 	requiredTree = 2,
+	requiredLevel = 12,
 	cooldown = 193796,
 	playerbuff = 194084,
 	  barcolors = {
@@ -165,6 +166,7 @@ function EventHorizon:InitializeClass()
   -- Frostbrand + Doomhammer CD at half height.
   self:newSpell({
 	requiredTree = 2,
+	requiredLevel = 38,
 	cooldown = 204945,
 	smallCooldown = true,
 	playerbuff = 196834,
@@ -196,6 +198,7 @@ function EventHorizon:InitializeClass()
   -- Stormstrike
   self:newSpell({
 	requiredTree = 2,
+	requiredLevel = 20,
 	cooldown = 17364,
 	playerbuff = 201846,
 	  barcolors = {
@@ -219,6 +222,7 @@ function EventHorizon:InitializeClass()
   -- Crash Lightning
   self:newSpell({
 	requiredTree = 2,
+	requiredLevel = 28,
 	cooldown = 187874,
 	playerbuff = 187878,
   })
@@ -230,9 +234,10 @@ function EventHorizon:InitializeClass()
 	cooldown = 197214,
   })
 
-  -- Fury of Air and Feral Beasts cooldown at half height.
+  -- Fury of Air and Feral Spirit cooldown at half height.
   self:newSpell({
 	requiredTree = 2,
+	requiredLevel = 36,
 	cooldown = 51533,
 	smallCooldown = true,
 	playerbuff = 197211,
