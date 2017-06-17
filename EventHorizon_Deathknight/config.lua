@@ -308,7 +308,7 @@ function EventHorizon:InitializeClass()
 	requiredTree = 3,
 	requiredLevel = 81,
 	requiredTalentUnselected = 3,
-	debuff = {{196782,6}, {191587,3}},
+	debuff = {191587,3},
 	recharge = 207317,
 	refreshable = true,
 	barcolors = {
@@ -322,7 +322,7 @@ function EventHorizon:InitializeClass()
 	requiredTree = 3,
 	requiredLevel = 81,
 	requiredTalent = 3,
-	debuff = {191587,3},
+	debuff = {191587,1.5},
 	recharge = 207317,
 	refreshable = true,
 	barcolors = {
@@ -344,27 +344,27 @@ function EventHorizon:InitializeClass()
 	 },
   })
 
-  -- Death and Decay, Sudden Doom and Dark Succor. The icon changes but buff colour can't (yet I hope).
+  -- Death and Decay cooldown at half height, Sudden Doom, Necrosis and Dark Succor buff procs. The icon changes but bar colour can't (yet?).
   self:newSpell({
 	requiredTree = 3,
 	requiredLevel = 74,
 	requiredTalentUnselected = 20,
 	cooldown = 43265,
 	smallCooldown = true,
-	playerbuff = {{216974}, {49530}, {191748}},
+	playerbuff = {{49530}, {216974}, {101568}},
 	barcolors = {
 	 cooldown	= {171/255, 191/255, 181/255, 0.6},
 	 playerbuff	= {080/255, 010/255, 151/255, 0.7}
 	 },
   })
 
-  -- Defile, Sudden Doom and Dark Succor
+  -- Defile cooldown at half height, Sudden Doom, Necrosis and Dark Succor buff procs. The icon changes but bar colour can't (yet?).
   self:newSpell({
 	requiredTree = 3,
 	requiredTalent = 20,
 	cooldown = 152280,
 	smallCooldown = true,
-	playerbuff = {{216974}, {49530}, {191748}},
+	playerbuff = {{49530}, {216974}, {101568}},
 	barcolors = {
 	 cooldown	= {171/255, 191/255, 181/255, 0.6},
 	 playerbuff	= {080/255, 010/255, 151/255, 0.7}
@@ -384,13 +384,16 @@ function EventHorizon:InitializeClass()
 	 },
   })
 
-  -- Apocalypse
+  -- Apocalypse (Artifact ability) cooldown at half height with Outbreak and Scourge of Worlds debuffs.
   self:newSpell({
 	requiredTree = 3,
 	requiredArtifactTalent = 220143,
 	cooldown = 220143,
+	smallCooldown = true,
+	debuff = {{196782}, {191747}},
 	barcolors = {
 	 cooldown	= {202/255, 161/255, 050/255, 0.7},
+	 debuffmine	= {222/255, 232/255, 090/255, 0.6}
 	 },
   })
 
