@@ -1,5 +1,16 @@
 Changelog:
 
+v1.9.20
+* Update for WoW 7.2.5
+* Updates to the following class configs for 7.2.5 class changes. (Huge thanks Cluey!)
+* * Death Knight
+* * Demon Hunter
+* * Druid
+* * Priest
+* * Rogue
+* * Shaman
+* No updates to classes not listed above. If you have an updated class config for 7.2.5 please send it my way so I can include it in the addon! :)
+
 v1.9.19
  * Issue #35 - Updated for Patch 7.2
  * Added BM/Survival Class Configs (Thanks Cluey!!!)

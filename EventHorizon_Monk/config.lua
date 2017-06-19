@@ -1,8 +1,8 @@
-local usemouseover = true	-- Make this false or nil (or just delete the line altogether) to make your healing bars not change when you mouse over something.
+local usemouseover = true  -- Make this false or nil (or just delete the line altogether) to make your healing bars not change when you mouse over something.
 
 function EventHorizon:InitializeClass()
   self.config.gcdSpellID = 100780 -- Legacy of the Emperor
-  self.config.hastedSpellID = {115178,10} -- Resuscitate
+  self.config.hastedSpellID = {115178, 10} -- Resuscitate
 
   -- [[ Windwalker ]] --   
   -- rising sun kick
@@ -29,7 +29,7 @@ function EventHorizon:InitializeClass()
   self:newSpell({
     cooldown = 115080,
     keepIcon = true,
-  })	
+  })
 
   -- Storm, Earth and Fire
   self:newSpell({

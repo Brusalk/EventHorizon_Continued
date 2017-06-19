@@ -1,7 +1,7 @@
 ## Interface: 70200
 ## Title: EventHorizon
 ## Author: Brusalk
-## Version: 1.9.19
+## Version: 1.9.20
 ## Dependencies:
 ## OptDeps: SharedMedia, LibArtifactData-1.0
 ## OptionalDepts: LibArtifactData-1.0
