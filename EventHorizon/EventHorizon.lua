@@ -89,7 +89,6 @@ ns.legionf = {
 
 local LegionStatusText = ""
 
-LegionStatusText = LegionStatusText .. "This is a early release of the Legion version of EventHorizon. As such, please don't be too surprised if there are bugs. "
 LegionStatusText = LegionStatusText .. "If you encounter a bug, please copy the whole error message including stack trace and tell me about it on EventHorizon's WowInterface page. \n\n"
 LegionStatusText = LegionStatusText .. "I don't plan on updating every individual class config for every spec. It takes me weeks to play every class and spec to a level I feel comfortable with enough to set the default config for, and I don't have time for that anymore. \n" 
 LegionStatusText = LegionStatusText .. "If you have a class config that you think is good enough for your spec or class, please post it to EventHorizon's WowInterface page so I can add it! \n\n  Thanks! ^.^ \n - Brusalk \n\n"
@@ -135,47 +134,18 @@ local LegionSpecIDMapping = {
   [581] = "Demon Hunter: Vengeance",
 }
 
-local LegionClassConfigStatus = {
-  [62] = "Mage: Arcane",
-  [63] = "Mage: Fire",
-  [65] = "Paladin: Holy",
-  [66] = "Paladin: Protection",
-  [70] = "Paladin: Retribution",
-  [71] = "Warrior: Arms",
-  [72] = "Warrior: Fury",
-  [73] = "Warrior: Protection",
-  [102] = "Druid: Balance",
-  [103] = "Druid: Feral",
-  [104] = "Druid: Guardian",
-  [105] = "Druid: Restoration",
-  [250] = "Death Knight: Blood",
-  [251] = "Death Knight: Frost",
-  [252] = "Death Knight: Unholy",
-  [253] = "Hunter: Beast Mastery",
-  [254] = "Hunter: Marksmanship",
-  [255] = "Hunter: Survival",
-  [256] = "Priest: Discipline",
-  [257] = "Priest: Holy",
-  [258] = "Priest: Shadow",
-  [259] = "Rogue: Assassination",
-  [260] = "Rogue: Outlaw",
-  [261] = "Rogue: Subtlety",
-  [262] = "Shaman: Elemental",
-  [263] = "Shaman: Enhancement",
-  [265] = "Warlock: Affliction",
-  [266] = "Warlock: Demonology",
-  [267] = "Warlock: Destruction",
-  [269] = "Monk: Windwalker",
-  [577] = "Demon Hunter: Havoc",
-  [581] = "Demon Hunter: Vengeance",
-
+local LegionClassesNotImplemented = {
+  [64] = true,
+  [268] = true,
+  [270] = true,
 }
+
 
 local BuildLegionClassConfigStatusText = function()
   local ret = "EventHorizon\nCurrent Class Status \n\n"
   for specID, classname in pairs(LegionSpecIDMapping) do
     local id, name, desc, icon, background, role, class = GetSpecializationInfoByID(specID)
-    if not LegionClassConfigStatus[specID] then 
+    if LegionClassesNotImplemented[specID] then 
       ret = ret .. name .. " | NYI \n"
     end
   end
@@ -632,7 +602,6 @@ local reloadEvents = {
   ['PLAYER_SPECIALIZATION_CHANGED'] = true,
   ['ACTIVE_TALENT_GROUP_CHANGED'] = true,
   ['PLAYER_ENTERING_WORLD'] = true,
-  
 }
 
 local tickevents = {
@@ -702,14 +671,14 @@ end
 
 -- Since Blizzard doesn't provide the ability to look up a slot name from a slotID...
 local GetSlotName = function (slot)
-  for k,v in pairs(equipSlots) do
+  for k, v in pairs(equipSlots) do
     if v == slot then return k end
   end
 end
 
 local mainframe_PLAYER_TOTEM_UPDATE = function( self, slot )
-    for i,spellframe in pairs(ns.frames.frames) do
-        if (spellframe.totem) then
+    for i, spellframe in pairs(ns.frames.frames) do
+        if spellframe.totem then
             spellframe:PLAYER_TOTEM_UPDATE( slot )
             -- Totem Mastery doesn't populate immediately, so we delay.
             C_Timer.After( 0.1, function () spellframe:PLAYER_TOTEM_UPDATE( slot ) end )
@@ -720,7 +689,7 @@ end
 local mainframe_UNIT_AURA = function (self,unit)
   if vars.buff[unit] then
     table.wipe(vars.buff[unit])
-    for i = 1,50 do
+    for i = 1, 50 do
       local name, _, icon, count, _, duration, expirationTime, source, _, _, spellID = UnitBuff(unit,i)
       --print(name,icon,count,duration,expirationTime,source,spellID)
       if not (name and spellID) then break end
