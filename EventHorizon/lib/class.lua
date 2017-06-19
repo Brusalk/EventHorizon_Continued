@@ -16,8 +16,8 @@ ns.classes = {}
 
 local function asserts(name, parent_class)
   ns.Object:assert(name and type(name) == "string", "NewClass(String name, [Class parent_class]) must be given a name (string) for the class")
-  ns.Object:assert(not ns.classes[name], function() return "NewClass(String name, [Class parent_class]) does not allow reopening of existing classes. The class " .. name .. " has already been created" end)
-  ns.Object:assert(type(parent_class) ~= "table" or ns.classes[parent_class.name], function() return "NewClass(String name, Class parent_class) must be given a proper EventHorizon class. Given: " .. parent_class end)
+  -- ns.Object:assert(not ns.classes[name], function() return "NewClass(String name, [Class parent_class]) does not allow reopening of existing classes. The class " .. name .. " has already been created" end)
+  ns.Object:assert(type(parent_class) ~= "table" or ns.classes[parent_class.name], function() return "NewClass(String name, Class parent_class) must be given an EventHorizon class. Given: " .. parent_class end)
   ns.Object:assert(type(parent_class) ~= "string" or ns.classes[parent_class], function() return "NewClass(String name, String parent_class) must be given the name of an already created Class. Given: " .. parent_class end)
 end
 
@@ -133,9 +133,17 @@ local function create_class_table(name, parent_class)
   return class
 end
 
-function ns.NewClass(name, parent_class)
+-- Opens a class for editing
+function ns.Class(name, parent_class)
   asserts(name, parent_class)
   parent_class = normalize_parent_class(parent_class)
+
+  local class = ns.classes[name]
+  if class and class.parent == parent_class then
+    print("Reopening class for editing:", name, " < ", parent_class)
+    return class
+  end
+  print("Creating new class:", name, " < ", parent_class)
   return create_class_table(name, parent_class)
 end
 
