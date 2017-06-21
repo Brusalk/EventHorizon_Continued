@@ -60,7 +60,7 @@ function EventHorizon:InitializeClass()
   -- Phantom Singularity
   self:newSpell({
     requiredTree = 1,
-    requiredTalent = 16,
+    requiredTalent = 10,
     debuff = {205179, 2},
     cooldown = 205179,
     refreshable = false,
