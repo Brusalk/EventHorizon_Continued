@@ -33,7 +33,7 @@ function EventHorizon:InitializeClass()
   --Siphon Life
   self:newSpell({
     requiredTree = 1,
-    requiredTalent = 10,
+    requiredTalent = 20,
     cast = 63106,
     debuff = {63106, 3},
     hasted = true,
@@ -60,7 +60,7 @@ function EventHorizon:InitializeClass()
   -- Phantom Singularity
   self:newSpell({
     requiredTree = 1,
-    requiredTalent = 20,
+    requiredTalent = 10,
     debuff = {205179, 2},
     cooldown = 205179,
     refreshable = false,
