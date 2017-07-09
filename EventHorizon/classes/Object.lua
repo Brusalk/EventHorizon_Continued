@@ -32,7 +32,7 @@ end
 --  Returns a table of the colorized strings
 function Object:colorize_string(...)
   local return_values = {}
-  for string, color in ns.Object:array_pairs(...) do
+  for string, color in self:array_pairs(...) do
     table.insert(return_values, "|cFF" .. (color or "FFFFFF") .. string .. "|r")
   end
   return unpack(return_values)

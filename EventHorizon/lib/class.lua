@@ -16,7 +16,6 @@ ns.classes = {}
 
 local function asserts(name, parent_class)
   ns.Object:assert(name and type(name) == "string", "NewClass(String name, [Class parent_class]) must be given a name (string) for the class")
-  -- ns.Object:assert(not ns.classes[name], function() return "NewClass(String name, [Class parent_class]) does not allow reopening of existing classes. The class " .. name .. " has already been created" end)
   ns.Object:assert(type(parent_class) ~= "table" or ns.classes[parent_class.name], function() return "NewClass(String name, Class parent_class) must be given an EventHorizon class. Given: " .. parent_class end)
   ns.Object:assert(type(parent_class) ~= "string" or ns.classes[parent_class], function() return "NewClass(String name, String parent_class) must be given the name of an already created Class. Given: " .. parent_class end)
 end
@@ -148,4 +147,5 @@ function ns.Class(name, parent_class)
 end
 
 -- Base Object class that all classes eventually inherit from
+-- Since we don't want it inheiriting from itself, we manually create the class table
 ns.Object = create_class_table("Object", {})
