@@ -2,16 +2,12 @@ local ehn, ns = ...
 ns.watch_leaked_globals()
 
 local EventHorizon = ns.Class("EventHorizon")
+local OrderedHash  = ns.Class("OrderedHash")
 
 function EventHorizon:initialize(ace_addon)
   _G["EventHorizon"] = self -- Intentionally expose for debugging purposes
   self.ace_addon = ace_addon
-  self.modules = {
-    -- Denormalized for lookup speed while maintaining load order semantics
-    -- TODO: Abstract this out into OrderedHash
-    classes = {},
-    ordered = {}
-  }
+  self.modules = OrderedHash()
 end
 
 function EventHorizon:enable()
@@ -37,24 +33,15 @@ function EventHorizon:disable_event_horizon()
   -- Unregister event handlers, destroy frames, etc
 end
 
-function EventHorizon:register_module(ModuleClass)
-  self:assert(not self.modules.classes[ModuleClass], function() return "EventHorizon:register_module(ModuleClass): A Module is already registered with the name '%s'":format(ModuleClass.name) end)
-  self.modules.classes[ModuleClass] = true
-  self.modules.ordered:insert(ModuleClass)
-end
-
-function EventHorizon:each_module()
-  return ipairs(self.modules.ordered)
+function EventHorizon:register_module(module_klass)
+  self:assert(not self.modules[module_klass], function() return "EventHorizon:register_module(module_klass): A Module is already registered with the name '%s'":format(module_klass.name) end)
+  self.modules[module_klass] = module_klass:default_state()
 end
 
 function EventHorizon:enable_modules()
-  for i, module in self:each_module() do
-    module:enable()
-  end
+  self.modules:each(module.enable)
 end
 
 function EventHorizon:disable_modules()
-  for i, module in self:each_module() do
-    module:disable()
-  end
+  self.modules:each(module.disable)
 end
