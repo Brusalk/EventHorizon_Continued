@@ -118,12 +118,17 @@ local function create_class_table(name, parent_class)
     return "EventHorizon::" .. name -- Example: EventHorizon::SpellFrame
   end
 
+  -- Allow instantiation of instances via `Class(args..)` syntax
+  function class_metatable:__call(...)
+    return create_instance_table(self, ...)
+  end
+
   function class:print(...)
     parent_class.print(self, self:colorize_string("[" .. name .. "]", class_color), ...)
   end
 
   function class:new(...)
-    return create_instance_table(self, ...)
+    return self(...)
   end
 
   -- Book-keeping
