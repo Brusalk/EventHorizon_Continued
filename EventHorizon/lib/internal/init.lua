@@ -8,7 +8,10 @@ ns.debug = GetAddOnMetadata(EHN, "X-Debug") == 'true'
 -- Globals can still be set via _G. Ex: _G['var'] = 'test'
 -- This is just to force solely conscious leakage of vars.
 function ns.watch_leaked_globals()
-  setfenv(2, setmetatable({}, {
+  setfenv(2, setmetatable({
+    -- "Global" methods
+    Class = ns.Class
+  }, {
     __index = getfenv(2),
     __newindex = function(table, key, value)
       error("LEAKED GLOBAL: " .. tostring(key) .. " => " .. tostring(value), 2)

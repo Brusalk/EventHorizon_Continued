@@ -1,5 +1,4 @@
 local _, ns = ...
-ns.watch_leaked_globals()
 
 --[[
     Class
@@ -43,7 +42,7 @@ local function wrap_super(class, instance, function_name)
         local rets = {wrap_super(class.parent, instance, function_name)(instance, ...)} -- Continue the fun all the way up the super chain
         return unpack(rets) -- Have to do this so we don't have a tail call, and we properly add to the stack
       else
-        error("Attempted to call super() in " .. tostring(class) .. ":" .. function_name .. " when parent class " .. tostring(class.parent) .. " does not have that method", 2)
+        error("Attempted to call super() in %s: %s when parent class %s does not have that method":format(class, function_name, class.parent), 2)
       end
     end
   }, {
@@ -102,11 +101,11 @@ end
 local function create_class_table(name, parent_class)
   local class = {
     name = name,
-    parent = parent_class
+    parent = parent_class,
+    mro = { parent_class } -- Method resolution order
   }
   local class_metatable = {
     __metatable = false, -- Don't allow overriding of the metatable of the class
-    __index = parent_class -- Fall-back to the parent class for method references
   }
   setmetatable(class, class_metatable)
 
@@ -115,7 +114,7 @@ local function create_class_table(name, parent_class)
   class.__instance_counter = 1 -- Lua begins indicies at 1, so do this for consistency :[
 
   function class_metatable:__tostring()
-    return "EventHorizon::" .. name -- Example: EventHorizon::SpellFrame
+    return "EventHorizon::%s":format(name) -- Example: EventHorizon::SpellFrame
   end
 
   -- Allow instantiation of instances via `Class(args..)` syntax
@@ -123,8 +122,28 @@ local function create_class_table(name, parent_class)
     return create_instance_table(self, ...)
   end
 
+  -- Methods are defined according to the MRO (Reference: Python)
+  -- Last element is always the parent class
+  -- Values are last-write wins. Most recent Include is found first
+  function class_metatable:__index(key)
+    for _, klass in ipairs(self.mro) do
+      if klass[key] then
+        return klass[key]
+      end
+    end
+  end
+
   function class:print(...)
     parent_class.print(self, self:colorize_string("[" .. name .. "]", class_color), ...)
+  end
+
+  function class:__include(klass)
+    self:assert(
+      klass:inherits(ns.Class("Include")),
+      function() return "%s:__include(klass): klass must inherit from Include. Got %s":format(self, klass) end      
+    )
+    self.mro:insert(1, klass)
+    klass:__included(self) -- Included callback on the included klass
   end
 
   function class:new(...)
