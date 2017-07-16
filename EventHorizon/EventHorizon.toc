@@ -3,14 +3,37 @@
 ## Author: Brusalk
 ## Version: 2.0.0
 ## OptionalDeps: SharedMedia, LibArtifactData-1.0
-## SavedVariables: EventHorizonGlobal
-## SavedVariablesPerCharacter: EventHorizonCharacter
+## SavedVariables: EventHorizonSavedVariables
+## SavedVariablesPerCharacter: EventHorizonSavedVariablesPerCharacter
 
 ## X-Debug: true
 
-# X-Includes
-lib/init.lua
-lib/class.lua
-classes/Object.lua
+## X-Includes: external
+lib/external/Ace3/LibStub/LibStub.lua
+#lib/external/Ace3/CallbackHandler-1.0/CallbackHandler-1.0.xml
+lib/external/Ace3/AceAddon-3.0/AceAddon-3.0.xml
+lib/external/Ace3/AceEvent-3.0/AceEvent-3.0.xml
+lib/external/Ace3/AceTimer-3.0/AceTimer-3.0.xml
+lib/external/Ace3/AceBucket-3.0/AceBucket-3.0.xml
+#lib/external/Ace3/AceHook-3.0/AceHook-3.0.xml
+lib/external/Ace3/AceDB-3.0/AceDB-3.0.xml
+lib/external/Ace3/AceDBOptions-3.0/AceDBOptions-3.0.xml
+#lib/external/Ace3/AceLocale-3.0/AceLocale-3.0.xml
+lib/external/Ace3/AceConsole-3.0/AceConsole-3.0.xml
+lib/external/Ace3/AceGUI-3.0/AceGUI-3.0.xml
+lib/external/Ace3/AceConfig-3.0/AceConfig-3.0.xml
+#lib/external/Ace3/AceComm-3.0/AceComm-3.0.xml
+#lib/external/Ace3/AceTab-3.0/AceTab-3.0.xml
+#lib/external/Ace3/AceSerializer-3.0/AceSerializer-3.0.xml
+lib/external/AceGUI-3.0-SharedMediaWidgets/widget.xml
+lib/external/LibSharedMedia-3.0/lib.xml
 
-EventHorizon.lua
+## X-Includes: internal
+lib/internal/init.lua
+lib/internal/class.lua
+classes/AceAddon.lua
+classes/Database.lua
+classes/EventHorizon.lua
+classes/Module.lua
+classes/Object.lua
+classes/OrderedHash.lua

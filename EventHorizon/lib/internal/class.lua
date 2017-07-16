@@ -57,7 +57,7 @@ end
 
 local function create_instance_table(class, ...)
   local instance = {}
-  local instance_metatable = {__metatable=false} -- Disallow overriding of the metatable of the instance
+  local instance_metatable = {}
   local unique_id = class.__instance_counter
   setmetatable(instance, instance_metatable)
 
