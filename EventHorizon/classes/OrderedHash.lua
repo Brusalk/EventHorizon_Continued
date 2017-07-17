@@ -1,7 +1,7 @@
 local ehn, ns = ...
 ns.watch_leaked_globals()
 
-local OrderedHash = ns.Class("OrderedHash")
+local OrderedHash = Class("OrderedHash")
 local metatable = {}
 
 function OrderedHash:initialize()
@@ -27,7 +27,7 @@ end
 -- If both a and b have the same key, b overrides a
 -- Ordered according to original insert order of a, followed by b
 function metatable:__add(a, b)
-  local new = self.class.new()
+  local new = self.class()
   a:each(function(k, v)
     new[k] = v
   end)
@@ -40,31 +40,36 @@ end
 -- Table subtraction. Returns a new OrderedHash
 -- Returns table a, without any of the keys in b
 function metatable:__sub(a, b)
-  local new = self.class.new()
-  for k, v in pairs(a) do
+  local new = self.class()
+  a:each(function(k, v) do
     if b[k] ~= nil then
       new[k] = v
     end
-  end
+  end)
 end
 
 -- Table equality. Does not check order.
 -- Returns true if all elements in b exist in a, with the same values
 function metatable:__eq(a, b)
-  return a < b and b < a
+  return a <= b and b <= a
 end
 
 -- Table subset check a is a subset of b, with the same values
+-- but, returns false if the tables are equal
 function metatable:__lt(a, b)
-  for k, v in pairs(a) do
-    if b[k] ~= a[k] then return false end
-  end
-  return true
+  return a <= b and not a == b
 end
 
--- Table subset or equal check
+-- Table subset or equal check. True set equality
 function metatable:__le(a, b)
-  return a < b or a == b
+  mismatch = a:each(function(k, v) do
+    if b[k] ~= a[k] then
+      return true
+    end
+  end)
+  -- If we get through the whole table a with the same values in b,
+  -- then we know that a is a subset of (or exactly equal to) b
+  return not mismatch
 end
 
 -- Given an array where all elements are strings or numbers, 
@@ -85,13 +90,15 @@ end
 function OrderedHash:each(callback)
   self:assert(type(callback)=="function", function() return "each(callback): Callback(key, value) must be a function" end)
   for i, k in ipairs(self.order) do
-    callback(k, self[k])
+    local ret = callback(k, self[k])
+    if ret ~= nil then return ret end
   end
 end
 
 function OrderedHash:eachi(callback)
   self:assert(type(callback)=="function", function() return "eachi(callback): Callback(inserted_order, value) must be a function" end)
   for i, k in ipairs(self.order) do
-    callback(i, self[k])
+    local ret = callback(i, self[k])
+    if ret ~= nil then return ret end
   end
 end

@@ -5,13 +5,12 @@ ns.watch_leaked_globals()
     Object
     Base class for all EH Classes. Defines a standard library of helper functions that subclasses can use
 --]]
-local Object = ns.classes["Object"] -- Actually initially instantiated in class.lua, so we just fetch it here
+local Object = Class("Object") -- Actually initially instantiated in class.lua, so we just fetch it here
+Object.TAG_COLOR = "FFEE99"
 
 -- Default initialize (noop)
 function Object:initialize()
 end
-
-local tag_color = "FFEE99"
 
 -- Lazily evaluates the error message via loadstring
 -- This lets an assert's error message execute under the assumption of failure
@@ -40,7 +39,7 @@ end
 
 -- Prints a message, tagged with the EventHorizon tag
 function Object:print(...)
-  print(self:colorize_string("[EventHorizon]", tag_color), ...)
+  print(self:colorize_string("[EventHorizon]", self.TAG_COLOR), ...)
 end
 
 --  Prints debug information. Wrapper around print

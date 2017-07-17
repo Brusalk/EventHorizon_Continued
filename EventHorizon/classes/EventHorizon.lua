@@ -1,12 +1,13 @@
 local ehn, ns = ...
 ns.watch_leaked_globals()
 
-local EventHorizon = ns.Class("EventHorizon")
-local OrderedHash  = ns.Class("OrderedHash")
+local EventHorizon = Class("EventHorizon")
+local OrderedHash  = Class("OrderedHash")
 
 function EventHorizon:initialize(ace_addon)
   _G["EventHorizon"] = self -- Intentionally expose for debugging purposes
   self.ace_addon = ace_addon
+  self.ns = ns
   self.modules = OrderedHash()
 end
 
@@ -27,6 +28,8 @@ end
 
 function EventHorizon:enable_event_horizon()
   -- Set up event handlers, create frames, etc
+
+  
 end
 
 function EventHorizon:disable_event_horizon()

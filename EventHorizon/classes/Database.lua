@@ -3,7 +3,7 @@ ns.watch_leaked_globals()
 
 local SAVED_VARIABLE_NAME = "EventHorizonSavedVariables"
 
-local Database = ns.Class("Database")
+local Database = Class("Database")
 
 -- Registry of default configs
 -- When we build the default config table for AceDB, all of the specified
@@ -18,4 +18,8 @@ function Database:initialize()
   -- Proxy all requests made to us through to AceDB
   -- if we don't have those methods
   ns.inject_metatable(self, db)
+end
+
+function Database:build_default_config()
+  return self.default_configs -- TODO: Enhance this to support giving out namespaces to modules, w/ module defined schema
 end

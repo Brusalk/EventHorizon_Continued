@@ -2,7 +2,7 @@ local ehn, ns = ...
 ns.watch_leaked_globals()
 
 local AceAddon = LibStub("AceAddon-3.0"):NewAddon(ehn, "AceConsole-3.0")
-local EventHorizon = ns.Class("EventHorizon")
+local EventHorizon = Class("EventHorizon")
 
 function AceAddon:OnInitialize()
   self.event_horizon = EventHorizon.new(self)
