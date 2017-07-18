@@ -2,4 +2,6 @@ local ehn, ns = ...
 ns.watch_leaked_globals()
 
 local Array = Class("Array")
-Array:__include("Enumerable")
+local Enumerable = Class("Enumerable", "Include")
+
+Array:__include(Enumerable)

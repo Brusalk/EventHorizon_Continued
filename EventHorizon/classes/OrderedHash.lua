@@ -15,7 +15,7 @@ function metatable:__index(key)
 end
 
 function metatable:__newindex(key, value)
-  self.order:insert(key)
+  table.insert(self.order, key)
   self.hash[key] = value
 end
 
@@ -41,7 +41,7 @@ end
 -- Returns table a, without any of the keys in b
 function metatable:__sub(a, b)
   local new = self.class()
-  a:each(function(k, v) do
+  a:each(function(k, v)
     if b[k] ~= nil then
       new[k] = v
     end
@@ -62,7 +62,7 @@ end
 
 -- Table subset or equal check. True set equality
 function metatable:__le(a, b)
-  mismatch = a:each(function(k, v) do
+  mismatch = a:each(function(k, v)
     if b[k] ~= a[k] then
       return true
     end
@@ -82,7 +82,7 @@ function OrderedHash:concat(separator, first, last)
 
   local str = ""
   for i=first, last do
-    str = "%s%s%s":format(str, self[i], i<last and separator or "")
+    str = ("%s%s%s"):fformat(str, self[i], i<last and separator or "")
   end
   return str
 end

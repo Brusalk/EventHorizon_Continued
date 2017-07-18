@@ -6,7 +6,6 @@ local Module = Class("Module")
 -- Initialize the module. Called upon login
 -- Corresponding WoW Event: PLAYER_LOGIN
 function Module:initialize()
-  self.enabled = false
 end
 
 -- Called when the module is enabled.

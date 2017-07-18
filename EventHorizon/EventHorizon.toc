@@ -30,14 +30,15 @@ lib/external/LibSharedMedia-3.0/lib.xml
 
 ## X-Includes: internal
 lib/internal/init.lua
+lib/internal/stdlib_extensions.lua
 lib/internal/class.lua
+classes/Object.lua
 lib/internal/include.lua
 classes/AceAddon.lua
 classes/Array.lua
 classes/Database.lua
 classes/EventHorizon.lua
 classes/Module.lua
-classes/Object.lua
 classes/OrderedHash.lua
 includes/Enumerable.lua
 modules/Mainframe.lua
