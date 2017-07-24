@@ -34,10 +34,10 @@ lib/internal/stdlib_extensions.lua
 lib/internal/class.lua
 classes/Object.lua
 lib/internal/include.lua
+classes/EventHorizon.lua
 classes/AceAddon.lua
 classes/Array.lua
 classes/Database.lua
-classes/EventHorizon.lua
 classes/Module.lua
 classes/OrderedHash.lua
 includes/Enumerable.lua

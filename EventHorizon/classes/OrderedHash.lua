@@ -7,7 +7,7 @@ local metatable = {}
 function OrderedHash:initialize()
   self.order = {} -- insert_order => hash_key
   self.hash = {}  -- hash_key => hash_value
-  ns.inject_metatable(self, metatable)
+  --self:__setmetatable(metatable)
 end
 
 function metatable:__index(key)
@@ -89,6 +89,7 @@ end
 
 function OrderedHash:each(callback)
   self:assert(type(callback)=="function", function() return "each(callback): Callback(key, value) must be a function" end)
+  self:print(self, self.order)
   for i, k in ipairs(self.order) do
     local ret = callback(k, self[k])
     if ret ~= nil then return ret end
@@ -102,3 +103,22 @@ function OrderedHash:eachi(callback)
     if ret ~= nil then return ret end
   end
 end
+
+local oh = OrderedHash()
+_G["OH"] = oh
+OrderedHash:print("hi class")
+oh:print("hi instance")
+oh["test"] = "hi"
+print(oh)
+print(#oh)
+print("oh.order", oh.order)
+print("oh.hash", oh.hash)
+for i,v in ipairs(oh.order) do
+  print(i, v)
+end
+for k,v in pairs(oh.hash) do
+  print(k, v)
+end
+oh:each(function(k, v)
+  print(k, v)
+end)

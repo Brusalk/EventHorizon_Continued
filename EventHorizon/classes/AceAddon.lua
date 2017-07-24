@@ -5,7 +5,7 @@ local AceAddon = LibStub("AceAddon-3.0"):NewAddon(ehn, "AceConsole-3.0")
 local EventHorizon = Class("EventHorizon")
 
 function AceAddon:OnInitialize()
-  self.event_horizon = EventHorizon:new(self)
+  self.event_horizon = EventHorizon(self)
 end
 
 function AceAddon:OnEnable()

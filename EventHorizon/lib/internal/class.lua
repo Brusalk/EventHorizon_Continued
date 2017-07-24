@@ -8,6 +8,23 @@ local _, ns = ...
 
 local class_color = "EE99FF"
 local instance_color = "99FFEE"
+local metamethods = {
+  __add = true,
+  __sub = true,
+  __mul = true,
+  __div = true,
+  __mod = true,
+  __pow = true,
+  __unm = true,
+  __concat = true,
+  __len = true,
+  __eq = true,
+  __lt = true,
+  __le = true,
+  __index = true,
+  __newindex = true,
+  __call = true,
+}
 
 -- Holds all created classes.
 -- string => class
@@ -27,15 +44,14 @@ end
 
 local function normalize_class_reference(class_reference)
   local klass
-  if type(class_reference) == "table" and class_reference.__inherits and class_reference.__inherits("Object") then
+  if type(class_reference) == "table" and class_reference.__inherits and class_reference:__inherits("Object") then
     klass = class_reference
   elseif type(class_reference) == "string" then
     klass = ns.classes[class_reference]
-  else
+  elseif not class_reference then
     klass = ns.classes["Object"]
   end
-  print("Normalized Klass:", klass)
-  if not klass then error(("Unable to normalize class reference '%s'. Class reference must be either a string of an Class that was already defined, or the class itself."):fformat(class_reference)) end
+  if not klass then error(("Unable to normalize class reference '%s'. Class reference must be either a string of a Class that was already defined, or the class itself."):fformat(class_reference), 2) end
   return klass
 end
 
@@ -44,24 +60,24 @@ end
 -- MUST NOT BE CALLED AS A TAIL CALL -- If ever used as a tail call getfenv will be at the wrong level
 -- This is because a tail call doesn't add onto the call stack so as a tail call we actually want the
 -- environment of our function execution, rather than one up the call stack as one would normally expect
-local function wrap_super(class, instance, function_name)
+--
+-- Resume_mro is an iterator, but returns a function which is in reality calling coroutine.resume(), so we can
+-- continue right where we left off in this closure by calling the function. It yields the next object in
+-- mro order. This must be passed in on the initial call
+local function wrap_super(function_to_wrap, object, function_name, resume_mro)
   local previous_fenv = getfenv(2)
   local super_env = setmetatable({
     super = function(...)
-      if type(class.parent[function_name]) == "function" then
-        local rets = {wrap_super(class.parent, instance, function_name)(instance, ...)} -- Continue the fun all the way up the super chain
-        return unpack(rets) -- Have to do this so we don't have a tail call, and we properly add to the stack
-      else
-        error(("Attempted to call super() in %s: %s when parent class %s does not have that method"):fformat(class, function_name, class.parent), 2)
-      end
+      local next_level = resume_mro()
+      local next_function = rawget(next_level, function_name) or function(...) return super(...) end -- If the next mro object is missing, just pass through
+      local rets = { wrap_super(next_function, next_level, function_name, resume_mro)(...) } -- Continue the fun all the way up the super chain
+      return unpack(rets) -- Have to do this so we don't have a tail call, and we properly add to the stack
     end
   }, {
     __index = previous_fenv,
-    __newindex = function(_, key, value)
-      previous_fenv[key] = value
-    end
+    __newindex = function(_, key, value) previous_fenv[key] = value end
   })
-  return setfenv(class[function_name], super_env)
+  return setfenv(function_to_wrap or function(...) return super(...) end, super_env) -- If we don't get a real function to wrap, we'll assume there's one higher up the chain
 end
 
 local function create_instance_table(class, ...)
@@ -71,24 +87,37 @@ local function create_instance_table(class, ...)
   setmetatable(instance, instance_metatable)
 
   function instance_metatable:__index(key)
-    if key:find("__") == 1 and class[key] then -- Improper attempt to access class method
+    local value = class[key]
+    if key:find("__") == 1 and value then -- Improper attempt to access class method
       error("Attempting to call a class method on an instance. Must call on class directly", 2)
       return
     end
     if key:find("__") == 1 then return end -- These are private/class methods, so we shouldn't return anything
     -- Instance method defined on class
-    if class[key] ~= nil then 
-      if type(class[key])=="function" then
-        local super = wrap_super(class, instance, key) -- Give the method access to calling super
+    if value ~= nil then 
+      if type(value)=="function" then
+        -- Give the method access to calling super
+        -- The rawget looks weird, but this way we don't end executing the same function twice.
+        -- Indexing class[key] will potentially hit class:__index, which will look all the way up the mro chain
+        -- If we get a hit in the mro chain, we don't know where it was (or if it was on the class itself and
+        -- this bypassed __index entirely). Thus, we use rawget here so that we always start at the lowest level
+        -- and allow the recursive super() chain to resolve the mro order only-once
+        -- If we used the found value, rather than rawget, we'll execute class[key]() twice, once in the first
+        -- super call, and then eventually again if that super call calls its' super()
+        local super = wrap_super(rawget(class, key), instance, key, instance.class:__each_mro())
         return super -- Have to do this so we don't have a tail call, and we properly add to the stack
       else
-        return class[key]
+        return value
       end
     end
   end
 
   function instance_metatable:__tostring()
     return tostring(class) .. "#" .. unique_id
+  end
+
+  function instance:__each_mro()
+    return instance.class:__each_mro()
   end
 
   function instance:print(...)
@@ -99,7 +128,7 @@ local function create_instance_table(class, ...)
   instance.class = class
 
   -- Call the init method
-  wrap_super(class, instance, 'initialize')(instance, ...)
+  wrap_super(rawget(class, 'initialize'), instance, 'initialize', class:__each_mro())(instance, ...)
 
   -- Book-keeping
   class.__instance_counter = class.__instance_counter + 1
@@ -112,7 +141,7 @@ local function create_class_table(name, parent_class)
   local class = {
     name = name,
     parent = parent_class,
-    mro = { parent_class } -- Method resolution order
+    includes = {} -- Included classes
   }
 
   local class_metatable = {
@@ -137,15 +166,14 @@ local function create_class_table(name, parent_class)
   -- Last element is always the parent class
   -- Values are last-write wins. Most recent Include is found first
   function class_metatable:__index(key)
-    print(("%s - Finding Key in MRO: %s"):fformat(class.name, key))
-    for _, klass in ipairs(self.mro) do
-      print(("%s - Checking klass %s"):fformat(class.name, klass))
-      if klass[key] then
-        print(("%s - Found in klass %s"):fformat(class.name, klass))
-        return klass[key]
+    print("__index", self, key)
+    for candidate in self:__each_mro() do
+      local thing = rawget(candidate, key)
+      print("__index", self, key, candidate, thing, not not thing)
+      if thing then
+        return thing
       end
     end
-    print(("%s - Failed to find in MRO"):fformat(class.name))
   end
 
   function class:print(...)
@@ -154,40 +182,67 @@ local function create_class_table(name, parent_class)
 
   function class:__inherits(klass_or_name)
     local ancestor_klass = normalize_class_reference(klass_or_name)
-    local Object = ns.classes["Object"]
-    -- Exit early if ancestor_klass is Object since all classes inherit from Object
-    if ancestor_klass == Object then return true end
-
-    local current_klass = self
-    print("current_klass", current_klass)
-    while current_klass ~= Object or not current_klass do
-      print("parent_klass", current_klass.parent, "ancestor_klass", ancestor_klass)
-      if current_klass.parent == ancestor_klass then
+    for ancestor in self:__each_ancestor() do
+      if ancestor == ancestor_klass then
         return true
       end
-      current_klass = current_klass.parent
     end
     return false
+  end
+
+  -- Order:
+  -- Class A
+  -- Class A's Includes
+  -- Class A Parent
+  -- Class A Parent's Includes, etc
+  local yield = coroutine.yield
+  function class:__each_mro(callback)
+    return coroutine.wrap(function()
+      yield(self)
+      for i, included_klass in self:__each_include() do
+        yield(included_klass)
+      end
+      for ancestor in self:__each_ancestor() do
+        yield(ancestor)
+        for i, included_klass in ancestor:__each_include() do
+          yield(included_klass)
+        end
+      end
+    end)
+  end
+
+  function class:__each_ancestor()
+    local terminator = ns.classes["Object"].parent
+    local iterator = function(invariant, current_klass)
+      local parent = current_klass.parent
+      if parent ~= terminator then
+        return parent
+      end
+    end
+    return iterator, nil, self
+  end
+
+  function class:__each_include()
+    return ipairs(self.includes)
   end
 
   function class:__includes(klass)
-    for i, included_klass in ipairs(self.mro) do
-      if included_klass == klass then
+    return self.__each_include(function(included_klass)
+      if klass == included_klass then
         return true
       end
-    end
-    return false
+    end) or false
   end
 
   function class:__include(klass_or_name)
-    print("klass_or_name", klass_or_name)
+    print("Including ", klass_or_name, "onto", self)
     local klass = normalize_class_reference(klass_or_name)
-    print("klass", klass)
+    print("include - normalized klass", klass)
     self:assert(
       klass and klass:__inherits("Include"),
       function() return ("%s:__include(klass): klass must inherit from Include. Got %s"):fformat(self, klass) end
     )
-    table.insert(self.mro, 1, klass)
+    table.insert(self.includes, 1, klass)
     klass:__included(self) -- Included callback on the included klass
   end
 
@@ -207,22 +262,22 @@ function ns.Class(name, parent_class)
   if name == "Object" then return ns.classes["Object"] end -- Always reopen the original object class
 
   asserts(name, parent_class)
-  parent_class = normalize_class_reference(parent_class)
+  local parent_klass = normalize_class_reference(parent_class)
   local class = ns.classes[name]
   if class then -- Need to check if we can reopen it
-    if class.parent == parent_class then
-      print("Reopening class for editing:", name, " < ", parent_class)
+    if class.parent == parent_klass then
+      print("Reopening class for editing:", name, " < ", parent_klass)
       return class -- We can
     else
-      error(("ns.Class(name, parent_class): Unable to reopen class '%s' with the given parent_class '%s'. " ..
+      error(("ns.Class(name, parent_class): Unable to reopen class '%s' with the given parent_klass '%s'. " ..
              "Original definition: ns.Class('%s', '%s') " ..
              "The Class may have been improperly defined earlier, or with a different parent class. " ..
-             "You can only reopen a class with the same name and parent."):fformat(class, parent_class, class, class.parent))
+             "You can only reopen a class with the same name and parent."):fformat(class, parent_klass, class, class.parent))
     end
   else
     -- Need to make a new class.
-    print("Creating new class:", name, " < ", parent_class)
-    return create_class_table(name, parent_class)
+    print("Creating new class:", name, " < ", parent_klass)
+    return create_class_table(name, parent_klass)
   end
 end
 

@@ -1,6 +1,6 @@
-local EHN, ns = ...
+local ehn, ns = ...
 
-ns.debug = GetAddOnMetadata(EHN, "X-Debug") == 'true'
+ns.debug = GetAddOnMetadata(ehn, "X-Debug") == 'true'
 _G["EHNS"] = ns
 
 function ns.deep_copy(object)
@@ -33,14 +33,3 @@ function ns.watch_leaked_globals()
 end
 ns.watch_leaked_globals()
 
--- Injects the given metatable between the given object and
--- the original metatable (if it has one)
-function ns.inject_metatable(object, metatable)
-  local original_metatable = getmetatable(object)
-  -- Cannot override the original metatable
-  if original_metatable == false then return false end
-  if original_metatable then
-    metatable.__index = original_metatable
-  end
-  return setmetatable(object, metatable)
-end
