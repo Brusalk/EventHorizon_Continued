@@ -369,8 +369,6 @@ function EventHorizon:InitializeClass()
 	stance = 2,
 	requiredTalent = 21,
 	cooldown = 202060,
---	smallCooldown = true,
---	debuff = {1079,2},
 	playerbuff = {202060, 1},
 	refreshable = true,
 	barcolors = {
@@ -384,19 +382,18 @@ function EventHorizon:InitializeClass()
 	requiredTree = 2,
 	stance = 2,
 	requiredTalent = 20,
---	playerbuff = 69369,
 	playerbuff = {{69369},{155672}},
 	barcolors = {
 	  playerbuff	= {030/255, 131/255, 000/255, 0.5}
 	},
 	})
 
-	-- Thrash with Brutal Slash.
+	-- Thrash with Brutal Slash recharge underneath.
   self:newSpell({
 	requiredTree = 2,
 	stance = 2,
 	requiredLevel = 18,
-	requiredTalentUnselected = 17,
+	requiredTalentUnselected = 15,
 	debuff = {106830,3},
 	refreshable = true,
 	recharge = 202028,
@@ -406,11 +403,11 @@ function EventHorizon:InitializeClass()
 	},
 	})
 
-	-- Thrash with faster ticks because of Jagged Wounds. The tick time will need to be adjusted if they change the talent, again.
+	-- Thrash with faster ticks because of Jagged Wounds, Brutal Slash recharge underneath. The tick time will need to be adjusted if they change the talent, again.
   self:newSpell({
 	requiredTree = 2,
 	stance = 2,
-	requiredTalent = 17,
+	requiredTalent = 15,
 	debuff = {106830,2.4},
 	refreshable = true,
 	recharge = 202028,
@@ -440,11 +437,11 @@ function EventHorizon:InitializeClass()
 	})
 
 	-- Omen/Moment of Clarity & Survival Instinct recharge
-	-- Delete the next line and the 12th line after it, if you'd like OoC/MoC tracking.
   self:newSpell({
 	requiredTree = 2,
 	stance = 2,
 	requiredLevel = 38,
+	requiredTalent = 19,	-- Uncomment this line if you'd like this showing without taking Moment of Clarity.
 	playerbuff = 135700,
 	recharge = 61336,
 	barcolors = {
