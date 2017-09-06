@@ -13,9 +13,9 @@ function EventHorizon:InitializeClass()
     playerbuff = 77762,
     recharge = 51505,
     barcolors = {
-      recharge = {171/255, 191/255, 181/255, 0.7},
-      playerbuff = {232/255, 050/255, 020/255, 0.5}
-    },
+     recharge    = {171/255, 191/255, 181/255, 0.7},
+     playerbuff  = {232/255, 050/255, 020/255, 0.5}
+     },
   })
 
   -- Flame Shock and Fire Elemental at half height.
@@ -27,10 +27,10 @@ function EventHorizon:InitializeClass()
     playerbuff = 205495,
     debuff = {188389, 2},
     barcolors = {
-      cooldown = {171/255, 191/255, 181/255, 0.7},
-      tick = {222/255, 040/255, 010/255, 0.9},
-      debuffmine = {242/255, 141/255, 010/255, 0.5}
-    },
+     cooldown    = {171/255, 191/255, 181/255, 0.7},
+     tick        = {222/255, 040/255, 010/255, 0.9},
+     debuffmine  = {242/255, 141/255, 010/255, 0.5}
+     },
   })
 
   -- Elemental Blast
@@ -41,9 +41,9 @@ function EventHorizon:InitializeClass()
     cooldown = 117014,
     playerbuff = {{118522}, {173183}, {173184}}, -- 118522 crit, 173183 haste, 173184 mastery
     barcolors = {
-      cooldown = {171/255, 191/255, 181/255, 0.7},
-      playerbuff = {171/255, 070/255, 161/255, 0.6}
-    },
+     cooldown    = {171/255, 191/255, 181/255, 0.7},
+     playerbuff  = {171/255, 070/255, 161/255, 0.6}
+     },
   })
 
   -- Icefury
@@ -64,9 +64,9 @@ function EventHorizon:InitializeClass()
     smallCooldown = true,
     playerbuff = {{205495}, {191861}},
     barcolors = {
-      cooldown = {202/255, 161/255, 055/255, 0.7},
-      playerbuff = {080/255, 141/255, 191/255, 0.6}
-    },
+     cooldown    = {202/255, 161/255, 055/255, 0.7},
+     playerbuff  = {080/255, 141/255, 191/255, 0.6}
+     },
   })
 
   -- Liquid Magma Totem, currently unable to track totem uptime
@@ -83,9 +83,9 @@ function EventHorizon:InitializeClass()
     playerbuff = {{202192}, {210652}, {210659}, {210658}},
     icon = 210643,
     barcolors = {
-      -- cooldown = {171/255, 191/255, 181/255, 0.7},
-      -- playerbuff = {232/255, 191/255, 181/255, 0.4}
-    },
+--     cooldown    = {171/255, 191/255, 181/255, 0.7},
+--     playerbuff  = {232/255, 191/255, 181/255, 0.4}
+     },
   })
 
   -- Elemental Mastery
@@ -95,9 +95,9 @@ function EventHorizon:InitializeClass()
     cooldown = 16166,
     playerbuff = 16166,
     barcolors = {
-      cooldown = {171/255, 191/255, 181/255, 0.7},
-      playerbuff = {232/255, 191/255, 181/255, 0.4}
-    },
+     cooldown    = {171/255, 191/255, 181/255, 0.7},
+     playerbuff  = {232/255, 191/255, 181/255, 0.4}
+     },
   })
 
   -- Ascendance
@@ -107,9 +107,9 @@ function EventHorizon:InitializeClass()
     cooldown = 114050,
     playerbuff = 114050,
     barcolors = {
-      cooldown = {171/255, 191/255, 181/255, 0.7},
-      playerbuff = {232/255, 191/255, 181/255, 0.4}
-    },
+     cooldown    = {171/255, 191/255, 181/255, 0.7},
+     playerbuff  = {232/255, 191/255, 181/255, 0.4}
+     },
   })
 
   -- Enhancement
@@ -120,9 +120,9 @@ function EventHorizon:InitializeClass()
     requiredLevel = 10,
     requiredTalent = 1,
     recharge = 193786,
-      barcolors = {
-      recharge = {171/255, 191/255, 181/255, 0.3}
-    },
+    barcolors = {
+     recharge    = {171/255, 191/255, 181/255, 0.3}
+     },
   })
 
   -- Rockbiter recharge and Hot Hand proc, if taken.
@@ -133,9 +133,9 @@ function EventHorizon:InitializeClass()
     recharge = 193786,
     playerbuff = 215785,
     barcolors = {
-      playerbuff = {222/255, 080/255, 010/255, 0.6},
-      recharge = {171/255, 191/255, 181/255, 0.3}
-    },
+     playerbuff  = {222/255, 080/255, 010/255, 0.6},
+     recharge    = {171/255, 191/255, 181/255, 0.3}
+     },
   })
 
   -- Rockbiter recharge and Landslide buff, if taken.
@@ -146,9 +146,9 @@ function EventHorizon:InitializeClass()
     recharge = 193786,
     playerbuff = 202004,
     barcolors = {
-      playerbuff = {121/255, 020/255, 030/255, 0.7},
-      recharge = {171/255, 191/255, 181/255, 0.3}
-    },
+     playerbuff  = {121/255, 020/255, 030/255, 0.7},
+     recharge    = {171/255, 191/255, 181/255, 0.3}
+     },
   })
 
   -- Flametongue
@@ -158,9 +158,9 @@ function EventHorizon:InitializeClass()
     cooldown = 193796,
     playerbuff = 194084,
     barcolors = {
-      playerbuff = {252/255, 141/255, 040/255, 0.6},
-      cooldown = {171/255, 191/255, 181/255, 0.6}
-    },
+     playerbuff  = {252/255, 141/255, 040/255, 0.6},
+     cooldown    = {171/255, 191/255, 181/255, 0.6}
+     },
   })
 
   -- Frostbrand + Doomhammer CD at half height.
@@ -171,9 +171,9 @@ function EventHorizon:InitializeClass()
     smallCooldown = true,
     playerbuff = 196834,
     barcolors = {
-      playerbuff = {080/255, 111/255, 151/255, 0.5},
-      cooldown = {202/255, 161/255, 050/255, 0.8},
-    },
+     playerbuff  = {080/255, 111/255, 151/255, 0.5},
+     cooldown    = {202/255, 161/255, 050/255, 0.8},
+     },
   })
 
   -- Overcharge
@@ -190,9 +190,9 @@ function EventHorizon:InitializeClass()
     cooldown = 201898,
     playerbuff = 201898,
     barcolors = {
-      playerbuff = {151/255, 242/255, 242/255, 0.6},
-      cooldown = {171/255, 191/255, 181/255, 0.6}
-    },
+     playerbuff  = {151/255, 242/255, 242/255, 0.6},
+     cooldown    = {171/255, 191/255, 181/255, 0.6}
+     },
   })
 
   -- Stormstrike
@@ -202,9 +202,9 @@ function EventHorizon:InitializeClass()
     cooldown = 17364,
     playerbuff = 201846,
     barcolors = {
-      playerbuff = {010/255, 010/255, 171/255, 0.6},
-      cooldown = {171/255, 191/255, 181/255, 0.6}
-    },
+     playerbuff  = {010/255, 010/255, 171/255, 0.6},
+     cooldown    = {171/255, 191/255, 181/255, 0.6}
+     },
   })
 
   -- Earthen Spike
@@ -214,9 +214,9 @@ function EventHorizon:InitializeClass()
     cooldown = 188089,
     debuff = 188089,
     barcolors = {
-      cooldown = {171/255, 191/255, 181/255, 0.6},
-      debuffmine = {090/255, 060/255, 020/255, 0.7}
-    },
+     cooldown    = {111/255, 090/255, 050/255, 0.4},
+     debuffmine  = {101/255, 080/255, 040/255, 0.6}
+     },
   })
 
   -- Crash Lightning
@@ -242,9 +242,9 @@ function EventHorizon:InitializeClass()
     smallCooldown = true,
     playerbuff = 197211,
     barcolors = {
-      cooldown = {171/255, 191/255, 181/255, 0.7},
-      playerbuff = {212/255, 212/255, 242/255, 0.4}
-    },
+     cooldown    = {171/255, 191/255, 181/255, 0.7},
+     playerbuff  = {212/255, 212/255, 242/255, 0.4}
+     },
   })
 
   -- Ascendance
@@ -254,9 +254,9 @@ function EventHorizon:InitializeClass()
     cooldown = 114051,
     playerbuff = 114051,
     barcolors = {
-      cooldown = {171/255, 191/255, 181/255, 0.7},
-      playerbuff = {232/255, 191/255, 181/255, 0.4}
-    },
+     cooldown    = {171/255, 191/255, 181/255, 0.7},
+     playerbuff  = {232/255, 191/255, 181/255, 0.4}
+     },
   })
 
   -- Restoration
@@ -268,9 +268,9 @@ function EventHorizon:InitializeClass()
     playerbuff = 77762,
     recharge = 51505,
     barcolors = {
-      recharge = {171/255, 191/255, 181/255, 0.7},
-      playerbuff = {232/255, 050/255, 020/255, 0.5}
-    },
+     recharge    = {171/255, 191/255, 181/255, 0.7},
+     playerbuff  = {232/255, 050/255, 020/255, 0.5}
+     },
   })
 
   -- Flame Shock
@@ -280,10 +280,10 @@ function EventHorizon:InitializeClass()
     cooldown = 188838,
     debuff = {188838, 3},
     barcolors = {
-      cooldown = {171/255, 191/255, 181/255, 0.7},
-      tick = {222/255, 040/255, 010/255, 0.9},
-      debuffmine = {242/255, 141/255, 010/255, 0.5}
-    },
+     cooldown    = {171/255, 191/255, 181/255, 0.7},
+     tick        = {222/255, 040/255, 010/255, 0.9},
+     debuffmine  = {242/255, 141/255, 010/255, 0.5}
+     },
   })
 
   -- Riptide
@@ -294,10 +294,10 @@ function EventHorizon:InitializeClass()
     playerbuff = {61295, 3},
     auraunit = 'mouseover' or 'target',
     barcolors = {
-      recharge = {171/255, 191/255, 181/255, 0.7},
-      tick = {040/255, 181/255, 020/255, 0.9},
-      playerbuff = {030/255, 090/255, 090/255, 0.6}
-    },
+     recharge    = {171/255, 191/255, 181/255, 0.7},
+     tick        = {040/255, 181/255, 020/255, 0.9},
+     playerbuff  = {030/255, 090/255, 090/255, 0.6}
+     },
   })
 
   -- Healing Rain
@@ -306,9 +306,9 @@ function EventHorizon:InitializeClass()
     requiredLevel = 40,
     cooldown = 73920,
     barcolors = {
-      cooldown = {010/255, 101/255, 232/255, 0.7},
-      playerbuff = {080/255, 181/255, 131/255, 0.5}
-    },
+     cooldown    = {010/255, 101/255, 232/255, 0.7},
+     playerbuff  = {080/255, 181/255, 131/255, 0.5}
+     },
   })
 
   -- Unleashed Life
@@ -318,9 +318,9 @@ function EventHorizon:InitializeClass()
     cooldown = 73685,
     playerbuff = 73685,
     barcolors = {
-      cooldown = {090/255, 191/255, 191/255, 0.7},
-      playerbuff = {080/255, 181/255, 131/255, 0.5}
-    },
+     cooldown    = {090/255, 191/255, 191/255, 0.7},
+     playerbuff  = {080/255, 181/255, 131/255, 0.5}
+     },
   })
 
   -- Healing Stream Totem
@@ -328,11 +328,11 @@ function EventHorizon:InitializeClass()
     requiredTree = 3,
     requiredLevel = 14,
     recharge = 5394,
-    -- totem = 5394,
+--    totem = 5394,
     barcolors = {
-      recharge = {080/255, 161/255, 202/255, 0.7},
-      playerbuff = {080/255, 161/255, 202/255, 0.4}
-    },
+     recharge    = {080/255, 161/255, 202/255, 0.7},
+     playerbuff  = {080/255, 161/255, 202/255, 0.4}
+     },
   })
 
   -- Tidal Waves buff and Gift of the Queen (artifact) cooldown at half height, if you have it.
@@ -342,9 +342,9 @@ function EventHorizon:InitializeClass()
     playerbuff = 53390,
     cooldown = 207778,
     smallCooldown = true,
-      barcolors = {
-      cooldown = {202/255, 161/255, 055/255, 0.7},
-    },
+    barcolors = {
+     cooldown    = {202/255, 161/255, 055/255, 0.7},
+     },
   })
 
   -- Earthen Shield Totem
@@ -354,11 +354,11 @@ function EventHorizon:InitializeClass()
     cooldown = 198838,
     playerbuff = 201633,
     auraunit = 'mouseover' or 'target',
-    -- totem = 198838,
+--    totem = 198838,
     barcolors = {
-      cooldown = {040/255, 090/255, 090/255, 0.6},
-      playerbuff = {232/255, 090/255, 242/255, 0.7}
-    },
+     cooldown    = {040/255, 090/255, 090/255, 0.6},
+     playerbuff  = {232/255, 090/255, 242/255, 0.7}
+     },
   })
 
   -- Ancestral Guidance
@@ -368,9 +368,9 @@ function EventHorizon:InitializeClass()
     cooldown = 108281,
     playerbuff = 108281,
     barcolors = {
-      cooldown = {16/255, 252/255, 252/255, 0.6},
-      -- playerbuff = {232/255, 191/255, 181/255, 0.4}
-    },
+     cooldown    = {16/255, 252/255, 252/255, 0.6},
+--     playerbuff  = {232/255, 191/255, 181/255, 0.4}
+     },
   })
 
   -- Healing Tide Totem
@@ -378,11 +378,11 @@ function EventHorizon:InitializeClass()
     requiredTree = 3,
     requiredLevel = 80,
     cooldown = 108280,
-    -- totem = 108280,
+--    totem = 108280,
     barcolors = {
-      cooldown = {151/255, 242/255, 222/255, 0.7},
-      playerbuff = {151/255, 242/255, 222/255, 0.4}
-    },
+     cooldown    = {151/255, 242/255, 222/255, 0.7},
+     playerbuff  = {151/255, 242/255, 222/255, 0.4}
+     },
   })
 
   -- Ascendance
@@ -392,9 +392,9 @@ function EventHorizon:InitializeClass()
     cooldown = 114052,
     playerbuff = 114052,
     barcolors = {
-      cooldown = {171/255, 191/255, 181/255, 0.7},
-      playerbuff = {232/255, 191/255, 181/255, 0.4}
-    },
+     cooldown    = {171/255, 191/255, 181/255, 0.7},
+     playerbuff  = {232/255, 191/255, 181/255, 0.4}
+     },
   })
 
 -- Utility spells or long cooldowns, hidden by default as there are already many bars for this spec. Remove the comment "--[[ ]]--" block lines to show the ones you'd like.
@@ -416,10 +416,10 @@ function EventHorizon:InitializeClass()
     cooldown = 207399,
     playerbuff = 207498,
     auraunit = 'mouseover' or 'target',
-    -- totem = 207399,
+--    totem = 207399,
     barcolors = {
-      playerbuff = {232/255, 010/255, 010/255, 0.7}
-    },
+     playerbuff  = {232/255, 010/255, 010/255, 0.7}
+     },
   })
 ]]--
 end
