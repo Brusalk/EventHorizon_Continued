@@ -138,41 +138,41 @@ function EventHorizon:InitializeClass()
     }
   })
 
-  -- Hunter's Mark with Windburst CD at half height and casts.
+  -- Hunter's Mark with Sentinel CD at half height, if talented, plus non-instant casts.
   self:newSpell({
     requiredTree = 2,
     requiredLevel = 12,
     cast = {19434, 204147},
     debuff = 185987,
-    cooldown = 204147,
+    cooldown = 206817,
     smallCooldown = true,
     barcolors = {
-      cooldown  = {202/255, 161/255, 055/255, 0.5},
-      debuffmine  = {252/255, 088/255, 088/255, 0.7}
+      cooldown  = {171/255, 191/255, 181/255, 0.6},
+      debuffmine  = {252/255, 101/255, 101/255, 0.7}
     }
   })
 
-  -- Vulnerable & Sidewinders recharge
+  -- Vulnerable with Sidewinders recharge or Piercing Shot CD at half height
   self:newSpell({
     requiredTree = 2,
-    requiredTalent = 19,
     debuff = {187131, 2},
     recharge = 214579,
-    barcolors = {
-      recharge  = {171/255, 191/255, 181/255, 0.4},
-      debuffmine  = {222/255, 093/255, 131/255, 0.9}
-    }
-  })
-
-  -- Vulnerable & Piercing Shot CD at half height
-  self:newSpell({
-    requiredTree = 2,
-    requiredTalent = 20,
-    debuff = {187131, 2},
     cooldown = 198670,
     smallCooldown = true,
     barcolors = {
-      debuffmine  = {222/255, 093/255, 131/255, 0.9}
+      cooldown  = {171/255, 191/255, 181/255, 0.6},
+      recharge  = {171/255, 191/255, 181/255, 0.6},
+      debuffmine  = {222/255, 090/255, 131/255, 0.8}
+    }
+  })
+
+    -- Windburst - artifact ability
+  self:newSpell({
+    requiredTree = 2,
+    requiredArtifactTalent = 204147,
+    cooldown = 204147,
+    barcolors = {
+      cooldown  = {202/255, 161/255, 050/255, 0.5},
     }
   })
 
@@ -247,6 +247,7 @@ function EventHorizon:InitializeClass()
     }
   })
 
+--[[ included as a half height CD under Hunter's mark above, that was Windburst but I put that on it's onw bar now.
   -- Sentinel
   self:newSpell({
     requiredTree = 2,
@@ -259,6 +260,7 @@ function EventHorizon:InitializeClass()
       debuffmine  = {054/255, 059/255, 143/255, 0.7}
     }
   })
+]]--
 
   -- Trueshot
   self:newSpell({
