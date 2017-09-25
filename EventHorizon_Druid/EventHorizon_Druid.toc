@@ -1,4 +1,4 @@
-## Interface: 70200
+## Interface: 70300
 ## Title: EventHorizon_|c20ff7d0aDruid|r
 ## Author: Brusalk
 ## Dependencies: EventHorizon
