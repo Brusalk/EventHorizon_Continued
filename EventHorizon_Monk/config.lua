@@ -3,6 +3,8 @@ local usemouseover = true  -- Make this false or nil (or just delete the line al
 function EventHorizon:InitializeClass()
   self.config.gcdSpellID = 100780 -- Legacy of the Emperor
   self.config.hastedSpellID = {115178, 10} -- Resuscitate
+  self.config.past = -1.5 -- Number of seconds to show in the past. Default = -3
+  self.config.future = 12 -- Number of seconds to show in the future. Default = 12
 
   -- [[ Windwalker ]] --   
   -- rising sun kick

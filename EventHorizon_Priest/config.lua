@@ -2,6 +2,8 @@ local usemouseover = true -- Make this false or nil (or just delete the line alt
 function EventHorizon:InitializeClass()
   self.config.gcdSpellID = 528 -- dispel magic
   self.config.hastedSpellID = {2006, 10}-- Resurrection
+  self.config.past = -1.5 -- Number of seconds to show in the past. Default = -3
+  self.config.future = 12 -- Number of seconds to show in the future. Default = 12
 
   -- Discipline
 
