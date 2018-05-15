@@ -3450,8 +3450,8 @@ function ns:ApplyConfig()
   setmetatable(config,{__index = ns.config}) -- Set non-overridden values to what is in [my]config.lua
   self:InitializeClass() -- Set config values in class modules
   
-  vars.past = -math.abs(config.past) or -3  -- We really don't want config.past to be positive, so negative absolute values work great here.
-  vars.future = math.abs(config.future) or 9
+  vars.past = -math.abs(config.past or -3)  -- We really don't want config.past to be positive, so negative absolute values work great here.
+  vars.future = math.abs(config.future or 9)
   vars.barheight = config.height or 18
   vars.barwidth = config.width or 150
   vars.barspacing = config.spacing or 0
