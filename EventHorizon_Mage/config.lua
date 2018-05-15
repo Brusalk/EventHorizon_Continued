@@ -1,6 +1,8 @@
 function EventHorizon:InitializeClass()
   self.config.gcdSpellID = 118 -- Polymorph
   self.config.hastedSpellID = {118,1.7}
+  self.config.past = -1.5 -- Number of seconds to show in the past. Default = -3
+  self.config.future = 12 -- Number of seconds to show in the future. Default = 12
   
   -- Arcane
     

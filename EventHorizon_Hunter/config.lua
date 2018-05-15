@@ -1,5 +1,7 @@
 function EventHorizon:InitializeClass()
   self.config.gcdSpellID = 982 -- Revive Pet
+  self.config.past = -1.5 -- Number of seconds to show in the past. Default = -3
+  self.config.future = 12 -- Number of seconds to show in the future. Default = 12
 
   -- Beastmaster Bars
 

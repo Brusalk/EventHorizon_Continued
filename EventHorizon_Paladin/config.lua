@@ -3,6 +3,8 @@ local usemouseover = true -- Make this false or nil (or just delete the line alt
 function EventHorizon:InitializeClass()
   self.config.gcdSpellID = 19750 -- Flash of Light
   self.config.hastedSpellID = {7328,10} -- Redemption, probably not needed at all
+  self.config.past = -1.5 -- Number of seconds to show in the past. Default = -3
+  self.config.future = 12 -- Number of seconds to show in the future. Default = 12
 
 
   -- ---------------------------------------

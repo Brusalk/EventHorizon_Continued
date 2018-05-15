@@ -42,9 +42,6 @@ config.staticheight = 150        -- Changing this to a number will override conf
 config.staticframes = 7          -- When used with config.staticheight, sets a minimum number of bars to use static height settings with. For example, with staticframes = 4 and 3 bars shown, EventHorizon will use normal variable height settings.
 config.hideIcons = false        -- Hides the bar icons completely. This will make the frame a little more narrow, as config.height will no longer add to its width.
 
-config.past = -1.5            -- Number of seconds to show in the past. Default = -3 (yes, it's a negative number)
-config.future = 12            -- Number of seconds to show in the future. Recommended to keep this between 12-18 unless you've got some crazy configuration. Default = 12
-
 config.texturedbars = true        -- You have the choice between textures and solid colors. Remove this or comment it out to see what the solids look like. Default = true
 config.bartexture = "Interface\\Addons\\EventHorizon\\Smooth"  -- Full path, minus extension, of the bar texture to use. Default = "Interface\\Addons\\EventHorizon\\Smooth"
 config.texturealphamultiplier = 2    -- Most textures appear darker than a solid color because of the alpha value. To counteract this, the opacity of the color is multiplied by this number before it's applied to a texture.

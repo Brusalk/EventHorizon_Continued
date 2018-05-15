@@ -3207,8 +3207,6 @@ function ns:Initialize()
 
   self:ApplyConfig()
 
-  self:InitializeClass()
-
   if self.config.showTrinketBars and self.config.showTrinketBars == true then
     self:NewSpell({slotID = 13})
     self:NewSpell({slotID = 14})
@@ -3450,6 +3448,7 @@ function ns:ApplyConfig()
     config = EventHorizonDBG.profiles[ppc] -- EventHorizon.profiles[ProfileName] = {overriddenConfig}
   end
   setmetatable(config,{__index = ns.config}) -- Set non-overridden values to what is in [my]config.lua
+  self:InitializeClass() -- Set config values in class modules
   
   vars.past = -math.abs(config.past) or -3  -- We really don't want config.past to be positive, so negative absolute values work great here.
   vars.future = math.abs(config.future) or 9
