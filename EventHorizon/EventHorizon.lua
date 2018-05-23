@@ -8,6 +8,7 @@ local Cataclysm = select(4,GetBuildInfo()) >= 40000
 local Mop = select(4,GetBuildInfo()) >= 50000
 local Wod = select(4,GetBuildInfo()) >= 60000
 local Legion = select(4,GetBuildInfo()) >= 70000
+local BFA = select(4,GetBuildInfo()) >= 80000
 
 local DEBUG = true 
 DEBUG = UnitName("player") == "Brusalk" -- Comment out this line by prefixing it with "--" if you want to see the load-spam and debug messages
@@ -76,16 +77,6 @@ WodStatusText = WodStatusText .. "If you're interested in helping me out with im
 
 local _GetSpellInfo, _GetTalentInfo, _GetNumTalents, _GetAddOnInfo = GetSpellInfo, GetTalentInfo, GetNumTalents, GetAddOnInfo
 local GetSpellInfo, GetTalentInfo, GetNumTalents, GetAddOnInfo = _GetSpellInfo, _GetTalentInfo, _GetNumTalents, _GetAddOnInfo
-if Legion then
-  GetGlyphSocketInfo = function(...) -- Doesn't really exist anymore, so just disable all glyphs always
-    -- local enabled,_,_,gsID,_ = GetGlyphSocketInfo(i)
-    return false, nil, nil, nil, nil
-  end
-end
-
-ns.legionf = {
-  ["GetGlyphSocketInfo"] = GetGlyphSocketInfo,
-}
 
 local LegionStatusText = ""
 
@@ -150,6 +141,107 @@ local BuildLegionClassConfigStatusText = function()
     end
   end
   ret = ret .. "\nIf your spec is Not Yet Implemented (NYI), please send me your customized config via WoWInterface or the Discord server, so I can add it as the default config for your spec!\n"
+  return ret
+end
+
+-- BFA Alpha
+local BFAStatusText = ""
+
+BFAStatusText = BFAStatusText .. "Welcome to EventHorizon for BFA -- This is a beta release, so expect bugs and things not to work. Also, it is highly likely your class config has not been updated."
+BFAStatusText = BFAStatusText .. "If you do encounter a bug, please copy the whole error message including stack trace and post it in EventHorizon's discord \n\n"
+BFAStatusText = BFAStatusText .. "Just like Legion, it takes me weeks to play every class and spec to a level I feel comfortable with enough to set the default config for, and I likely will not have the time to do that for every spec before launch \n" 
+BFAStatusText = BFAStatusText .. "If you have an updated class config for your spec, please post it to EventHorizon's Discord so I can add it! \n\n  Thanks!\n - Brusalk \n\n"
+
+
+
+local BFASpecIDMapping = {
+  [62] = "Mage: Arcane",
+  [63] = "Mage: Fire",
+  [64] = "Mage: Frost",
+  [65] = "Paladin: Holy",
+  [66] = "Paladin: Protection",
+  [70] = "Paladin: Retribution",
+  [71] = "Warrior: Arms",
+  [72] = "Warrior: Fury",
+  [73] = "Warrior: Protection",
+  [102] = "Druid: Balance",
+  [103] = "Druid: Feral",
+  [104] = "Druid: Guardian",
+  [105] = "Druid: Restoration",
+  [250] = "Death Knight: Blood",
+  [251] = "Death Knight: Frost",
+  [252] = "Death Knight: Unholy",
+  [253] = "Hunter: Beast Mastery",
+  [254] = "Hunter: Marksmanship",
+  [255] = "Hunter: Survival",
+  [256] = "Priest: Discipline",
+  [257] = "Priest: Holy",
+  [258] = "Priest: Shadow",
+  [259] = "Rogue: Assassination",
+  [260] = "Rogue: Outlaw",
+  [261] = "Rogue: Subtlety",
+  [262] = "Shaman: Elemental",
+  [263] = "Shaman: Enhancement",
+  [264] = "Shaman: Restoration",
+  [265] = "Warlock: Affliction",
+  [266] = "Warlock: Demonology",
+  [267] = "Warlock: Destruction",
+  [268] = "Monk: Brewmaster",
+  [269] = "Monk: Windwalker",
+  [270] = "Monk: Mistweaver",
+  [577] = "Demon Hunter: Havoc",
+  [581] = "Demon Hunter: Vengeance",
+}
+
+local BFAClassesNotImplemented = {
+  [62] = "Mage: Arcane",
+  [63] = "Mage: Fire",
+  [64] = "Mage: Frost",
+  [65] = "Paladin: Holy",
+  [66] = "Paladin: Protection",
+  [70] = "Paladin: Retribution",
+  [71] = "Warrior: Arms",
+  [72] = "Warrior: Fury",
+  [73] = "Warrior: Protection",
+  [102] = "Druid: Balance",
+  [103] = "Druid: Feral",
+  [104] = "Druid: Guardian",
+  [105] = "Druid: Restoration",
+  [250] = "Death Knight: Blood",
+  [251] = "Death Knight: Frost",
+  [252] = "Death Knight: Unholy",
+  [253] = "Hunter: Beast Mastery",
+  [254] = "Hunter: Marksmanship",
+  [255] = "Hunter: Survival",
+  [256] = "Priest: Discipline",
+  [257] = "Priest: Holy",
+  [258] = "Priest: Shadow",
+  [259] = "Rogue: Assassination",
+  [260] = "Rogue: Outlaw",
+  [261] = "Rogue: Subtlety",
+  [262] = "Shaman: Elemental",
+  [263] = "Shaman: Enhancement",
+  [264] = "Shaman: Restoration",
+  [265] = "Warlock: Affliction",
+  [266] = "Warlock: Demonology",
+  [267] = "Warlock: Destruction",
+  [268] = "Monk: Brewmaster",
+  [269] = "Monk: Windwalker",
+  [270] = "Monk: Mistweaver",
+  [577] = "Demon Hunter: Havoc",
+  [581] = "Demon Hunter: Vengeance",
+}
+
+
+local BuildBFAClassConfigStatusText = function()
+  local ret = "EventHorizon - BFA Alpha Release\nCurrent Class Status \n\n"
+  for specID, classname in pairs(BFASpecIDMapping) do
+    local id, name, desc, icon, background, role, class = GetSpecializationInfoByID(specID)
+    if BFAClassesNotImplemented[specID] then 
+      ret = ret .. name .. " | NYI \n"
+    end
+  end
+  ret = ret .. "\nIf your spec is Not Yet Implemented (NYI), please send me your customized config via Discord, so I can add it as the default config for your spec!\n"
   return ret
 end
 
@@ -471,7 +563,6 @@ ns.config = {Redshift = {}, blendModes = {}}
 ns.layouts = {}
 ns.colors = {}
 
-ns.glyphs = {}      -- currently active glyph storage. format = ns.glyphs[i] = glyphID
 ns.otherIDs = {}    -- combatlog events either not directly tied to bars, or using spells other than bar.spellID
 ns.modules = {}      -- storage for loaded modules - format = module = ns.modules[string.lower(moduleName)] = {namespace}
 
@@ -577,7 +668,8 @@ local equipSlots = {
 
 local mainframeEvents = {
   ['COMBAT_LOG_EVENT_UNFILTERED'] = true,
-  ['PLAYER_SPECIALIZATION_UPDATE'] = true,
+  ['PLAYER_TALENT_UPDATE'] = true,
+  ['ACTIVE_TALENT_GROUP_CHANGED'] = true,
   ['UPDATE_SHAPESHIFT_FORM'] = true,
   ['UPDATE_SHAPESHIFT_FORMS'] = true,
   ['SPELL_UPDATE_COOLDOWN'] = true,
@@ -589,17 +681,12 @@ local mainframeEvents = {
 }
 
 local reloadEvents = {
-  ['GLYPH_ADDED'] = true,
-  ['GLYPH_ENABLED'] = true,
-  ['GLYPH_REMOVED'] = true,
-  ['GLYPH_UPDATED'] = true,
-  ['GLYPH_DISABLED'] = true,
   ['PLAYER_REGEN_DISABLED'] = true,
   ['PLAYER_REGEN_ENABLED'] = true,
   ['ZONE_CHANGED_NEW_AREA'] = true,
   ['ZONE_CHANGED_INDOORS'] = true,
   ['LFG_LOCK_INFO_RECEIVED'] = true,
-  ['PLAYER_SPECIALIZATION_CHANGED'] = true,
+  ['PLAYER_TALENT_UPDATE'] = true,
   ['ACTIVE_TALENT_GROUP_CHANGED'] = true,
   ['PLAYER_ENTERING_WORLD'] = true,
 }
@@ -620,10 +707,13 @@ local EventHandler = function (self, event, ...)
   local f = self[event]
   if f then
     --if event ~= 'COMBAT_LOG_EVENT_UNFILTERED' then print(event) end
-    f(self,...) 
-    if event ~= 'COMBAT_LOG_EVENT_UNFILTERED' then
-      ns:ModuleEvent(event,...)
+    if event == 'COMBAT_LOG_EVENT' or event == 'COMBAT_LOG_EVENT_UNFILTERED' then
+      -- I'm sorry Blizz, but this is kinda dumb...
+      -- Even weirder is we don't get any sort of event ID to query with, we just have to call the method? Feels weird man
+      return f(self, CombatLogGetCurrentEventInfo())
     end
+    f(self,...) 
+    ns:ModuleEvent(event,...)
   end 
 end
 
@@ -690,7 +780,7 @@ local mainframe_UNIT_AURA = function (self,unit)
   if vars.buff[unit] then
     table.wipe(vars.buff[unit])
     for i = 1, 50 do
-      local name, _, icon, count, _, duration, expirationTime, source, _, _, spellID = UnitBuff(unit,i)
+      local name, icon, count, _, duration, expirationTime, source, _, _, spellID = UnitBuff(unit,i)
       --print(name,icon,count,duration,expirationTime,source,spellID)
       if not (name and spellID) then break end
       table.insert(vars.buff[unit],{
@@ -707,7 +797,7 @@ local mainframe_UNIT_AURA = function (self,unit)
   if vars.debuff[unit] then
     table.wipe(vars.debuff[unit])
     for i = 1,100 do
-      local name, _, icon, count, _, duration, expirationTime, source, _, _, spellID = UnitDebuff(unit,i)
+      local name, icon, count, _, duration, expirationTime, source, _, _, spellID = UnitDebuff(unit,i)
       if not (name and spellID) then break end
       table.insert(vars.debuff[unit], {
         name = name,
@@ -795,12 +885,6 @@ local typeparent = {}
 local SpellFrame_SetStacks = function (self,count)
   if type(count) == "number" and (count > 0) then
     self.stacks:SetFormattedText('%d',count)
-  elseif self.glyphstacks then
-    if self.glyphstacks[guid] and (self.glyphstacks[guid] > 0) then
-      self.stacks:SetText(self.glyphstacks[guid])
-    else
-      self.stacks:SetText()
-    end
   else
     self.stacks:SetText()
   end
@@ -997,21 +1081,24 @@ local SpellFrame_OnUpdate = function (self,elapsed)
   end
 end
 
-local SpellFrame_UNIT_SPELLCAST_SENT = function (self, unitid, spellname, spellrank, spelltarget)
+local SpellFrame_UNIT_SPELLCAST_SENT = function (self, unitid, target, castGuid, spellID)
+  local spellname = GetSpellInfo(spellID)
   if ((self.cast and not(self.cast[spellname])) or (spellname ~= self.spellname)) or unitid ~= 'player' then return end
   local now = GetTime()
   self:AddIndicator('sent', 'default', now)
 end
 
-local Cast_Start = function (self, unitid, spellname, spellrank)
+local Cast_Start = function (self, unitid, castGUID, spellID)
+  local name,_,icon = GetSpellInfo(spellID)
+  local unitid, spellname, spellrank = unitid, name, -1
+  print("EH DEBUG CAST START", unitid, spellname, spellrank, castGUID, spellID, self.cast[spellname])
   if not(self.cast[spellname]) or unitid ~= 'player' then return end
-  local _,_,_,_,startTime,endTime,_ = self.cast[spellname].func(unitid)
+  local _,_,_,startTime,endTime,_ = self.cast[spellname].func(unitid)
   if not(startTime and endTime) then return end
   
   startTime, endTime = startTime/1000, endTime/1000
   self.casting = self:AddSegment('casting', 'default', startTime, endTime)
-  
-  local name,_,icon = GetSpellInfo(self.cast[spellname].id)
+
   self.lastcast = name
   if not(self.keepIcon) then
     self.icon:SetTexture(icon)
@@ -1033,10 +1120,12 @@ local Cast_Start = function (self, unitid, spellname, spellrank)
   end
 end
 
-local Cast_Update = function (self, unitid, spellname, spellrank)
+local Cast_Update = function (self, unitid, castGUID, spellID)
   --debug('UNIT_SPELLCAST_CHANNEL_UPDATE',unitid, spellname, spellrank)
+  local name,_,icon = GetSpellInfo(spellID)
+  local unitid, spellname, spellrank = unitid, name, -1 
   if not(self.cast[spellname]) or unitid ~= 'player' then return end
-  local _,_,_,_,startTime,endTime,_ = self.cast[spellname].func(unitid)
+  local _,_,_,startTime,endTime,_ = self.cast[spellname].func(unitid)
   if not (startTime and endTime) then return end
   startTime, endTime = startTime/1000, endTime/1000
   if self.casting then
@@ -1048,7 +1137,10 @@ local Cast_Update = function (self, unitid, spellname, spellrank)
   self:RemoveChannelTicksAfter(endTime)
 end
 
-local Cast_Stop = function (self, unitid, spellname, spellrank)
+local Cast_Stop = function (self, unitid, castGUID, spellID)
+  local name,_,icon = GetSpellInfo(spellID)
+  local unitid, spellname, spellrank = unitid, name, -1 
+  
   if not(self.cast[spellname]) or unitid ~= 'player' then return end
   local now = GetTime()
   if self.casting then
@@ -1307,25 +1399,6 @@ local mainframe_CLEU_OtherInterestingSpell = function (self, time, event, hideCa
           break
         end
       end
-    elseif event == 'SPELL_CAST_SUCCESS' or event == 'SPELL_DAMAGE' and id.isGlyph then    -- Glyph refresh
-      if id.last and (now < (id.last + 0.9)) then    -- Throttle heavily, don't want stacks getting blown
-        --debug("Ignoring "..event.." from "..spellname.." at "..now)
-        return
-      else
-        --debug("Interesting spell potentially not in frame detected! Spell: "..spellname,event)
-        id.last = now
-        for i in pairs(bf) do
-          local gr = bf[i].glyphrefresh or nil
-          local gs = bf[i].glyphstacks or nil
-          if gr and (gr[3] == spellname) then
-            if gs[destguid] then
-              gs[destguid] = gs[destguid] - 1
-              bf[i]:SetStacks(gs[destguid] > 0 and gs[destguid] or nil)
-            end
-            --debug("SUCCESS! "..gr[3].." has triggered "..frame[i].auraname)
-          end
-        end
-      end
     end
   end
 end
@@ -1365,20 +1438,16 @@ AddTicks.start = function (self,now)
   end
 end
 
-local SpellFrame_COMBAT_LOG_EVENT_UNFILTERED = function (self, timestamp, event, hideCaster, srcguid,srcname,srcflags, destguid,destname,destflags, spellid,spellname)
+local SpellFrame_COMBAT_LOG_EVENT_UNFILTERED = function (...)
+  local self, timestamp, event, hideCaster, srcguid,srcname,srcflags, destguid,destname,destflags, spellid,spellname = ...
   local now = GetTime()
-  if event == 'SPELL_AURA_REMOVED' then
-    if self.glyphrefresh then
-      self.glyphstacks[destguid] = 0
-    end
-  end
   
   if event == 'SPELL_CAST_SUCCESS' then
     --debug('SPELL_CAST_SUCCESS',destguid)
     self.castsuccess[destguid] = now
 
   elseif tickevents[event] then
-        local isInvalid = not(self.dot) and (self.cast and self.cast[spellname] and not(self.cast[spellname].numhits))  -- filter out cast+channel bars
+    local isInvalid = not(self.dot) and (self.cast and self.cast[spellname] and not(self.cast[spellname].numhits))  -- filter out cast+channel bars
     if isInvalid then return end
     if UnitGUID(self.auraunit or 'target')==destguid then
       local tick = self:AddIndicator('tick', 'tick', now)
@@ -1553,13 +1622,7 @@ local SpellFrame_UpdateDoT = function (self, addnew, source, now, start, expirat
     self.nexttick = nil
     
     if self.hasted then
-      if type(self.hasted) == 'number' then
-        for i = 1,6 do
-          if ns.glyphs[i] == self.hasted then isHasted = true end
-        end
-      elseif self.hasted == true then
-        isHasted = true
-      end
+      isHasted = true
     end
     
     if isHasted and self.expectedTicks then    -- Using expectedTicks
@@ -1581,13 +1644,7 @@ local SpellFrame_UpdateDoT = function (self, addnew, source, now, start, expirat
     --self:AddTicks(now)
     
     if self.hasted then
-      if type(self.hasted) == 'number' then
-        for i = 1,6 do
-          if ns.glyphs[i] == self.hasted then isHasted = true end
-        end
-      elseif self.hasted == true then
-        isHasted = true
-      end
+      isHasted = true
     end
     
     if isHasted and self.ticks then          -- Tick-process haste handling
@@ -1676,13 +1733,7 @@ local SpellFrame_UpdateTotem = function (self, addnew, source, now, start, expir
     self.nexttick = nil
     
     if self.hasted then
-      if type(self.hasted) == 'number' then
-        for i = 1,6 do
-          if ns.glyphs[i] == self.hasted then isHasted = true end
-        end
-      elseif self.hasted == true then
-        isHasted = true
-      end
+      isHasted = true
     end
     
     if isHasted and self.expectedTicks then    -- Using expectedTicks
@@ -1704,13 +1755,7 @@ local SpellFrame_UpdateTotem = function (self, addnew, source, now, start, expir
     --self:AddTicks(now)
     
     if self.hasted then
-      if type(self.hasted) == 'number' then
-        for i = 1,6 do
-          if ns.glyphs[i] == self.hasted then isHasted = true end
-        end
-      elseif self.hasted == true then
-        isHasted = true
-      end
+      isHasted = true
     end
     
     if isHasted and self.ticks then          -- Tick-process haste handling
@@ -1996,13 +2041,6 @@ local SpellFrame_UPDATE_MOUSEOVER_UNIT = function (self)
         --if self.targetdebuff then debug(self.spellname, 'have old') end
         mainframe:UNIT_AURA(self.auraunit)
         --if self.aurasegment then debug(self.spellname, 'added new') end
-        if self.glyphstacks and self.aurasegment then
-          
-          local count = self.glyphstacks[guid]
-          if self.glyphstacks[guid] and ( count > 0) then
-            self:SetStacks(self.glyphstacks[UnitGUID(self.auraunit)])
-          end
-        end
       end
     end
   elseif UnitExists(self.auraunit) then
@@ -2151,41 +2189,20 @@ function ns:CheckRequirements()
         local nameTalent, icon, tier, column, active = GetTalentInfo(i);
         vars.currentTalents[i] = active;
     end
-    
-  self.glyphs = {}
-  for i = 1,6 do
-    local enabled,_,_,gsID,_ = GetGlyphSocketInfo(i)
-    if enabled and gsID then
-      self.glyphs[i] = gsID
-    else
-      self.glyphs[i] = nil
-    end
-  end
-  
   
   for i,config in ipairs(self.frames.config) do
-    local rG = false -- Glyphs don't exist anymore for combat affecting behavior (maybe?)
     local rS = config.requiredTree
     local rL = config.requiredLevel or 1
     local rT = config.requiredTalent
     local nRT = config.requiredTalentUnselected
     local rA = config.requiredArtifactTalent
     
-    local haveGlyphReq = true
     local haveSpecReq = true
     local haveTalentReq = true
     local haveTalentRequiredUnselected = true
     local haveLevelReq = rL <= vars.currentLevel
     local haveArtifactTalentReq = true
-    
-        
-    if rG then
-      haveGlyphReq = nil
-      for i,glyph in ipairs(self.glyphs) do
-        if rG == glyph then haveGlyphReq = true end
-      end
-    end
-    
+
     if rS then
       haveSpecReq = nil
       if type(rS) == 'number' then
@@ -2267,7 +2284,7 @@ function ns:CheckRequirements()
     local spellframe = self.frames.frames[i]
     local frameExists = spellframe~=nil
     
-    if haveGlyphReq and haveSpecReq and haveLevelReq and haveTalentReq and haveTalentRequiredUnselected and haveArtifactTalentReq then
+    if haveSpecReq and haveLevelReq and haveTalentReq and haveTalentRequiredUnselected and haveArtifactTalentReq then
       if frameExists then
         spellframe:Activate()
       else
@@ -2410,7 +2427,8 @@ local mainframe_SPELL_UPDATE_COOLDOWN = function (self)
 end
 
 -- Dispatch the CLEU.
-local mainframe_COMBAT_LOG_EVENT_UNFILTERED = function (self,time, event, hideCaster, srcguid,srcname,srcflags, destguid,destname,destflags, spellid,spellname)
+local mainframe_COMBAT_LOG_EVENT_UNFILTERED = function (...)
+  local self,time, event, hideCaster, srcguid,srcname,srcflags, destguid,destname,destflags, spellid,spellname = ...
   if srcguid~=vars.playerguid or event:sub(1,5)~='SPELL' then return end
   local spellframe = self.framebyspell[spellname]
   if ns.otherIDs[spellname] then
@@ -2538,8 +2556,7 @@ function ns:newSpell(config) -- New class config to old class config
   n.keepIcon = c.keepIcon
   n.icon = c.icon
   n.smallCooldown = c.smallCooldown
-  
-  n.requiredGlyph = c.requiredGlyph
+
   n.requiredTree = c.requiredTree
   n.requiredLevel = c.requiredLevel
   n.requiredTalent = c.requiredTalent
@@ -2820,17 +2837,6 @@ local function SetSpellAttributes(spellframe,config)
     end
   end  
   
-  if type(config.glyphrefresh) == 'table' then
-    spellframe.glyphrefresh = config.glyphrefresh
-    spellframe.glyphstacks = {}
-    if not otherids[config.glyphrefresh[3]] then
-      otherids[config.glyphrefresh[3]] = {}
-    end
-    otherids[config.glyphrefresh[3]][spellname] = true
-    otherids[config.glyphrefresh[3]].isGlyph = true
-    interestingCLEU.SPELL_AURA_REMOVED = true
-  end
-  
   spellframe.hasted = config.hasted
   spellframe.minstacks = config.minstacks
   spellframe.stance = config.stance
@@ -2978,7 +2984,7 @@ function ns:Deactivate()
     return
   end
   mainframe:UnregisterAllEvents()
-  mainframe:RegisterEvent('PLAYER_SPECIALIZATION_UPDATE')
+  mainframe:RegisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
 
   mainframe:Hide()
   
@@ -3085,7 +3091,7 @@ function ns:Initialize()
     end,
     OnAccept = function()
       StaticPopup_Hide("EH_GithubDialog1")
-      EventHorizonDB.__GithubDialog1Notification = true
+      EventHorizonDB.__GithubDialog1NotificationBFA = true
     end,
   }
 
@@ -3101,11 +3107,11 @@ function ns:Initialize()
       self:SetText("discord.gg/mR8xUUK") -- Esentially don't allow them to change the value
     end,
     OnAccept = function()
-      EventHorizonDB.__DiscordDialog1Notification = true
+      EventHorizonDB.__DiscordDialog1NotificationBFA = true
     end,
     OnHide = function()
       StaticPopup_Hide("EH_DiscordDialog1")
-      if not EventHorizonDB.__GithubDialog1Notification then
+      if not EventHorizonDB.__GithubDialog1NotificationBFA then
          popupIn("EH_GithubDialog1", 0.5)
       end
     end,
@@ -3146,6 +3152,41 @@ function ns:Initialize()
     end,
   }
 
+  StaticPopupDialogs["EH_BFADialog2"] = {
+    text = BuildBFAClassConfigStatusText(),
+    showAlert = true,
+    button1 = "Hide Forever",
+    button2 = "Hide",
+    hideOnEscape = 1,
+    OnAccept = function()
+      EventHorizonDB.__BFAClassConfigStatusNotification2 = true
+    end,
+    OnHide = function()
+      StaticPopup_Hide("EH_BFADialog2")
+      if not EventHorizonDB.__DiscordDialog1Notification then
+        popupIn("EH_DiscordDialog1", 0.5)
+      end
+    end,
+  }
+    
+  
+  StaticPopupDialogs["EH_BFADialog1"] = {
+    text = BFAStatusText,
+    showAlert = true,
+    button1 = "Hide Forever",
+    button2 = "Hide",
+    hideOnEscape = 1,
+    OnAccept = function()
+      EventHorizonDB.__BFAClassStatusNotification2 = true
+    end,
+    OnHide = function()
+      StaticPopup_Hide("EH_BFADialog1")
+      if not EventHorizonDB.__BFAClassConfigStatusNotification2 then
+        popupIn("EH_BFADialog2", 0.5)
+      end
+    end,
+  }
+
   StaticPopupDialogs["EH_EmptyConfig"] = {
     text = "EventHorizon: Failed to load any spell configs for your spec. Either your spec has not been implemented yet, or there was an error loading your config. Consider checking your class config.\n\nEventHorizon will not display until the spell config is fixed",
     showAlert = true,
@@ -3167,9 +3208,21 @@ function ns:Initialize()
     hideOnEscape = 1
   }
 
-  if Wod and not Legion then
-    if not EventHorizonDB.__WodClassStatusNotification2 then
-      popupIn("EH_WodDialog", 2)
+  if BFA then
+    if EventHorizonDB.__BFAClassStatusNotification2 then -- Dialog1 hidden
+      if EventHorizonDB.__BFAClassConfigStatusNotification2 then -- We've hidden dialog2
+        if EventHorizonDB.__DiscordDialog1NotificationBFA then
+          if not EventHorizonDB.__GithubDialog1NotificationBFA then
+            popupIn("EH_GithubDialog1", 2)
+          end
+        else
+          popupIn("EH_DiscordDialog1", 2)
+        end
+      else
+        popupIn("EH_BFADialog2", 2)
+      end
+    else
+      popupIn("EH_BFADialog1", 2) -- Need to show Dialog1
     end
   elseif Legion then
     if EventHorizonDB.__LegionClassStatusNotification2 then -- Dialog1 hidden
@@ -3352,7 +3405,7 @@ function ns:Initialize()
       if self.isActive then
         print('Deactivating. Use "/ehz help" to see what else you can do.')
         self:Deactivate()
-        mainframe:UnregisterEvent('PLAYER_SPECIALIZATION_UPDATE')
+        mainframe:UnregisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
       else
         print('Activating. Use "/ehz help" to see what else you can do.')
         print('Will be hidden automatically if there\' no active bars')
@@ -3368,7 +3421,7 @@ function ns:Initialize()
   ns.isActive = EventHorizonDB.isActive
   if not EventHorizonDB.isActive then
     self:Deactivate()
-    mainframe:UnregisterEvent('PLAYER_SPECIALIZATION_UPDATE')
+    mainframe:UnregisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
   end
   
   
@@ -3582,7 +3635,7 @@ function ns:UpdateConfig()
   self:SetFrameDimensions()
 end
 
-local glyphCheck = function ()
+local loginCheck = function ()
   if ns.isActive == true then
     ns:CheckTalents()
 
@@ -3639,7 +3692,7 @@ frame.PLAYER_ALIVE = function (self)
   frame2:SetScript('OnEvent', EventHandler)
   for k,v in pairs(reloadEvents) do
     frame2:RegisterEvent(k)
-    frame2[k] = glyphCheck
+    frame2[k] = loginCheck
   end
   if not(ns.isReady) then
     ns:Initialize()
@@ -3657,7 +3710,7 @@ frame.PLAYER_LOGIN = function (self)
     frame2:SetScript('OnEvent', EventHandler)
     for k,v in pairs(reloadEvents) do
       frame2:RegisterEvent(k)
-      frame2[k] = glyphCheck
+      frame2[k] = loginCheck
     end
     if not(ns.isReady) then 
       ns:Initialize()
@@ -3675,7 +3728,8 @@ mainframe.UPDATE_SHAPESHIFT_FORM = mainframe_UPDATE_SHAPESHIFT_FORM
 mainframe.SPELL_UPDATE_COOLDOWN = mainframe_SPELL_UPDATE_COOLDOWN
 mainframe.COMBAT_LOG_EVENT_UNFILTERED = mainframe_COMBAT_LOG_EVENT_UNFILTERED
 mainframe.UPDATE_SHAPESHIFT_FORMS = mainframe_UPDATE_SHAPESHIFT_FORM
-mainframe.PLAYER_SPECIALIZATION_UPDATE = ns.CheckTalents
+mainframe.PLAYER_TALENT_UPDATE = ns.CheckTalents
+mainframe.ACTIVE_TALENT_GROUP_CHANGED = ns.CheckTalents
 mainframe.PLAYER_LEVEL_UP = ns.CheckTalents
 mainframe.PLAYER_TARGET_CHANGED = mainframe_PLAYER_TARGET_CHANGED
 mainframe.UNIT_AURA = mainframe_UNIT_AURA

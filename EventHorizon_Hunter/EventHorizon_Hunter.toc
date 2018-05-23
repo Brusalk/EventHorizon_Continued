@@ -1,4 +1,4 @@
-## Interface: 70300
+## Interface: 80000
 ## Title: EventHorizon_|c30abd473Hunter|r
 ## Author: Brusalk, Stilmore
 ## Dependencies: EventHorizon
