@@ -11,10 +11,10 @@ local Legion = select(4,GetBuildInfo()) >= 70000
 local BFA = select(4,GetBuildInfo()) >= 80000
 
 local DEBUG = true 
-DEBUG = UnitName("player") == "Brusalk" -- Comment out this line by prefixing it with "--" if you want to see the load-spam and debug messages
+--DEBUG = UnitName("player") == "Brusalk" -- Comment out this line by prefixing it with "--" if you want to see the load-spam and debug messages
 local spellIDsEnabled = DEBUG -- Toggles display of spellIDs in tooltips. Useful for working on spell configs
 
-local LA = LibStub("LibArtifactData-1.0")
+--local LA = LibStub("LibArtifactData-1.0")
 
 -- Wod Changes
 local _GetSpellInfo, _GetTalentInfo, _GetNumTalents, _GetAddOnInfo = GetSpellInfo, GetTalentInfo, GetNumTalents, GetAddOnInfo
@@ -3442,7 +3442,7 @@ function ns:DelayLoad()
 
   -- Optimization for people who can't possibly have talents
   if UnitLevel("PLAYER") <= 99 then ns:DelayedLoad() return end
-
+--[[
   LA.RegisterCallback(ns, "ARTIFACT_ADDED", function()
     LA.UnregisterCallback(ns, "ARTIFACT_ADDED")
     debug("ADDED", LA:GetActiveArtifactID())
@@ -3455,7 +3455,7 @@ function ns:DelayLoad()
     LA.UnregisterCallback(ns, "ARTIFACT_ACTIVE_CHANGED")
     LA.UnregisterCallback(ns, "ARTIFACT_ADDED")
   end)
-
+]]
 end
 
 function ns:DelayedLoad()
@@ -3463,7 +3463,7 @@ function ns:DelayedLoad()
   if self.isReady then return end
   self.isReady = true
 
-  -- Artifact checkRequirements events
+  --[[ Artifact checkRequirements events
   local interestingArtifactLibEvents = {
     ["ARTIFACT_ADDED"] = ns.CheckTalents, -- Fires if no artifact equipped on load
     ["ARTIFACT_ACTIVE_CHANGED"] = ns.CheckTalents,
@@ -3481,7 +3481,7 @@ function ns:DelayedLoad()
       handler(ns)
     end)
   end
-
+]]
   self:CheckRequirements()
   self:LoadModules()
 
@@ -4192,4 +4192,3 @@ if spellIDsEnabled then
   ShoppingTooltip2:HookScript("OnTooltipSetItem", attachItemTooltip)
 end
 --END TEMP--
-
