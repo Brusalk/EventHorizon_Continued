@@ -33,7 +33,7 @@ config.Redshift.hideVitals = true    -- Hide EventHorizon_Vitals as well when th
 config.Lines = nil            -- This draws extra marker lines on EventHorizon. Examples: config.Lines = 2 (add a line at 2 seconds in the future); config.Lines = {2, 4, 6} (add lines at 2, 4 and 6 seconds). Decimals and math are permitted, of course. Any amount of lines is allowed. Default: Disabled.
 config.LinesColor = {1,1,1,0.5}      -- Standard color syntax {R,G,B,A} (see below). No classcolor allowed quite yet. Embed more tables for more colors. {{1,0,0,1},{0,1,0,1},{0,0.5,1}} will do one red line, one green line, and the rest kinda-teal lines. Yeah, it's a bit of an advanced thing.
 
-config.anchor = {"TOPRIGHT", "EventHorizonHandle", "BOTTOMRIGHT"}  -- EventHorizon's position. Format: {'POINT', 'AnchorFrame', 'RELATIVE', Xoffset (optional), Yoffset (optional)}. Set the anchor to something other than EventHorizonHandle to root EH in place and remove the anchor. Default = {"TOPRIGHT", "EventHorizonHandle", "BOTTOMRIGHT"} (anchor the TOPRIGHT of EH to EventHorizonHandle's BOTTOMRIGHT with no offset)
+config.anchor = {"TOPLEFT", "EventHorizonHandle", "BOTTOMLEFT"}  -- EventHorizon's position. Format: {'POINT', 'AnchorFrame', 'RELATIVE', Xoffset (optional), Yoffset (optional)}. Set the anchor to something other than EventHorizonHandle to root EH in place and remove the anchor. Default = {"TOPRIGHT", "EventHorizonHandle", "BOTTOMRIGHT"} (anchor the TOPRIGHT of EH to EventHorizonHandle's BOTTOMRIGHT with no offset)
 config.width = 375            -- Width of a single bar, not counting its icon. The actual width of the frame is (width+height+[padding*2]).
 config.height = 20            -- Height of a single bar. If you use config.staticHeight, this is used for the width of the bar icons.
 config.spacing = 0            -- Vertical spacing between bars.
@@ -57,13 +57,14 @@ config.border = "Interface\\Tooltips\\UI-Tooltip-Border"  -- Border texture, sam
 config.edgesize = 8                      -- Thickness of the frame's border. Default = 8
 config.inset = {top = 2, bottom = 2, left = 2, right = 2}  -- Backdrop insets move the edges of the background, but leave the border untouched. Long story short, start at 1/4 your edgesize and adjust by 1 until it looks right. Default = {top = 2, bottom = 2, left = 2, right = 2}
 
-config.stackFont = false        -- Changes the font of the stack indicators. Usage: config.stackFont = "Interface\\AddOns\\FontDirectory\\FontName.ttf"
-config.stackFontSize = false      -- Changes the font size of the stack indicators. Only usable with config.stackFont. Usage: config.stackFontSize = <number> (start at 12 and adjust from there if you're not sure)
-config.stackFontOutline = false      -- Adds an outline to the font. Only usable with config.stackFont. Valid flags: "OUTLINE", "THICKOUTLINE", "MONOCHROME". Usage: config.stackFontSize = "FLAG"
-config.stackFontColor = false      -- Changes the color of the stack indicators. This option available even if config.stackFont is not being used. Usage: config.stackFontColor = {Red,Green,Blue,(Alpha)} (default = {1,1,1}, alpha is optional)
-config.stackFontShadow = false      -- Adds a shadow effect to the stack indicators. Only usable with config.stackFont. Setting this to true defaults it to black at 50% opacity. Best used without an outline. Usage: config.stackFontShadow = {Red,Green,Blue,(Alpha)} -OR- true ( {0,0,0,0.5} )
-config.stackFontShadowOffset = false  -- Changes the offset of the font shadow if config.stackFontShadow is set. Usage: config.stackFontShadowOffset = {x,y} (default = {1,-1})
-config.stackOnRight = false        -- Changes the position of the stack indicators from the left of the frame to the right. Default = false. Usage: config.stackOnRight = true
+
+config.stackFont = "fonts\\arialn.ttf"          -- Changes the font of the stack indicators. Usage: config.stackFont = "Interface\\AddOns\\FontDirectory\\FontName.ttf"
+config.stackFontSize = 16                       -- Changes the font size of the stack indicators. Only usable with config.stackFont. Usage: config.stackFontSize = <number> (start at 12 and adjust from there if you're not sure)
+config.stackFontOutline = MONOCHROME            -- Adds an outline to the font. Only usable with config.stackFont. Valid flags: "OUTLINE", "THICKOUTLINE", "MONOCHROME". Usage: config.stackFontSize = "FLAG"
+config.stackFontColor = {1/255,242/255,242/255} -- Changes the color of the stack indicators. This option available even if config.stackFont is not being used. Usage: config.stackFontColor = {Red,Green,Blue,(Alpha)} (default = {1,1,1}, alpha is optional)
+config.stackFontShadow = false                  -- Adds a shadow effect to the stack indicators. Only usable with config.stackFont. Setting this to true defaults it to black at 50% opacity. Best used without an outline. Usage: config.stackFontShadow = {Red,Green,Blue,(Alpha)} -OR- true ( {0,0,0,0.5} )
+config.stackFontShadowOffset = {-1,1}           -- Changes the offset of the font shadow if config.stackFontShadow is set. Usage: config.stackFontShadowOffset = {x,y} (default = {1,-1})
+config.stackOnRight = false                     -- Changes the position of the stack indicators from the left of the frame to the right. Default = false. Usage: config.stackOnRight = true
 
 -- The format for the color section is {Red, Green, Blue, Opacity/Alpha}. To color a bar or indicator by class, use {true, <burn>, <alpha>}.
 -- <burn> means color intensity - 0.5 burn darkens a color by 50%. 1.2 lightens it by 20%. 1 is baseline.
