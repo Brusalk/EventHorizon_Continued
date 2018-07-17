@@ -1086,7 +1086,6 @@ end
 local Cast_Start = function (self, unitid, castGUID, spellID)
   local name,_,icon = GetSpellInfo(spellID)
   local unitid, spellname, spellrank = unitid, name, -1
-  print("EH DEBUG CAST START", unitid, spellname, spellrank, castGUID, spellID, self.cast[spellname])
   if not(self.cast[spellname]) or unitid ~= 'player' then return end
   local _,_,_,startTime,endTime,_ = self.cast[spellname].func(unitid)
   if not(startTime and endTime) then return end
@@ -3454,7 +3453,6 @@ function ns:DelayLoad()
 end
 
 function ns:DelayedLoad()
-  print("Delayed Load", self.isReady)
   if self.isReady then return end
   self.isReady = true
 
@@ -4131,7 +4129,6 @@ ns:RegisterModule('redshift',Redshift)
 
 
 -- SpellID Debug (Shows up in the tooltip) -- 
-print("Show spell ids?", spellIDsEnabled)
 if spellIDsEnabled then
   print("Showing SpellIDs in Tooltips")
   local hooksecurefunc, select, UnitBuff, UnitDebuff, UnitAura, UnitGUID, GetGlyphSocketInfo, tonumber, strfind = hooksecurefunc, select, UnitBuff, UnitDebuff, UnitAura, UnitGUID, GetGlyphSocketInfo, tonumber, strfind
@@ -4203,7 +4200,6 @@ if spellIDsEnabled then
   end)
 
   hooksecurefunc(GameTooltip, "SetUnitAura", function(self,...)
-    print("OnTooltipSetSpell", UnitAura(...))
     local id = select(10, UnitAura(...))
     if id then addLine(self, id, types.spell) end
   end)
