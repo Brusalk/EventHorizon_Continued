@@ -159,7 +159,7 @@ function EventHorizon:InitializeClass()
     playerbuff = 48792,
   })
 
---[[ Not shown as default due to the number of bars already and it's a long, offensive, CD.
+--[[ Not shown as default due to the number of bars already and it's a long, offensive, CD in tank spec.
   -- Dancing Rune Weapon
   self:newSpell({
     requiredTree = 1,
@@ -171,7 +171,7 @@ function EventHorizon:InitializeClass()
 
   -- Frost
 
---[[ --I was testing not having this as it's unlikely to ever be missing unless you fell asleep, feedback welcome.
+--[[ --I was testing not tracking this as it's unlikely to ever be missing unless you fell asleep, feedback welcome.
   -- Frost Fever
   self:newSpell({
     requiredTree = 2,
@@ -187,7 +187,7 @@ function EventHorizon:InitializeClass()
   self:newSpell({
     requiredTree = 2,
     requiredTalent = {1, 16},
-    playerbuff = {253593, 8}, -- Unhasted GCD time included as a 'tick marker' to help keep it up.
+    playerbuff = {253593, 8}, -- Tick marker to tell you when you'll get another charge, only displays if you've got one though. :-(
     barcolors = {
      playerbuff  = {111/255, 212/255, 252/255, 0.6}
      },
@@ -197,7 +197,7 @@ function EventHorizon:InitializeClass()
   self:newSpell({
     requiredTree = 2,
     requiredTalent = {1, 17},
-    playerbuff = {253593, 8}, -- Unhasted GCD time included as a 'tick marker' to help keep it up.
+    playerbuff = {253593, 8}, -- Tick marker to tell you when you'll get another charge, only displays if you've got one though. :-(
     cooldown = 194913,
     smallCooldown = true,
     barcolors = {
@@ -210,7 +210,7 @@ function EventHorizon:InitializeClass()
   self:newSpell({
     requiredTree = 2,
     requiredTalent = {1, 18},
-    playerbuff = {253593, 8}, -- Unhasted GCD time included as a 'tick marker' to help keep it up.
+    playerbuff = {253593, 8}, -- Tick marker to tell you when you'll get another charge, only displays if you've got one though. :-(
     cooldown = 279302,
     smallCooldown = true,
     barcolors = {
@@ -296,7 +296,7 @@ function EventHorizon:InitializeClass()
     requiredTree = 2,
     requiredLevel = 57,
     cooldown = 196770,
-    debuff = 196770,
+    debuff = {196770, 1},
     barcolors = {
      cooldown    = {151/255, 222/255, 252/255, 0.6},
      debuffmine  = {151/255, 222/255, 252/255, 0.7}
@@ -353,7 +353,6 @@ function EventHorizon:InitializeClass()
   self:newSpell({
     requiredTree = 2,
     requiredLevel = 57,
-    requiredTalentUnselected = 21,
     recharge = 47568,
     barcolors = {
      cooldown    = {070/255, 252/255, 252/255, 0.5},
@@ -372,18 +371,6 @@ function EventHorizon:InitializeClass()
      playerbuff  = {070/255, 252/255, 252/255, 0.7}
      },
   })
-
---[[ Not included by default as it's a five minute CD, feedback has told us this is too long to track. Uncomment if wanted.
-  -- Sindragosa's Fury
-  self:newSpell({
-    requiredTree = 2,
-    requiredArtifactTalent = 190778,
-    cooldown = 190778,
-    barcolors = {
-     cooldown    = {202/255, 161/255, 050/255, 0.7},
-     },
-  })
-]]--
 
   -- Remove the --[[ and ]]-- from any of the damage reduction spells you'd like to track in Frost spec.
 --[[
@@ -583,7 +570,8 @@ function EventHorizon:InitializeClass()
      },
   })
 
-  -- Anti-Magic Shell
+  -- Remove the --[[ and ]]-- from any of the damage reduction spells you'd like to track in Unholy spec.
+--[[  -- Anti-Magic Shell
   self:newSpell({
     requiredTree = 3,
     cooldown = 48707,
@@ -593,8 +581,9 @@ function EventHorizon:InitializeClass()
      playerbuff  = {212/255, 242/255, 040/255, 0.7}
      },
   })
+]]--
 
---[[ -- Hidden by default as the number of bars gets to eight, depending on talents. Also it's a long survival CD, uncomment it you'd like to see it.
+--[[
   -- Icebound Fortitude
   self:newSpell({
     requiredTree = 3,
@@ -606,6 +595,6 @@ function EventHorizon:InitializeClass()
      debuffmine  = {181/255, 232/255, 090/255, 0.7}
      },
   })
-]]
+]]--
 
 end
