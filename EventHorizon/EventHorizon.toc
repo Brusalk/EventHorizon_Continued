@@ -1,7 +1,7 @@
 ## Interface: 80000
 ## Title: EventHorizon
 ## Author: Brusalk
-## Version: 1.9.22-beta
+## Version: 1.9.23-beta
 ## Dependencies:
 ## OptDeps: SharedMedia, LibArtifactData-1.0
 ## OptionalDepts: LibArtifactData-1.0
@@ -23,4 +23,3 @@ trinkets.lua
 # Thus, if you create an EventHorizon_Configs folder along side EventHorizon's folders, you can stick specific configs there
 # and they'll be used over config/myconfigs.
 ..\EventHorizon_Configs\core_my_config.lua
-

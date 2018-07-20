@@ -23,7 +23,7 @@ if Wod then
     local name, rank, icon, castingTime, minRange, maxRange = _GetSpellInfo(...)
     return name, rank, icon, nil, nil, nil, castingTime, minRange, maxRange
   end
-  
+
   GetTalentInfo = function(talentIndex, isInspect, talentGroup, inspectedUnit, classID)
     local tier = math.floor((talentIndex-1)/3 + 1)
     local column = (talentIndex-1)%3 + 1
@@ -31,7 +31,7 @@ if Wod then
     local _, name, icon, selected, selectable = _GetTalentInfo(tier, column, talentGroup or GetActiveSpecGroup(), inspectedUnit, nil)
     return name, icon, tier, column, selected
   end
-  
+
   GetNumTalents = function()
     if Wod then
       return 21
@@ -39,7 +39,7 @@ if Wod then
       return 18
     end
   end
-  
+
   GetAddOnInfo = function(id_or_name)
     if type(id_or_name) == "number" then
       return _GetAddOnInfo(id_or_name)
@@ -69,7 +69,7 @@ else
   WodStatusText = WodStatusText .. "This is the backwards compatible version of the WoD beta version of EventHorizon. "
 end
 WodStatusText = WodStatusText .. "If you encounter a bug, please copy the whole error message including stack trace and tell me about it on EventHorizon's WowInterface page. \n\n"
-WodStatusText = WodStatusText .. "I only play a few specs, so most of these configs are my best guess given a few hours on beta and training dummies. \n" 
+WodStatusText = WodStatusText .. "I only play a few specs, so most of these configs are my best guess given a few hours on beta and training dummies. \n"
 WodStatusText = WodStatusText .. "If you're interested in helping me out with improving class configurations, please don't hesitate to let me know on EventHorizon's WowInterface page. \n\n  Thanks! ^.^ \n - Brusalk \n\n"
 
 -- Legion API Changes
@@ -80,7 +80,7 @@ local GetSpellInfo, GetTalentInfo, GetNumTalents, GetAddOnInfo = _GetSpellInfo, 
 local LegionStatusText = ""
 
 LegionStatusText = LegionStatusText .. "If you encounter a bug, please copy the whole error message including stack trace and tell me about it on EventHorizon's WowInterface page. \n\n"
-LegionStatusText = LegionStatusText .. "I don't plan on updating every individual class config for every spec. It takes me weeks to play every class and spec to a level I feel comfortable with enough to set the default config for, and I don't have time for that anymore. \n" 
+LegionStatusText = LegionStatusText .. "I don't plan on updating every individual class config for every spec. It takes me weeks to play every class and spec to a level I feel comfortable with enough to set the default config for, and I don't have time for that anymore. \n"
 LegionStatusText = LegionStatusText .. "If you have a class config that you think is good enough for your spec or class, please post it to EventHorizon's WowInterface page so I can add it! \n\n  Thanks! ^.^ \n - Brusalk \n\n"
 
 
@@ -135,7 +135,7 @@ local BuildLegionClassConfigStatusText = function()
   local ret = "EventHorizon\nCurrent Class Status \n\n"
   for specID, classname in pairs(LegionSpecIDMapping) do
     local id, name, desc, icon, background, role, class = GetSpecializationInfoByID(specID)
-    if LegionClassesNotImplemented[specID] then 
+    if LegionClassesNotImplemented[specID] then
       ret = ret .. name .. " | NYI \n"
     end
   end
@@ -148,7 +148,7 @@ local BFAStatusText = ""
 
 BFAStatusText = BFAStatusText .. "Welcome to EventHorizon for BFA -- This is a beta release, so expect bugs and things not to work. Also, it is highly likely your class config has not been updated."
 BFAStatusText = BFAStatusText .. "If you do encounter a bug, please copy the whole error message including stack trace and post it in EventHorizon's discord \n\n"
-BFAStatusText = BFAStatusText .. "Just like Legion, it takes me weeks to play every class and spec to a level I feel comfortable with enough to set the default config for, and I likely will not have the time to do that for every spec before launch \n" 
+BFAStatusText = BFAStatusText .. "Just like Legion, it takes me weeks to play every class and spec to a level I feel comfortable with enough to set the default config for, and I likely will not have the time to do that for every spec before launch \n"
 BFAStatusText = BFAStatusText .. "If you have an updated class config for your spec, please post it to EventHorizon's Discord so I can add it! \n\n  Thanks!\n - Brusalk \n\n"
 
 
@@ -202,18 +202,12 @@ local BFAClassesNotImplemented = {
   [71] = "Warrior: Arms",
   [72] = "Warrior: Fury",
   [73] = "Warrior: Protection",
-  [250] = "Death Knight: Blood",
-  [251] = "Death Knight: Frost",
-  [252] = "Death Knight: Unholy",
   [253] = "Hunter: Beast Mastery",
   [254] = "Hunter: Marksmanship",
   [255] = "Hunter: Survival",
   [256] = "Priest: Discipline",
   [257] = "Priest: Holy",
   [258] = "Priest: Shadow",
-  [259] = "Rogue: Assassination",
-  [260] = "Rogue: Outlaw",
-  [261] = "Rogue: Subtlety",
   [262] = "Shaman: Elemental",
   [263] = "Shaman: Enhancement",
   [264] = "Shaman: Restoration",
@@ -232,7 +226,7 @@ local BuildBFAClassConfigStatusText = function()
   local ret = "EventHorizon - BFA Alpha Release\nCurrent Class Status \n\n"
   for specID, classname in pairs(BFASpecIDMapping) do
     local id, name, desc, icon, background, role, class = GetSpecializationInfoByID(specID)
-    if BFAClassesNotImplemented[specID] then 
+    if BFAClassesNotImplemented[specID] then
       ret = ret .. name .. " | NYI \n"
     end
   end
@@ -421,7 +415,7 @@ ns.defaultconfig = {
     name = 'Textured Bars',
     desc = 'When enabled, Axis displays textured bars according to the Bar Texture option. \n When disabled, Axis displays the bars as a solid color.',
   },
-  
+
   bartexture = {
     default = "Interface\\Addons\\EventHorizon\\Smooth",
     string = true,
@@ -691,7 +685,7 @@ local tickevents = {
   ['SPELL_PERIODIC_HEAL'] = true,
   ['SPELL_PERIODIC_ENERGIZE'] = true,
   ['SPELL_PERIODIC_DRAIN'] = true,
-  ['SPELL_PERIODIC_LEACH'] = true,  
+  ['SPELL_PERIODIC_LEACH'] = true,
   ['SPELL_DAMAGE'] = true,
   ['SPELL_HEAL'] = true,
   --['SPELL_AURA_APPLIED'] = true,
@@ -707,9 +701,9 @@ local EventHandler = function (self, event, ...)
       -- Even weirder is we don't get any sort of event ID to query with, we just have to call the method? Feels weird man
       return f(self, CombatLogGetCurrentEventInfo())
     end
-    f(self,...) 
+    f(self,...)
     ns:ModuleEvent(event,...)
-  end 
+  end
 end
 
 local Clone = function (t)
@@ -804,7 +798,7 @@ local mainframe_UNIT_AURA = function (self,unit)
         spellID = spellID,
       })
     end
-  end  
+  end
   for i,spellframe in pairs(ns.frames.frames) do
     if (spellframe.auraunit and spellframe.auraunit == unit) then
       spellframe:UNIT_AURA(unit)
@@ -885,11 +879,11 @@ local SpellFrame_SetStacks = function (self,count)
   end
 end
 
-local SpellFrame_NotInteresting = function (self, unitid, spellname) 
+local SpellFrame_NotInteresting = function (self, unitid, spellname)
   return unitid ~= 'player' or spellname ~= self.spellname
 end
 
--- FindItemInfo: 
+-- FindItemInfo:
 local SpellFrame_FindItemInfo = function (self,slotID)
   local itemID = self.itemID or GetInventoryItemID('player',slotID or self.slotID)
   if itemID then
@@ -909,7 +903,7 @@ end
 local SpellFrame_AddIndicator = function (self, typeid, layoutid, time, usetexture, top, bottom)
   local indicator
   local parent = typeparent[typeid]
-  
+
   if not parent then
     parent = {}
     parent.unused = {}
@@ -975,7 +969,7 @@ local SpellFrame_StyleIndicator = function(self, indicator)
 
   indicator:SetPoint('TOP',    parentFrame, 'TOP', 0, topOffset)
   indicator:SetPoint('BOTTOM', parentFrame, 'TOP', 0, bottomOffset)
-  
+
   if indicator.usetexture then
     indicator:SetTexture(custom_bar_texture or vars.bartexture)
     indicator:SetTexCoord(unpack(layout.texcoords))
@@ -1039,7 +1033,7 @@ local SpellFrame_OnUpdate = function (self,elapsed)
     local indicator = self.indicators[k]
     local time = indicator.time
     if time then
-      -- Example: 
+      -- Example:
       -- [-------|------->--------]
       -- past    now     time     future
       -- now=795, time=800, past=-3, then time is time-now-past after past.
@@ -1089,7 +1083,7 @@ local Cast_Start = function (self, unitid, castGUID, spellID)
   if not(self.cast[spellname]) or unitid ~= 'player' then return end
   local _,_,_,startTime,endTime,_ = self.cast[spellname].func(unitid)
   if not(startTime and endTime) then return end
-  
+
   startTime, endTime = startTime/1000, endTime/1000
   self.casting = self:AddSegment('casting', 'default', startTime, endTime)
 
@@ -1097,11 +1091,11 @@ local Cast_Start = function (self, unitid, castGUID, spellID)
   if not(self.keepIcon) then
     self.icon:SetTexture(icon)
   end
-  
+
   if vars.castLine and (endTime - startTime > vars.castLine) then
     self.castLine = self:AddIndicator('sent', 'frameline', endTime)
   end
-  
+
   local numhits = self.cast[spellname].numhits and self.cast[spellname].numhits ~= true and self.cast[spellname].numhits
   if numhits then
     local casttime = endTime - startTime
@@ -1117,7 +1111,7 @@ end
 local Cast_Update = function (self, unitid, castGUID, spellID)
   --debug('UNIT_SPELLCAST_CHANNEL_UPDATE',unitid, spellname, spellrank)
   local name,_,icon = GetSpellInfo(spellID)
-  local unitid, spellname, spellrank = unitid, name, -1 
+  local unitid, spellname, spellrank = unitid, name, -1
   if not(self.cast[spellname]) or unitid ~= 'player' then return end
   local _,_,_,startTime,endTime,_ = self.cast[spellname].func(unitid)
   if not (startTime and endTime) then return end
@@ -1133,8 +1127,8 @@ end
 
 local Cast_Stop = function (self, unitid, castGUID, spellID)
   local name,_,icon = GetSpellInfo(spellID)
-  local unitid, spellname, spellrank = unitid, name, -1 
-  
+  local unitid, spellname, spellrank = unitid, name, -1
+
   if not(self.cast[spellname]) or unitid ~= 'player' then return end
   local now = GetTime()
   if self.casting then
@@ -1157,12 +1151,12 @@ local SpellFrame_PLAYER_TOTEM_UPDATE = function ( self, slot )
 
     local name, icon, count, duration, expirationTime, source, spellID = tName, tIcon, 1, tDuration, tStart + tDuration, "player", tID
     local addnew
-    
+
     if name then
         start = now
-        
+
         if icon and not (self.cast or self.slotID or self.keepIcon) then self.icon:SetTexture(icon) end
-        
+
         if self.aurasegment and (self.aurasegment.lastunit == "player") then
       -- The aura is currently displayed
       if expirationTime~=self.aurasegment.stop then
@@ -1195,7 +1189,7 @@ local SpellFrame_PLAYER_TOTEM_UPDATE = function ( self, slot )
           self:AddSegment('cooldown', 'cooldown', start, stop)
         end
       end
-            
+
     else
       addnew = true
       if self.internalcooldown and type(self.internalcooldown) == 'number' then
@@ -1225,8 +1219,8 @@ end
 
 local SpellFrame_UNIT_AURA = function (self, unitid)
   if unitid~=self.auraunit then return end
-  if not (self.spellname and self.auraname) then return end  
-  
+  if not (self.spellname and self.auraname) then return end
+
   local name, icon, count, duration, expirationTime, source, spellID = GetAura(self,unitid)
   --print(name, icon, count, duration, expirationTime, source, spellID)
   local afflicted = name and (self.unique or source=='player') and (not self.minstacks or count>=self.minstacks)
@@ -1234,11 +1228,11 @@ local SpellFrame_UNIT_AURA = function (self, unitid)
   local now = GetTime()
   local start
   local targ = UnitName(self.auraunit)
-  
+
   if self.uniqueID and self.uniqueID ~= spellID then
     return
   end
-  
+
   --[[
   if self.aurasegment and expirationTime == 0 and duration == 0 then  -- Timeless aura, bar exists (Overkill)
     for i = #self.indicators,1,-1 do
@@ -1249,7 +1243,7 @@ local SpellFrame_UNIT_AURA = function (self, unitid)
     self.stacks:SetText()
     return
   end
-  
+
   if expirationTime == 0 then
     return
   end
@@ -1338,7 +1332,7 @@ local mainframe_PLAYER_TARGET_CHANGED = function (self)
         spellframe.recenttick = nil
         spellframe:SetStacks()
       end
-      
+
       if spellframe.refreshable then
         if exists then
           if dead then
@@ -1347,10 +1341,10 @@ local mainframe_PLAYER_TARGET_CHANGED = function (self)
             spellframe.targetdebuff = spellframe.debuffs[UnitGUID('target')]
           end
         end
-      end    
+      end
     end
   end
-  
+
   if UnitExists('target') then
     self:UNIT_AURA('target')
   end
@@ -1415,7 +1409,7 @@ AddTicks.stop = function (self,now,fresh)
 end
 
 AddTicks.start = function (self,now)
-  
+
   local nexttick = now+(self.dotMod or self.dot)
   while nexttick<=(self.stop+0.2) do
     if now+vars.future<nexttick then
@@ -1435,7 +1429,7 @@ end
 local SpellFrame_COMBAT_LOG_EVENT_UNFILTERED = function (...)
   local self, timestamp, event, hideCaster, srcguid,srcname,srcflags, destguid,destname,destflags, spellid,spellname = ...
   local now = GetTime()
-  
+
   if event == 'SPELL_CAST_SUCCESS' then
     --debug('SPELL_CAST_SUCCESS',destguid)
     self.castsuccess[destguid] = now
@@ -1472,7 +1466,7 @@ local SpellFrame_COMBAT_LOG_EVENT_UNFILTERED = function (...)
             self.latesttick = nexttick
           end
           nexttick=nexttick+(self.dotMod or self.dot)
-        end  
+        end
       end
     end
   end
@@ -1488,7 +1482,7 @@ local SpellFrame_UNIT_AURA_refreshable = function (self, unitid)
   local guid = UnitGUID(self.auraunit or 'target')
   --print(name,source,self.spellname,self.auraname)
   -- First find out if the debuff was refreshed.
-  
+
   --[[ if self.aurasegment and expirationTime == 0 and duration == 0 then  -- Timeless aura, bar exists (Overkill)
     for i = #self.indicators,1,-1 do
       self:Remove(i)
@@ -1498,11 +1492,11 @@ local SpellFrame_UNIT_AURA_refreshable = function (self, unitid)
     self.stacks:SetText()
     return
   end ]]
-  
+
   --[[ if expirationTime == 0 then
     return
   end ]]
-  
+
   if afflicted then
     start = expirationTime-duration
     if icon and not(self.cast or self.slotID or self.keepIcon) then self.icon:SetTexture(icon) end
@@ -1510,7 +1504,7 @@ local SpellFrame_UNIT_AURA_refreshable = function (self, unitid)
       if self.targetdebuff.stop == expirationTime then
         start = self.targetdebuff.start
       else
-        -- Check for refresh. 
+        -- Check for refresh.
         if start < self.targetdebuff.stop then
           local totalduration = self.targetdebuff.stop - self.targetdebuff.start
           local lasttick = self.targetdebuff.stop - math.fmod(totalduration, self.dotMod or self.dot)
@@ -1566,132 +1560,21 @@ local SpellFrame_UpdateDoT = function (self, addnew, source, now, start, expirat
   local checkDoT = self.auranamePrimary or name
   local isPrimary = checkDoT == name or nil
   self.start, self.stop, self.duration = start, expirationTime, duration
-  
+
   local targ = UnitName(self.auraunit)
   if addnew then
     --debug('addnew', start, expirationTime)
     local typeid = (source=='player' and self.isType) or (source~='player' and 'debuff')
     if self.cast and self.useSmalldebuff then
       self.aurasegment = self:AddSegment(typeid, 'smalldebuff', start, expirationTime)
-            
-      local hastedcasttime = select(7, GetSpellInfo(self.lastcast or self.spellname))/1000
-      self.cantcast = self:AddSegment(typeid, 'cantcast', start, expirationTime-hastedcasttime)
-            
-            --local pandemic_duration = duration*0.3
-            --self.cantcast = self:AddSegment(typeid, 'cantcast', start, expirationTime - pandemic_duration
-            --self.cantcast.pandemic_duration = pandemic_duration
-            
-      self.aurasegment.lastunit = targ
-    else
-      self.aurasegment = self:AddSegment(typeid, 'default', start, expirationTime)
-      self.aurasegment.lastunit = targ
-    end
-    -- Add visible ticks.
-    if self.dot and isPrimary then
-      addticks = start
-    end
-    if self.debuffs then
-      -- Refreshable only.
-      self.targetdebuff = {start=start, stop=expirationTime}
-      self.debuffs[guid] = self.targetdebuff
-    end
-    self.recenttick = now
-  elseif refresh then
-    -- debug('refresh', start, expirationTime)
-    -- Note: refresh requires afflicted and self.targetdebuff. Also, afflicted and not self.debuff implies addnew.
-    -- So we can get here only if afflicted and self.debuff and self.targetdebuff.
-    self.aurasegment.stop = expirationTime
-    self.targetdebuff.stop = expirationTime
-    if self.cantcast then
-      self.cantcast.start = start
-      self.cantcast.stop = expirationTime - select(7, GetSpellInfo(self.lastcast or self.spellname))/1000
-    end
-    if self.latesttick then
-      addticks = self.latesttick
-    end
-  end
-  if addticks then
-    addticks = self.recenttick or addticks
-    local nexttick = addticks+(self.dotMod or self.dot)
-    self.nexttick = nil
-    
-    if self.hasted then
-      isHasted = true
-    end
-    
-    if isHasted and self.expectedTicks then    -- Using expectedTicks
-      self.dotMod = (expirationTime - start)/self.expectedTicks
-    elseif isHasted then
-      local bct = ns.config.hastedSpellID[2]
-      local hct = select(7, GetSpellInfo(ns.config.hastedSpellID[1]))/1000
-      self.dotMod = self.dot*(hct/bct)
---[[    if ns.config.nonAffectingHaste then
-        for i,nah in ipairs(ns.config.nonAffectingHaste) do
-          local name,_,_,_,_,source = ns:GetAura(nah[1],'buff','player')
-          if name and (source == 'player') then
-            self.dotMod = self.dotMod * nah[2]
-          end
-        end
-      end--]]
-    end
-    self:RemoveTicksAfter(now)
-    --self:AddTicks(now)
-    
-    if self.hasted then
-      isHasted = true
-    end
-    
-    if isHasted and self.ticks then          -- Tick-process haste handling
-      self.ticks.last = self.ticks.last or now
-      self.dotMod = self.dotMod and self.dotMod or self.dot
-      if (self.dotMod > self.dot) or (self.dotMod < 1.5) then self.dotMod = self.dot end
-      self.isHasted = true
-    elseif isHasted and self.expectedTicks then    -- Using expectedTicks
-      self.dotMod = (expirationTime - start)/self.expectedTicks
-    end
-    
-    while nexttick<=(self.stop+0.2) do -- Account for lag
-      if now+vars.future<nexttick then
-        -- The next tick is not visible yet.
-        self.nexttick = nexttick
-        self.lasttick = self.stop
-        break
-      end
-      if now+vars.past<=nexttick then 
-        -- The next tick is visible.
-        local tick = self:AddIndicator('tick', 'tick', nexttick)
-        if nexttick<=now then
-          tick.happened = true
-        end
-        self.latesttick = nexttick
-      end
-      nexttick=nexttick+(self.dotMod or self.dot)
-    end
-    
-  end
-end
 
-local SpellFrame_UpdateTotem = function (self, addnew, source, now, start, expirationTime, duration, name, refresh, guid)
-  local addticks
-  local isHasted
-  local checkDoT = self.auranamePrimary or name
-  local isPrimary = checkDoT == name or nil
-  self.start, self.stop, self.duration = start, expirationTime, duration
-  
-  local targ = "player"
-  if addnew then
-    --debug('addnew', start, expirationTime)
-    local typeid = (source=='player' and self.isType) or (source~='player' and 'debuff')
-    if self.cast and self.useSmalldebuff then
-      self.aurasegment = self:AddSegment(typeid, 'smalldebuff', start, expirationTime)
-            
       local hastedcasttime = select(7, GetSpellInfo(self.lastcast or self.spellname))/1000
       self.cantcast = self:AddSegment(typeid, 'cantcast', start, expirationTime-hastedcasttime)
-            
+
             --local pandemic_duration = duration*0.3
             --self.cantcast = self:AddSegment(typeid, 'cantcast', start, expirationTime - pandemic_duration
             --self.cantcast.pandemic_duration = pandemic_duration
-            
+
       self.aurasegment.lastunit = targ
     else
       self.aurasegment = self:AddSegment(typeid, 'default', start, expirationTime)
@@ -1725,11 +1608,11 @@ local SpellFrame_UpdateTotem = function (self, addnew, source, now, start, expir
     addticks = self.recenttick or addticks
     local nexttick = addticks+(self.dotMod or self.dot)
     self.nexttick = nil
-    
+
     if self.hasted then
       isHasted = true
     end
-    
+
     if isHasted and self.expectedTicks then    -- Using expectedTicks
       self.dotMod = (expirationTime - start)/self.expectedTicks
     elseif isHasted then
@@ -1747,11 +1630,11 @@ local SpellFrame_UpdateTotem = function (self, addnew, source, now, start, expir
     end
     self:RemoveTicksAfter(now)
     --self:AddTicks(now)
-    
+
     if self.hasted then
       isHasted = true
     end
-    
+
     if isHasted and self.ticks then          -- Tick-process haste handling
       self.ticks.last = self.ticks.last or now
       self.dotMod = self.dotMod and self.dotMod or self.dot
@@ -1760,7 +1643,7 @@ local SpellFrame_UpdateTotem = function (self, addnew, source, now, start, expir
     elseif isHasted and self.expectedTicks then    -- Using expectedTicks
       self.dotMod = (expirationTime - start)/self.expectedTicks
     end
-    
+
     while nexttick<=(self.stop+0.2) do -- Account for lag
       if now+vars.future<nexttick then
         -- The next tick is not visible yet.
@@ -1778,7 +1661,118 @@ local SpellFrame_UpdateTotem = function (self, addnew, source, now, start, expir
       end
       nexttick=nexttick+(self.dotMod or self.dot)
     end
-    
+
+  end
+end
+
+local SpellFrame_UpdateTotem = function (self, addnew, source, now, start, expirationTime, duration, name, refresh, guid)
+  local addticks
+  local isHasted
+  local checkDoT = self.auranamePrimary or name
+  local isPrimary = checkDoT == name or nil
+  self.start, self.stop, self.duration = start, expirationTime, duration
+
+  local targ = "player"
+  if addnew then
+    --debug('addnew', start, expirationTime)
+    local typeid = (source=='player' and self.isType) or (source~='player' and 'debuff')
+    if self.cast and self.useSmalldebuff then
+      self.aurasegment = self:AddSegment(typeid, 'smalldebuff', start, expirationTime)
+
+      local hastedcasttime = select(7, GetSpellInfo(self.lastcast or self.spellname))/1000
+      self.cantcast = self:AddSegment(typeid, 'cantcast', start, expirationTime-hastedcasttime)
+
+            --local pandemic_duration = duration*0.3
+            --self.cantcast = self:AddSegment(typeid, 'cantcast', start, expirationTime - pandemic_duration
+            --self.cantcast.pandemic_duration = pandemic_duration
+
+      self.aurasegment.lastunit = targ
+    else
+      self.aurasegment = self:AddSegment(typeid, 'default', start, expirationTime)
+      self.aurasegment.lastunit = targ
+    end
+    -- Add visible ticks.
+    if self.dot and isPrimary then
+      addticks = start
+    end
+    if self.debuffs then
+      -- Refreshable only.
+      self.targetdebuff = {start=start, stop=expirationTime}
+      self.debuffs[guid] = self.targetdebuff
+    end
+    self.recenttick = now
+  elseif refresh then
+    -- debug('refresh', start, expirationTime)
+    -- Note: refresh requires afflicted and self.targetdebuff. Also, afflicted and not self.debuff implies addnew.
+    -- So we can get here only if afflicted and self.debuff and self.targetdebuff.
+    self.aurasegment.stop = expirationTime
+    self.targetdebuff.stop = expirationTime
+    if self.cantcast then
+      self.cantcast.start = start
+      self.cantcast.stop = expirationTime - select(7, GetSpellInfo(self.lastcast or self.spellname))/1000
+    end
+    if self.latesttick then
+      addticks = self.latesttick
+    end
+  end
+  if addticks then
+    addticks = self.recenttick or addticks
+    local nexttick = addticks+(self.dotMod or self.dot)
+    self.nexttick = nil
+
+    if self.hasted then
+      isHasted = true
+    end
+
+    if isHasted and self.expectedTicks then    -- Using expectedTicks
+      self.dotMod = (expirationTime - start)/self.expectedTicks
+    elseif isHasted then
+      local bct = ns.config.hastedSpellID[2]
+      local hct = select(7, GetSpellInfo(ns.config.hastedSpellID[1]))/1000
+      self.dotMod = self.dot*(hct/bct)
+--[[    if ns.config.nonAffectingHaste then
+        for i,nah in ipairs(ns.config.nonAffectingHaste) do
+          local name,_,_,_,_,source = ns:GetAura(nah[1],'buff','player')
+          if name and (source == 'player') then
+            self.dotMod = self.dotMod * nah[2]
+          end
+        end
+      end--]]
+    end
+    self:RemoveTicksAfter(now)
+    --self:AddTicks(now)
+
+    if self.hasted then
+      isHasted = true
+    end
+
+    if isHasted and self.ticks then          -- Tick-process haste handling
+      self.ticks.last = self.ticks.last or now
+      self.dotMod = self.dotMod and self.dotMod or self.dot
+      if (self.dotMod > self.dot) or (self.dotMod < 1.5) then self.dotMod = self.dot end
+      self.isHasted = true
+    elseif isHasted and self.expectedTicks then    -- Using expectedTicks
+      self.dotMod = (expirationTime - start)/self.expectedTicks
+    end
+
+    while nexttick<=(self.stop+0.2) do -- Account for lag
+      if now+vars.future<nexttick then
+        -- The next tick is not visible yet.
+        self.nexttick = nexttick
+        self.lasttick = self.stop
+        break
+      end
+      if now+vars.past<=nexttick then
+        -- The next tick is visible.
+        local tick = self:AddIndicator('tick', 'tick', nexttick)
+        if nexttick<=now then
+          tick.happened = true
+        end
+        self.latesttick = nexttick
+      end
+      nexttick=nexttick+(self.dotMod or self.dot)
+    end
+
   end
 end
 
@@ -1835,7 +1829,7 @@ local SpellFrame_SPELL_UPDATE_CHARGES = function(self)
       local topPercent = (charge - 1) / displayMax
       local bottomPercent =  charge       / displayMax
       self.rechargeIndicators[charge] = self:AddSegment('recharge', 'recharge', chargeStart, chargeStop, nil, topPercent, bottomPercent)
-      
+
       --  debug("adding indicator", "charge", charge, "current", current, "displayMax", displayMax, "chargeStart", chargeStart, "chargeStop", chargeStop, "topPercent", topPercent, "bottomPercent", bottomPercent, "indicatorTime", self.rechargeIndicators[charge].time, "indicatorStart", self.rechargeIndicators[charge].start, "indicatorStop", self.rechargeIndicators[charge].stop)
     end
   end
@@ -1852,16 +1846,16 @@ local SpellFrame_SPELL_UPDATE_COOLDOWN = function (self)
     return self:PLAYER_EQUIPMENT_CHANGED(self.slotID)
   end
   if not(self.cooldownID or self.spellname) then return end
-  
+
   local start = 0
   local duration = 0
   local enabled
   local ready
-  
+
   if self.cooldownTable then -- we choose the one with the longer CD (This is mostly for sfiend/mindbender bar)
     for i,cooldown in pairs(self.cooldownTable) do
       start2, duration2, enabled2 = self.CooldownFunction(cooldown)
-      if start2+duration2 > start+duration then 
+      if start2+duration2 > start+duration then
         --print(cooldown, "better", start2+duration2, start+duration)
         start = start2
         duration = duration2
@@ -1869,7 +1863,7 @@ local SpellFrame_SPELL_UPDATE_COOLDOWN = function (self)
         ready = (enabled==1 and start~=0 and duration) and start+duration
       end
     end
-  else 
+  else
     start, duration, enabled = self.CooldownFunction(self.cooldownID or self.spellname)
     ready = enabled==1 and start~=0 and duration and start+duration
   end
@@ -1903,31 +1897,31 @@ end
 
 local SpellFrame_PLAYER_EQUIPMENT_CHANGED = function (self,slot,equipped)
   if not (slot or self.slotID) or (self.slotID ~= slot) then return end
-  
+
   for i = #self.indicators,1,-1 do
     self:Remove(i)
   end
-  
+
   self.aurasegment = nil
   self.nexttick = nil
   self:SetStacks()
-  
+
   self.cooldown = nil
   self.coolingdown = nil
   self.playerbuff = nil
   self.spellname = nil
   self.auraname = nil
   self.internalcooldown = true
-  
+
   local itemID,name,tex = self:FindItemInfo()
   self.cooldownID = itemID
-  
+
   if (itemID and name and tex) and not(ns.trinkets.blacklist[name]) then
     self.spellname = name
     self.icon:SetTexture(tex)
-    
+
     self.stance = true -- Always show
-    
+
     if ns.trinkets[name] then
       if type(ns.trinkets[name]) == 'number' then
         self.playerbuff = ns.trinkets[name]
@@ -1940,7 +1934,7 @@ local SpellFrame_PLAYER_EQUIPMENT_CHANGED = function (self,slot,equipped)
     elseif self.slotID == 8 then
       self.playerbuff = 54861    -- Nitro Boosts
     end
-    
+
     if type(self.playerbuff)=='number' then
       self.auraname = (GetSpellInfo(self.playerbuff))
     elseif type(self.playerbuff)=='table' then
@@ -1958,7 +1952,7 @@ local SpellFrame_PLAYER_EQUIPMENT_CHANGED = function (self,slot,equipped)
     self.stance = 50 -- More efficient than other methods of hiding the bar.
     self.icon:SetColorTexture(0,0,0,0)
   end
-  
+
   -- Throttle equipment checks to every 2 seconds. This should decrease overall cpu load while making equipment checks more reliable on beta/ptr.
 --  vars.EQCframes = vars.EQCframes or {}
 --  table.insert(vars.EQCframes,self)
@@ -2012,7 +2006,7 @@ local SpellFrame_UPDATE_MOUSEOVER_UNIT = function (self)
     self.auraunit = self.baseunit
   end
   frame:SetScript('OnUpdate',UpdateMouseover)
-  
+
   if self.aurasegment then
     for i = #self.indicators,1,-1 do
       local ind = self.indicators[i]
@@ -2024,7 +2018,7 @@ local SpellFrame_UPDATE_MOUSEOVER_UNIT = function (self)
     self.nexttick = nil
     self:SetStacks()
   end
-  
+
   if self.refreshable then
     if UnitExists(self.auraunit) then
       local guid = UnitGUID(self.auraunit)
@@ -2095,7 +2089,7 @@ function ns:SetFrameDimensions()
   local left,right,top,bottom = 0.07, 0.93, 0.07, 0.93
   local barheight2 = self.config.height
   local modHeight = self.config.height
-  
+
   local sfn = type(self.config.staticframes) == 'number' and self.config.staticframes or 0
   local sfi = self.config.hideIcons == true
   if (#ns.frames.shown >= sfn) and type(self.config.staticheight) == 'number' then
@@ -2115,7 +2109,7 @@ function ns:SetFrameDimensions()
     vars.barheight = barheight2
     mainframe:SetHeight(vars.numframes * (vars.barheight+vars.barspacing) - vars.barspacing)
   end
-  
+
   vars.nowleft = -vars.past/(vars.future-vars.past)*vars.barwidth-0.5 + (ns.config.hideIcons and 0 or ns.config.height)
   if ns.frames.nowIndicator then
     ns.frames.nowIndicator:SetPoint('BOTTOM',mainframe,'BOTTOM')
@@ -2123,12 +2117,12 @@ function ns:SetFrameDimensions()
     ns.frames.nowIndicator:SetWidth(vars.onepixelwide)
     ns.frames.nowIndicator:SetColorTexture(unpack(self.colors.nowLine))
   end
-  
+
   for i, spellframe in ipairs(ns.frames.shown) do
     --spellframe:ClearAllPoints()
     spellframe:SetHeight(vars.barheight)
     spellframe:SetWidth(vars.barwidth)
-    
+
     spellframe.icon:ClearAllPoints()
     spellframe:SetPoint('RIGHT', mainframe, 'RIGHT')
     if i == 1 then
@@ -2142,7 +2136,7 @@ function ns:SetFrameDimensions()
       spellframe.icon:SetHeight(modHeight)
       spellframe.icon:SetTexCoord(left,right,top,bottom)
     end
-    
+
     for i, indicator in ipairs(spellframe.indicators) do
       spellframe:StyleIndicator(indicator)
     end
@@ -2169,28 +2163,28 @@ function ns:CheckRequirements()
   table.wipe(self.frames.mouseover)
   --print('checkrequirements')
   --print(GetTime())
-  
+
   EventHorizonDB.charInfo = EventHorizonDB.charInfo or {}
   local cc = EventHorizonDB.charInfo
-  
+
   vars.activeTree = GetSpecialization() or 0
   vars.activeTalentGroup = GetActiveSpecGroup('player')
   vars.currentLevel = UnitLevel('player')
-  
+
   vars.currentTalents = {};
-  
+
     for i=1, GetNumTalents() do
         local nameTalent, icon, tier, column, active = GetTalentInfo(i);
         vars.currentTalents[i] = active;
     end
-  
+
   for i,config in ipairs(self.frames.config) do
     local rS = config.requiredTree
     local rL = config.requiredLevel or 1
     local rT = config.requiredTalent
     local nRT = config.requiredTalentUnselected
     local rA = config.requiredArtifactTalent
-    
+
     local haveSpecReq = true
     local haveTalentReq = true
     local haveTalentRequiredUnselected = true
@@ -2210,7 +2204,7 @@ function ns:CheckRequirements()
         end
       end
     end
-    
+
         -- All talents must be active for it to work
     if rT then
       haveTalentReq = true
@@ -2222,24 +2216,24 @@ function ns:CheckRequirements()
                 haveTalentReq = haveTalentReq and vars.currentTalents[talent]
             end
         end
-        
+
         --print("nRT Check:", nRT, vars.currentTalents[nRT])
         if nRT then
             if vars.currentTalents[nRT] then
                 haveTalentRequiredUnselected = nil
             end
         end
-    
+
     -- Can be a spellID that must have at least one point, OR
-    -- Can be a table {spellID, x} for the spellID that must have at least x points, 
+    -- Can be a table {spellID, x} for the spellID that must have at least x points,
     -- Can be a list { {spellID1, x1}, {spellID2, x2} ... } such that all spellIDs must have at least their number of points selected
     if rA then
       haveArtifactTalentReq = false -- If there's one configured, we want to require all of them
-    
+
       if type(rA) == 'number' then
         rA = {rA, 1} -- Should have one rank applied
       end
-      
+
       if type(rA[1]) == 'number' then -- case 2 (simple table)
         rA = { rA } -- Convert to known case three of an array of talent tables
       end
@@ -2254,7 +2248,7 @@ function ns:CheckRequirements()
       end
       local requiredMatches = #rA - emptyMatches -- We need to have this many matches for all talents to have matched
       local matches = 0
-      
+
       local artifactID, traits = LA:GetArtifactTraits()
       for i, traitData in pairs(traits or {}) do
         debug("traitData", traitData)
@@ -2268,16 +2262,16 @@ function ns:CheckRequirements()
           end
         end
       end
-      
+
       if matches >= requiredMatches then
         haveArtifactTalentReq = true
       end
     end
-        
+
     -- Check if there already is a frame
     local spellframe = self.frames.frames[i]
     local frameExists = spellframe~=nil
-    
+
     if haveSpecReq and haveLevelReq and haveTalentReq and haveTalentRequiredUnselected and haveArtifactTalentReq then
       if frameExists then
         spellframe:Activate()
@@ -2290,7 +2284,7 @@ function ns:CheckRequirements()
       if spellframe.usemouseover then
         table.insert(self.frames.mouseover, spellframe)
       end
-      
+
       if type(config.cooldown) == "table" then -- We need to update the spellID again
         spellframe.cooldownTable = config.cooldown
       end
@@ -2308,7 +2302,7 @@ function ns:CheckRequirements()
   else
     ns:DisplayEmptyFrameTip()
   end
-  
+
   ns:ModuleEvent('CheckTalents')
 end
 
@@ -2318,13 +2312,13 @@ local mainframe_UPDATE_SHAPESHIFT_FORM = function (self)
   if not(stance) or (GetNumShapeshiftForms() and class ~= 'WARLOCK' and stance>GetNumShapeshiftForms()) then return end
   mainframe:SetHeight(1)
   table.wipe(ns.frames.shown)
-  
+
   EventHorizonDB.charInfo.stance = stance
   vars.numframes = 0
-  
+
   for i,spellframe in ipairs(ns.frames.active) do
     local shown = spellframe:IsShown()
-    
+
     if spellframe.stance then
       shown = false
       if type(spellframe.stance) == 'table' then
@@ -2342,7 +2336,7 @@ local mainframe_UPDATE_SHAPESHIFT_FORM = function (self)
         shown = false
       end
     end
-    
+
     if spellframe.notstance then
       shown = true
       if spellframe.notstance and type(spellframe.notstance) == 'table' then
@@ -2365,9 +2359,9 @@ local mainframe_UPDATE_SHAPESHIFT_FORM = function (self)
       for i,indicator in ipairs(spellframe.indicators) do
         indicator:Hide()
       end
-    end  
+    end
   end
-  
+
   if vars.numframes>0 then
     ns:SetFrameDimensions()
     if (EventHorizonDB.redshift) and (ns.modules.redshift.isReady and EventHorizonDB.redshift.isActive == true) then
@@ -2378,7 +2372,7 @@ local mainframe_UPDATE_SHAPESHIFT_FORM = function (self)
   else
     mainframe:Hide()
   end
-  
+
   return true
 end
 
@@ -2429,24 +2423,24 @@ local mainframe_COMBAT_LOG_EVENT_UNFILTERED = function (...)
     mainframe:CLEU_OtherInterestingSpell(time, event, hideCaster, srcguid,srcname,srcflags, destguid,destname,destflags, spellid,spellname)
   end
   if spellframe then
-    if spellframe.interestingCLEU[event] then 
-      spellframe:COMBAT_LOG_EVENT_UNFILTERED(time, event, hideCaster, srcguid,srcname,srcflags, destguid,destname,destflags, spellid,spellname) 
+    if spellframe.interestingCLEU[event] then
+      spellframe:COMBAT_LOG_EVENT_UNFILTERED(time, event, hideCaster, srcguid,srcname,srcflags, destguid,destname,destflags, spellid,spellname)
     end
   end
 end
 
 function ns:LoadClassModule()
   local class = select(2,UnitClass('player'))
-  
+
   class = class:sub(1,1)..class:sub(2):lower() -- 'WARLOCK' -> 'Warlock'
-  
+
   local name, _, _, enabled, loadable = GetAddOnInfo('EventHorizon_'..class)
 
   DisableAddOn('EventHorizon_Redshift')
   DisableAddOn('EventHorizon_Lines')
-  
+
   if not loadable then return end
-    
+
   local loaded, reason = LoadAddOn(name)
   if loaded and self.InitializeClass then
     return true
@@ -2469,8 +2463,8 @@ config: table
 --]]
 function ns:NewSpell(config)
   local spellid = config.spellID or config.itemID or config.slotID
-  if type(spellid)~='number' then 
-    return 
+  if type(spellid)~='number' then
+    return
   end
 
   table.insert(self.frames.config, config)
@@ -2479,9 +2473,9 @@ end
 function ns:newSpell(config) -- New class config to old class config
   local n = {}
   local c = config
- 
+
   n.spellID = (type(config.debuff)=="table" and (type(config.debuff[1])=="table" and config.debuff[1][1] or config.debuff[1]) or config.debuff) or (type(config.cast)=="table" and config.cast[1] or config.cast) or (type(config.cooldown)=="table" and config.cooldown[1] or config.cooldown) or (config.recharge) or (type(config.playerbuff)=="table" and (type(config.playerbuff[1])=="table" and config.playerbuff[1][1] or config.playerbuff[1]) or config.playerbuff) or EventHorizon.config.gcdSpellID
-  
+
   n.itemID = c.itemID
   n.slotID = c.slotID
   n.cast = c.cast
@@ -2490,7 +2484,7 @@ function ns:newSpell(config) -- New class config to old class config
   n.recharge = c.recharge
   n.rechargeMaxDisplayCount = c.rechargeMaxDisplayCount
   n.refreshable = c.refreshable == false and false or true
-  
+
   if type(c.debuff) == "table" then
     if type(c.debuff[1]) == "table" then
       n.dot = c.debuff[1][2]
@@ -2505,9 +2499,9 @@ function ns:newSpell(config) -- New class config to old class config
   elseif c.debuff then
     n.debuff = c.debuff
   end
-  
 
-  
+
+
   if type(c.playerbuff) == "table" and not n.debuff then
     if type(c.playerbuff[1]) == "table" then
       n.dot = c.playerbuff[1][2]
@@ -2522,11 +2516,11 @@ function ns:newSpell(config) -- New class config to old class config
   else
     n.playerbuff = c.playerbuff
   end
-  
+
   if n.dot == 0 then
     n.dot = nil
   end
-  
+
   if class == "HUNTER" or class == "ROGUE" or class == "WARRIOR" or class == "DEATHKNIGHT" or class == "DEATH_KNIGHT" or class == "MONK" then
     n.hasted = false
   elseif class == "PRIEST" or class == "MAGE" or class == "WARLOCK" or class == "PALADIN" or class == "SHAMAN" then
@@ -2538,11 +2532,11 @@ function ns:newSpell(config) -- New class config to old class config
       n.hasted = false
     end
   end
-  
+
   if c.hasted == true or c.hasted == false then -- overwrite default. Ex: Doom for warlocks doesn't benefit from haste
     n.hasted = c.hasted
   end
-    
+
   n.recast = c.recast
   n.minstacks = c.minstacks
   n.internalcooldown = c.internalcooldown
@@ -2560,16 +2554,16 @@ function ns:newSpell(config) -- New class config to old class config
   n.stance = c.stance
   n.auraunit = c.unitaura
   n.auraunit = c.auraunit
-  
+
   n.totem = c.totem
 
   n.bartexture = c.bartexture
   n.barcolors = c.barcolors
-    
+
   --  print("Debuff is type", type(config.debuff), "and has 1st value of", select(1,config.debuff))
   debug("Adding", n.spellID, n.debuff, n.cast, n.dot, n.cooldown)
   ns:NewSpell(n)
-  
+
 end
 
 
@@ -2617,7 +2611,7 @@ local function SetSpellAttributes(spellframe,config)
   spellframe.iconTexture = tex
 
   interestingEvent['UNIT_SPELLCAST_SENT'] = true
-  
+
   if config.itemID or config.slotID then
     spellframe.cooldown = true  -- Not getting out of this one. It's an item, what else do you watch?
     spellframe.cooldownTable = type(config.cooldown)=="table" and config.cooldown or nil
@@ -2631,7 +2625,7 @@ local function SetSpellAttributes(spellframe,config)
       interestingEvent['PLAYER_EQUIPMENT_CHANGED'] = true
     end
   end
-  
+
   if config.cast or config.channeled then
     spellframe.cast = {}
     if config.channeled then
@@ -2722,7 +2716,7 @@ local function SetSpellAttributes(spellframe,config)
     interestingEvent['SPELL_UPDATE_CHARGES'] = true
     interestingEvent['UNIT_SPELL_HASTE'] = true
   end
-    
+
   if config.debuff then
     spellframe.isType = 'debuffmine'
     spellframe.AuraFunction = UnitDebuff
@@ -2790,7 +2784,7 @@ local function SetSpellAttributes(spellframe,config)
     else
       spellframe.auraname = spellname
     end
-    
+
     if config.dot then    -- Register for periodic effect intervals.
       spellframe.dot = config.dot
       spellframe.AddTicks = AddTicks.stop
@@ -2805,7 +2799,7 @@ local function SetSpellAttributes(spellframe,config)
         spellframe.castsuccess = {}
       end
     end
-        
+
   elseif config.totem then
     spellframe.totem = config.totem
     spellframe.isType = 'playerbuff'
@@ -2816,7 +2810,7 @@ local function SetSpellAttributes(spellframe,config)
     spellframe.auraname = GetSpellInfo(config.totem)
   end
 
-  
+
   if config.cleu or config.event then -- Register custom CLEU events.
     if config.event then -- Optional alias for the forgetful.
       config.cleu = config.event
@@ -2829,8 +2823,8 @@ local function SetSpellAttributes(spellframe,config)
         interestingCLEU[ config.cleu[i] ] = true
       end
     end
-  end  
-  
+  end
+
   spellframe.hasted = config.hasted
   spellframe.minstacks = config.minstacks
   spellframe.stance = config.stance
@@ -2842,7 +2836,7 @@ local function SetSpellAttributes(spellframe,config)
   spellframe.uniqueID = config.uniqueID
   spellframe.keepIcon = config.keepIcon
   spellframe.smallCooldown = config.smallCooldown
-  
+
   spellframe.interestingCLEU = interestingCLEU
   return interestingEvent
 end
@@ -2854,12 +2848,12 @@ end
 
 function ns:CreateSpellBar(config)
   local slotname, spellname, tex, _
-  
+
   local spellframe = CreateFrame('Frame', nil, mainframe)
   mainframe.numframes = mainframe.numframes+1
 
   spellframe.interestingEvent = SetSpellAttributes(spellframe,config)
-  
+
   -- Create the bar.
   spellframe.indicators = {}
   if ns.config.barbg then
@@ -2885,10 +2879,10 @@ function ns:CreateSpellBar(config)
   for k,v in pairs(SpellFrame) do
     if not spellframe[k] then spellframe[k] = v end
   end
-  
+
   spellframe:SetScript('OnEvent', EventHandler)
   spellframe:SetScript('OnUpdate', spellframe.OnUpdate)
-  
+
   local sfi = self.config.hideIcons
   local sor = self.config.stackOnRight
   -- Layout
@@ -2896,11 +2890,11 @@ function ns:CreateSpellBar(config)
   spellframe.stacks:SetJustifyH(sor and 'LEFT' or 'RIGHT')
 
   spellframe:Activate()
-  
+
   if config.slotID then
     spellframe:PLAYER_EQUIPMENT_CHANGED(config.slotID)  -- Initialize trinkets and such if needed.
   end
-  
+
   return spellframe
 end
 
@@ -2962,10 +2956,10 @@ function ns:Activate(...)
   for k,v in pairs(mainframeEvents) do
     mainframe:RegisterEvent(k)
   end
-  
+
   self.isActive = true
   vars.visibleFrame = true
-  
+
   if (self.modules.redshift.isReady and EventHorizonDB.redshift.isActive == true) then
     self.modules.redshift:Check()
   else
@@ -2981,7 +2975,7 @@ function ns:Deactivate()
   mainframe:RegisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
 
   mainframe:Hide()
-  
+
   self.isActive = false
 end
 
@@ -3009,25 +3003,25 @@ function ns:InitDB()
     table.wipe(EventHorizonDBG)
     EventHorizonDBG = Clone(ns.defaultDBG)
   end
-  
+
   -- If profile doesn't exist, set it to the default.
   EventHorizonDBG.profilePerChar[playername] = EventHorizonDBG.profilePerChar[playername] or EventHorizonDBG.defaultProfile
   local ppc = EventHorizonDBG.profilePerChar[playername]
-  
+
   if not EventHorizonDBG.profiles[ppc] then
     EventHorizonDBG.profiles[ppc] = {}
   end
   self.vars.currentProfile = EventHorizonDBG.profiles[ppc]
-  
+
   if reset then
     print('Your savedvariables have been reset due to potential conflicts with older versions.')
   end
-  
+
   self.db = EventHorizonDB
   self.dbg = EventHorizonDBG
 end
 
--- We only want to show the empty frame tip if it's been more than 
+-- We only want to show the empty frame tip if it's been more than
 function ns:DisplayEmptyFrameTip()
   if EventHorizonDB.DisplayEmptyFrameTipLastShown == true then return end -- If true, then never show
 
@@ -3046,7 +3040,7 @@ function ns:Initialize()
   --self.Initialize = nil
   --print('initialize')
   self:InitDB()
-  
+
   local popupIn = function(popup_to_show, delay)
     local popup_f = CreateFrame("frame")
     local elapsedTime = 0
@@ -3059,7 +3053,7 @@ function ns:Initialize()
       end
     end)
   end
-  
+
   StaticPopupDialogs["EH_WodDialog"] = {
     text = WodStatusText,
     showAlert = true,
@@ -3071,7 +3065,7 @@ function ns:Initialize()
       EventHorizonDB.__WodClassStatusNotification2 = true
     end
   }
-  
+
   StaticPopupDialogs["EH_GithubDialog1"] = {
     text = "EventHorizon is now on Github! If you encounter any bugs or errors with EventHorizon, please create a new 'issue' on the below Github so I can track and fix it!",
     hasEditBox = true,
@@ -3127,8 +3121,8 @@ function ns:Initialize()
       end
     end,
   }
-    
-  
+
+
   StaticPopupDialogs["EH_LegionDialog1"] = {
     text = LegionStatusText,
     showAlert = true,
@@ -3162,8 +3156,8 @@ function ns:Initialize()
       end
     end,
   }
-    
-  
+
+
   StaticPopupDialogs["EH_BFADialog1"] = {
     text = BFAStatusText,
     showAlert = true,
@@ -3235,19 +3229,19 @@ function ns:Initialize()
       popupIn("EH_LegionDialog1", 2) -- Need to show Dialog1
     end
   end
-  
+
   --debug('GetTalentInfo(1,1)',GetTalentInfo(1,1))
   vars.playerguid = UnitGUID('player')
-  
+
   -- Create the main and spell frames.
   mainframe:SetHeight(1)
   mainframe.numframes = 0
   mainframe.framebyspell= {}
   mainframe:SetScript('OnEvent', EventHandler)
   mainframe:SetScale(self.config.scale or 1)
-  
+
   vars.buff.player = {}
-  
+
   if not self:LoadClassModule() then
     return
   end
@@ -3258,12 +3252,12 @@ function ns:Initialize()
     self:NewSpell({slotID = 13})
     self:NewSpell({slotID = 14})
   end
-  
+
   local sfi = self.config.hideIcons
   mainframe:SetWidth(vars.barwidth + (sfi and 0 or self.config.height))
-  
+
   self:SetupStyleFrame()    -- Spawn backdrop frame.
-    
+
   -- Create the indicator for the current time.
   -- Bugfix: When the UI scale is at a very low setting, textures with a width of 1
   -- were not visible in some resolutions.
@@ -3274,7 +3268,7 @@ function ns:Initialize()
   --nowI = CreateFrame('Frame',nil,mainframe)
   --nowI:SetFrameLevel(20)
   ns.frames.nowIndicator = mainframe:CreateTexture(nil, 'ARTWORK', nil, draworder.nowI)
-  
+
   ns.frames.nowIndicator:SetPoint('BOTTOM',mainframe,'BOTTOM')
   ns.frames.nowIndicator:SetPoint('TOPLEFT',mainframe,'TOPLEFT', vars.nowleft, 0)
   ns.frames.nowIndicator:SetWidth(vars.onepixelwide)
@@ -3294,7 +3288,7 @@ function ns:Initialize()
     handle:SetClampedToScreen(1)
     handle:RegisterForDrag('LeftButton')
     handle:SetScript('OnDragStart', function(handle, button) handle:StartMoving() end)
-    handle:SetScript('OnDragStop', function(handle) 
+    handle:SetScript('OnDragStop', function(handle)
       handle:StopMovingOrSizing()
       local a,b,c,d,e = handle:GetPoint(1)
       if type(b)=='frame' then
@@ -3312,7 +3306,7 @@ function ns:Initialize()
     handle:SetScript('OnEnter',function(frame) frame.tex:SetColorTexture(1,1,1,1) end)
     handle:SetScript('OnLeave',function(frame) frame.tex:SetColorTexture(1,1,1,0.1) end)
     handle.tex:SetColorTexture(1,1,1,0.1)
-    
+
     if EventHorizonDB.isLocked then
       handle:Hide()
     end
@@ -3356,7 +3350,7 @@ function ns:Initialize()
   SlashCmdList['EVENTHORIZON'] = function(msg)
     local cmd = string.lower(msg)
     local toggle = not(msg) or cmd == ''
-    
+
     if cmd == 'help' then
       print('Use "/eventhorizon" or "/ehz" to show or hide EventHorizon.')
       print('To enable or disable a module, use "/ehz ModuleName". For example, "/ehz redshift".')
@@ -3411,14 +3405,14 @@ function ns:Initialize()
     end
     EventHorizonDB.isActive = self.isActive
   end
-  
+
   ns.isActive = EventHorizonDB.isActive
   if not EventHorizonDB.isActive then
     self:Deactivate()
     mainframe:UnregisterEvent('ACTIVE_TALENT_GROUP_CHANGED')
   end
-  
-  
+
+
   -- Display helpful error message if there was a problem loading the class config
   debug("config: " .. #self.frames.config)
   if #self.frames.config < 1 then
@@ -3495,7 +3489,7 @@ function ns:ApplyConfig()
   end
   setmetatable(config,{__index = ns.config}) -- Set non-overridden values to what is in [my]config.lua
   self:InitializeClass() -- Set config values in class modules
-  
+
   vars.past = -math.abs(config.past or -3)  -- We really don't want config.past to be positive, so negative absolute values work great here.
   vars.future = math.abs(config.future or 9)
   vars.barheight = config.height or 18
@@ -3509,10 +3503,10 @@ function ns:ApplyConfig()
   vars.classalpha = config.classalpha or 0.3
   vars.castLine = config.castLine and ((type(config.castLine) == 'number' and config.castLine) or config.castLine == true and 0) or nil
   vars.nowleft = -vars.past/(vars.future-vars.past)*vars.barwidth-0.5 + (config.hideIcons and 0 or config.height)
-  
+
   local classcolors = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
   self.classcolor = Clone(classcolors[select(2,UnitClass('player'))])
-  
+
   vars.stackFont = config.stackFont
   vars.stackFontSize = config.stackFontSize
   vars.stackFontColor = config.stackFontColor == true and {1,1,1,1} or config.stackFontColor or {1,1,1,1}
@@ -3528,7 +3522,7 @@ function ns:ApplyConfig()
       end
     end
   end
-  
+
   if vars.texturedbars then
     for colorid,color in pairs(self.colors) do
       if color[4] and not(exemptColors[colorid]) then
@@ -3553,7 +3547,7 @@ function ns:ApplyConfig()
     end
     layout.texcoords = {0, 1, layout.top, layout.bottom}
   end
-  
+
   ns:ModuleEvent('ApplyConfig')
 end
 
@@ -3566,9 +3560,9 @@ function ns:UpdateConfig()
   if effectiveScale then
     vars.onepixelwide = 1/effectiveScale
   end
-  
+
   self:SetupStyleFrame()    -- Spawn backdrop frame.
-  
+
   vars.nowleft = -vars.past/(vars.future-vars.past)*vars.barwidth-0.5 + (ns.config.hideIcons and 0 or ns.config.height)
   --nowI:SetFrameLevel(20)
   ns.frames.nowIndicator:SetPoint('BOTTOM',mainframe,'BOTTOM')
@@ -3586,7 +3580,7 @@ function ns:UpdateConfig()
     handle:SetClampedToScreen(1)
     handle:RegisterForDrag('LeftButton')
     handle:SetScript('OnDragStart', function(handle, button) handle:StartMoving() end)
-    handle:SetScript('OnDragStop', function(handle) 
+    handle:SetScript('OnDragStop', function(handle)
       handle:StopMovingOrSizing()
       local a,b,c,d,e = handle:GetPoint(1)
       if type(b)=='frame' then
@@ -3623,7 +3617,7 @@ function ns:UpdateConfig()
     local gcdColor = self.colors.gcdColor or {.5,.5,.5,.3}
     ns.frames.gcd:SetColorTexture(unpack(gcdColor))
   end
-  
+
   mainframe:SetPoint(unpack(anchor))
   self:SetFrameDimensions()
 end
@@ -3635,7 +3629,7 @@ local loginCheck = function ()
     for i,spellframe in pairs(ns.frames.shown) do
       if spellframe.slotID then spellframe:PLAYER_EQUIPMENT_CHANGED(spellframe.slotID) end
     end
-  end  
+  end
 end
 
 function ns:SetupStyleFrame()
@@ -3646,7 +3640,7 @@ function ns:SetupStyleFrame()
     if self.styleframe then self.styleframe:Hide() end
     return
   end
-  
+
   local styleframe = self.styleframe
   local stylebg = self.config.bg or 'Interface\\ChatFrame\\ChatFrameBackground'
   local styleborder = self.config.border or 'Interface\\Tooltips\\UI-Tooltip-Border'
@@ -3694,7 +3688,7 @@ frame.PLAYER_ALIVE = function (self)
   end
   self:UnregisterEvent('PLAYER_ALIVE')
 end
-  
+
 frame.PLAYER_LOGIN = function (self)
   local talents = GetTalentInfo(1)
   if talents then
@@ -3705,7 +3699,7 @@ frame.PLAYER_LOGIN = function (self)
       frame2:RegisterEvent(k)
       frame2[k] = loginCheck
     end
-    if not(ns.isReady) then 
+    if not(ns.isReady) then
       ns:Initialize()
     else
       ns:LoadModules()
@@ -3781,26 +3775,26 @@ Redshift.Check = function (self)
       end
     end
   end
-  
+
   local s = Redshift.states
-  
+
   showState = nil
-  
+
   local attackable = UnitCanAttack("player","target")
   local targeting = UnitExists("target")
   local focusing = UnitExists("focus")
   local classify = UnitClassification("target")
   local dead = UnitIsDeadOrGhost("target")
   local vehicle = UnitHasVehicleUI("player")
-  
-  if(s.showCombat and UnitAffectingCombat("player")) then 
+
+  if(s.showCombat and UnitAffectingCombat("player")) then
     showState = true
   end
-  
+
   if (s.showFocus and UnitExists("focus")) then
     showState = true
   end
-  
+
   if targeting then
     if(s.showHelp and not attackable) and not dead then
       showState = true
@@ -3812,11 +3806,11 @@ Redshift.Check = function (self)
       showState = true
     end
   end
-  
+
   if (s.hideVehicle and UnitHasVehicleUI("player")) then
     showState = nil
   end
-  
+
   if showState then
     vars.visibleFrame = true
     mainframe:Show()
@@ -3835,7 +3829,7 @@ end
 Redshift.Init = function ()
   local settingsChanged = EventHorizonDB.redshift.lastConfig ~= ns.config.enableRedshift
   EventHorizonDB.redshift.lastConfig = ns.config.enableRedshift
-  
+
   if settingsChanged then
     local ends = ns.config.enableRedshift and 'enabled' or 'disabled'
     local settingsString = "Redshift has been "..ends.." via config.lua. Ingame settings have been adjusted to match. Use /ehz redshift to enable or disable Redshift as needed."
@@ -3844,7 +3838,7 @@ Redshift.Init = function ()
 
   local db = EventHorizonDB.redshift.isActive
   if not (db) then return end
-  
+
   Redshift.states = {}
   Redshift.Events = {
     ["PLAYER_REGEN_DISABLED"] = true,
@@ -3858,13 +3852,13 @@ Redshift.Init = function ()
     ["UNIT_EXITING_VEHICLE"] = true,
     ["VEHICLE_PASSENGERS_CHANGED"] = true,
   }
-  
+
   for k,v in pairs(ns.config.Redshift) do
     if v then
       Redshift.states[k] = true
     end
   end
-  
+
   if (EventHorizonDB.redshift.isActive == true) then Redshift:Check() end
   Redshift.isReady = true
 end
@@ -3894,10 +3888,10 @@ Lines.CreateLines = function ()
   elseif type(c) == 'number' then c = {c}  -- Turn numbers into delicious tables.
   elseif type(c) ~= 'table' then return  -- Turn away everything else.
   end
-  
+
   Lines.frame = CreateFrame('Frame',nil,UIParent)
   Lines.line = {}
-  
+
   local multicolor
   local color = ns.config.LinesColor
   if color and type(color) == 'table' then
@@ -3912,10 +3906,10 @@ Lines.CreateLines = function ()
   else
     color = {1,1,1,0.5}
   end
-  
+
   local now = -vars.past/(vars.future-vars.past)*vars.barwidth-0.5 + vars.barheight
   local pps = (vars.barwidth+vars.barheight-now)/vars.future
-  
+
   for i = 1, #c do
     local seconds = c[i]
     local position = now+(pps*seconds)
@@ -3929,13 +3923,13 @@ Lines.CreateLines = function ()
     Lines.line[i]:SetWidth(vars.onepixelwide)
     Lines.line[i]:SetPoint('BOTTOM', mainframe, 'BOTTOM')
   end
-  
+
   Lines.Enable = function ()
     for i = 1,#Lines.line do
       Lines.line[i]:Show()
     end
   end
-  
+
   Lines.Disable = function ()
     for i = 1,#Lines.line do
       Lines.line[i]:Hide()
@@ -3962,15 +3956,15 @@ Pulse.Enable = function ()
   if not(fps) or (type(fps) ~= 'number' or fps == 0) then
     fps = ns.defaultconfig.PulseFPS
   end
-  
+
   if not Pulse.frame then
     Pulse.frame = CreateFrame('Frame',nil,mainframe)
   end
-  
+
   Pulse.duration = (cv and sv.isActive) and ((cv == true or type(cv) ~= 'number') and ns.defaultconfig.Pulse or type(cv) == 'number' and cv)
   Pulse.intensity = int and (type(int) == 'number' and int > 0 and int) or ns.defaultconfig.PulseIntensity
   Pulse.TTL = (1000/fps)/1000
-  
+
   if Pulse.duration and not(Pulse.framesCreated) then
     local ehf = EventHorizon.frames.frames
     --  for k,v in pairs(ns.frames.frames) do print(k,v) end
@@ -3992,7 +3986,7 @@ Pulse.Enable = function ()
     end
     Pulse.framesCreated = true
   end
-  
+
   Pulse.frame:SetScript('OnEvent',Pulse.OnEvent)
   Pulse.frame:RegisterEvent('UNIT_AURA')
   Pulse.frame:RegisterEvent('SPELL_UPDATE_COOLDOWN')
@@ -4020,7 +4014,7 @@ end
 
 Pulse.OnAura = function (self,elapsed)
   self.remaining = self.remaining - elapsed
-  
+
   if self.current and self.alpha then    -- finish off any remaining pulse
     self.TSLU = self.TSLU + elapsed
     while self.TSLU >= Pulse.TTL do
@@ -4034,7 +4028,7 @@ Pulse.OnAura = function (self,elapsed)
       end
     end
   end
-  
+
   if self.remaining <= 0 and Pulse.duration then
     self.activeCD = nil
     self.remaining = nil
@@ -4060,11 +4054,11 @@ Pulse.OnEvent = function (self,event,unit)
       local cdTime
       local apply
       local now = GetTime()
-      
+
       if icd and icd == true then
         icd = nil
       end
-      
+
       if icd and event == 'UNIT_AURA' then
         local _,_,_,_,_,_,expirationTime,active = f.AuraFunction('player',f.auraname)
         local activeCD = frame.activeCD
@@ -4083,7 +4077,7 @@ Pulse.OnEvent = function (self,event,unit)
         local start, duration, enabled = f.CooldownFunction(f.cooldownID or f.spellname)
         local onCooldown = enabled == 1 and start ~= duration and start > 0 and duration > 1.5  -- Check duration against GCD to ensure we're not pulsing every time the char does something
         cdTime = duration
-        
+
         if onCooldown and not(frame.activeCD) then
           apply = true
           print(onCooldown,frame.activeCD,start,duration,enabled)
@@ -4095,7 +4089,7 @@ Pulse.OnEvent = function (self,event,unit)
         end
         frame.activeCD = onCooldown
       end
-      
+
       if apply and cdTime and Pulse.duration then  -- check for fresh application, make sure a cooldown time exists, and don't do anything if pulses are disabled
         if not(frame.flash) then
           frame.flash = CreateFrame('Frame',nil,f)
@@ -4128,7 +4122,7 @@ ns:RegisterModule('redshift',Redshift)
 
 
 
--- SpellID Debug (Shows up in the tooltip) -- 
+-- SpellID Debug (Shows up in the tooltip) --
 if spellIDsEnabled then
   print("Showing SpellIDs in Tooltips")
   local hooksecurefunc, select, UnitBuff, UnitDebuff, UnitAura, UnitGUID, GetGlyphSocketInfo, tonumber, strfind = hooksecurefunc, select, UnitBuff, UnitDebuff, UnitAura, UnitGUID, GetGlyphSocketInfo, tonumber, strfind
@@ -4385,4 +4379,3 @@ if spellIDsEnabled then
 
 end
 --END TEMP--
-
