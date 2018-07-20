@@ -345,6 +345,7 @@ function EventHorizon:InitializeClass()
   -- Dark Ascention
   self:newSpell({
     requiredTree = 3,
+    requiredTalent = 20,
     cooldown = 280711,
      barcolors   = {
      cooldown    = {171/255, 191/255, 181/255, 0.7},
