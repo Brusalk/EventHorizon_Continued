@@ -1,7 +1,7 @@
 function EventHorizon:InitializeClass()
   self.config.gcdSpellID = 1966
-  self.config.past = -1 -- Number of seconds to show in the past. Default = -1
-  self.config.future = 9 -- Number of seconds to show in the future. Default = 9
+  self.config.past = -1 -- Number of seconds to show in the past. Default = -3
+  self.config.future = 1 -- Number of seconds to show in the future. Default = 11
 
   -- Assassination
 
@@ -132,8 +132,8 @@ function EventHorizon:InitializeClass()
     cooldown = 199804,
     smallCooldown = true,
      barcolors   = {
-     cooldown    = {171/255, 191/255, 181/255, 0.7},
-     playerbuff  = {242/255, 242/255, 040/255, 0.7}
+     cooldown    = {171/255, 191/255, 181/255, 0.8},
+     playerbuff  = {242/255, 242/255, 040/255, 0.6}
      },
   })
 
@@ -145,8 +145,8 @@ function EventHorizon:InitializeClass()
     cooldown = 199804,
     smallCooldown = true,
      barcolors   = {
-     cooldown    = {171/255, 191/255, 181/255, 0.7},
-     playerbuff  = {242/255, 242/255, 040/255, 0.7}
+     cooldown    = {171/255, 191/255, 181/255, 0.8},
+     playerbuff  = {242/255, 242/255, 040/255, 0.6}
      },
   })
 
@@ -347,6 +347,29 @@ function EventHorizon:InitializeClass()
      barcolors   = {
      cooldown    = {171/255, 191/255, 181/255, 0.9},
      playerbuff  = {252/255, 252/255, 151/255, 0.6}
+     },
+  })
+
+  -- Secret Technique
+  self:newSpell({
+    requiredTree = 3,
+    requiredTalent = 20,
+    requiredTalentUnselected = 17,
+    cooldown = 280719,
+     barcolors   = {
+     cooldown    = {171/255, 191/255, 181/255, 0.9},
+     },
+  })
+
+  -- Shuriken Tornado
+  self:newSpell({
+    requiredTree = 3,
+    requiredTalent = 21,
+    requiredTalentUnselected =17,
+    cooldown = 277925,
+    smallCooldown = true,
+     barcolors   = {
+     cooldown    = {171/255, 191/255, 181/255, 0.9},
      },
   })
 
