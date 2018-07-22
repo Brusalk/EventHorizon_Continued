@@ -1801,7 +1801,7 @@ local SpellFrame_SPELL_UPDATE_CHARGES = function(self)
 
   local current, max, startTime, duration, unknown = GetSpellCharges(self.rechargeTable.spellID)
   local displayMax = math.min(self.rechargeTable.maxDisplayCount or max, max)
-
+  local now = GetTime()
   self.rechargeIndicators = self.rechargeIndicators or {}
 
   -- We want to show an indicator for each charge that ends when _that_ charge is available
@@ -1813,7 +1813,7 @@ local SpellFrame_SPELL_UPDATE_CHARGES = function(self)
     if chargeIndicator then
       --  debug("removing indicator", "charge", charge, "current", current, "displayMax", displayMax)
       -- nponoBegHuk: the "for" section of the code below doesn't address the issue when charges "magically" appear due to procs/talents.
-      self.rechargeIndicators[charge].stop = math.min(GetTime(), self.rechargeIndicators[charge].stop)
+      self.rechargeIndicators[charge].stop = math.min(now, self.rechargeIndicators[charge].stop)
       -- nponoBegHuk: The indicator is gone from the table but will live in our memories. And on the screen. P.S.: Please feel free to delete my dumb comments.
       self.rechargeIndicators[charge] = nil
     end
@@ -1839,7 +1839,7 @@ local SpellFrame_SPELL_UPDATE_CHARGES = function(self)
       local topPercent = (charge - 1) / displayMax
       local bottomPercent =  charge       / displayMax
       -- nponoBegHuk: once again, changing the past and disobeying second law of thermodynamics is not what I would want to meddle with.
-      self.rechargeIndicators[charge] = self:AddSegment('recharge', 'recharge', math.max(GetTime(),chargeStart), chargeStop, nil, topPercent, bottomPercent)
+      self.rechargeIndicators[charge] = self:AddSegment('recharge', 'recharge', math.max(now, chargeStart), chargeStop, nil, topPercent, bottomPercent)
       
       
       --  debug("adding indicator", "charge", charge, "current", current, "displayMax", displayMax, "chargeStart", chargeStart, "chargeStop", chargeStop, "topPercent", topPercent, "bottomPercent", bottomPercent, "indicatorTime", self.rechargeIndicators[charge].time, "indicatorStart", self.rechargeIndicators[charge].start, "indicatorStop", self.rechargeIndicators[charge].stop)
