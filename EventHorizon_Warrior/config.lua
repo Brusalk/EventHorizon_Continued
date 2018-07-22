@@ -1,5 +1,5 @@
 function EventHorizon:InitializeClass()
-    self.config.gcdSpellID = 100130
+    self.config.gcdSpellID = 1680
 
     -- -- Arms
     -- Colossus Smash + Warbreaker
@@ -83,13 +83,11 @@ function EventHorizon:InitializeClass()
     })
 
     -- -- Fury
-    -- Recklessness
+    -- Enrage 
     self:newSpell({
-        playerbuff = 1719,
-        cooldown = 1719,
+        playerbuff = 184362,
         requiredTree = 2,
     })
-
  
     -- Bloodthirst + Furious Slash
     self:newSpell({
@@ -115,17 +113,19 @@ function EventHorizon:InitializeClass()
         requiredTree = 2,
     })
 
-    -- Enrage 
-    self:newSpell({
-        playerbuff = 184362,
-        requiredTree = 2,
-    })
-
     -- Whirlwind + Dragon Roar
     self:newSpell({
         playerbuff = 190411,
         icon = 190411,
         cooldown = 118000,
+        requiredTree = 2,
+    })
+
+
+    -- Recklessness
+    self:newSpell({
+        playerbuff = 1719,
+        cooldown = 1719,
         requiredTree = 2,
     })
 
