@@ -1,7 +1,7 @@
 function EventHorizon:InitializeClass()
   self.config.gcdSpellID = 1966
   self.config.past = -1 -- Number of seconds to show in the past. Default = -3
-  self.config.future = 1 -- Number of seconds to show in the future. Default = 11
+  self.config.future = 11 -- Number of seconds to show in the future. Default = 11
 
   -- Assassination
 
