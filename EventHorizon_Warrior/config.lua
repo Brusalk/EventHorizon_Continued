@@ -1,152 +1,147 @@
 function EventHorizon:InitializeClass()
-  self.config.gcdSpellID = 100
-  self.config.past = -1.5 -- Number of seconds to show in the past. Default = -3
-  self.config.future = 12 -- Number of seconds to show in the future. Default = 12
-
-  -- -- Fury
-
-  -- bloodthirst
-  self:newSpell({
-        cooldown = 23881,
-        requiredTree = 2,
-  })
-
-  -- raging blow
-  self:newSpell({
-        cooldown = 85288,
-        requiredTree = 2,
-  })
-
-  -- enrage
-  self:newSpell({
-        playerbuff = 184362,
-        requiredTree = 2,
-  })
-
-    -- battlecry
-  self:newSpell({
-        cooldown = 1719,
-        requiredTree = 2,
-  })
-
-  -- wrecking ball
-  self:newSpell({
-        playerbuff = 215570,
-        requiredTree = 2,
-    requiredTalent = 7,
-  })
-
-  -- frothing berserker
-  self:newSpell({
-        playerbuff = 215572,
-        requiredTree = 2,
-    requiredTalent = 14,
-  })
-
-    -- dragons roar
-  self:newSpell({
-        cooldown = 118000,
-        requiredTree = 2,
-    requiredTalent = 21,
-  })
-
-    -- bladestorm  fury
-  self:newSpell({
-        cooldown = 46924,
-        requiredTree = 2,
-    requiredTalent = 19,
-  })
-
+    self.config.gcdSpellID = 100130
 
     -- -- Arms
-
-  -- Collosal Smash
-  self:newSpell({
-    debuff = 208086,
-        cooldown = 167105,
-    requiredTree = 1,
-    })
-
-  -- Mortal Strike
-  self:newSpell({
-        cooldown = 12294,
-        requiredTree = 1,
-    })
-
-    -- -- Rend
+    -- Colossus Smash + Warbreaker
     self:newSpell({
+        cooldown = {167105, 262161},
+        debuff = {167105, 262161},
+        requiredTree = 1,
+    })
+
+    -- Rend
+    self:newSpell({ 
         debuff = {772, 3},
-        requiredTree = 1,
-        requiredTalent = 8,
-    })
-
-  -- overpower
-  self:newSpell({
-    playerbuff = 60503,
-        requiredTree = 1,
-    requiredTalent = 2,
-    })
-
-  -- Deadly Calm
-  self:newSpell({
-        cooldown = 1719,
-        playerbuff = 1719,
+        requiredTalent = 9,
         requiredTree = 1,
     })
 
-  -- Avatar
-  self:newSpell({
-        cooldown = 107574,
-    playerbuff = 107574,
-        requiredTree = {1, 2},
-    requiredTalent = 9,
+    -- Mortal Strike + In For The Kill
+    self:newSpell({
+        cooldown = 12294,
+        icon = 12294,
+        keepIcon = true,
+        playerbuff = 248621,
+        requiredTree = 1,
     })
 
-  -- Cleave
-  self:newSpell({
+    -- Overpower
+    self:newSpell({ 
+        recharge = 7384,
+        requiredTree = 1,
+    })
+
+    -- Sudden Death
+    self:newSpell({
+        playerbuff = 29725,
+        requiredTalent = 2,
+        requiredTree = 1,
+    })
+
+    -- Skullsplitter 
+    self:newSpell({
+        cooldown = 260643,
+        requiredTalent = 3,
+        requiredTree = 1,
+    })
+
+    -- Sweeping Strikes
+    self:newSpell({
+        playerbuff = 260708,
+        cooldown = 260708,
+        requiredTree = 1,
+    })
+
+    -- Deep Wounds + Cleave
+    self:newSpell({
+        debuff = {262304, 3},
         cooldown = 845,
         requiredTree = 1,
     })
 
-  -- Bladestorm arms
-  self:newSpell({
+    -- Bladestorm
+    self:newSpell({
+        playerbuff = 46924,
         cooldown = {227847, 152277},
         requiredTree = 1,
     })
 
-    -- -- Protection
-
-     -- Ignore Pain
-     self:newSpell({
-     playerbuff = 190456,
-         requiredTree = 3,
-     })
-
-     -- Shield Block
-     self:newSpell({
-       playerbuff = 132404,
-         requiredTree = 3,
-     })
-
-     -- Shield Slam
-     self:newSpell({
-         cooldown = 23922,
-       requiredTree = 3,
-     })
-
-     -- Demoralizing Shout
-     self:newSpell({
-         cooldown = 1160,
-         debuff = 1160,
-       requiredTree = 3,
+    -- Avatar
+    self:newSpell({
+        playerbuff = 107574,
+        cooldown = 107574,
+        requiredTalent = 17,
+        requiredTree = 1,
+    })
+    
+    -- Deadly Calm
+    self:newSpell({
+        playerbuff = 262228,
+        cooldown = 262228,
+        requiredTalent = 18,
+        requiredTree = 1,
     })
 
-     -- Battle Cry
-     self:newSpell({
+    -- -- Fury
+    -- Recklessness
+    self:newSpell({
+        playerbuff = 1719,
         cooldown = 1719,
-       playerbuff = 1719,
-       requiredTree = 3,
+        requiredTree = 2,
     })
 
+ 
+    -- Bloodthirst + Furious Slash
+    self:newSpell({
+        cooldown = 23881,
+        playerbuff = 202539,
+        keepIcon = true,
+        requiredTree = 2,
+    })
 
+    -- Raging Blow + Frothing Berserker
+    self:newSpell({
+        recharge = 85288,
+        playerbuff = 215572,
+        keepIcon = true,
+        requiredTree = 2,
+    })
+
+    -- Execute + Sudden Death
+    self:newSpell({
+        cooldown = 5308,
+        playerbuff = 280721,
+        keepIcon = true,
+        requiredTree = 2,
+    })
+
+    -- Enrage 
+    self:newSpell({
+        playerbuff = 184362,
+        requiredTree = 2,
+    })
+
+    -- Whirlwind + Dragon Roar
+    self:newSpell({
+        playerbuff = 190411,
+        icon = 190411,
+        cooldown = 118000,
+        requiredTree = 2,
+    })
+
+    -- Siegebreaker
+    self:newSpell({
+        cooldown = 280772,
+        debuff = 280772,
+        requiredTalent = 21,
+        requiredTree = 2,
+    })
+
+    -- Bladestorm
+    self:newSpell({
+        playerbuff = 46924,
+        cooldown = 46924,
+        requiredTalent = 18,
+        requiredTree = 2,
+    })
 end
