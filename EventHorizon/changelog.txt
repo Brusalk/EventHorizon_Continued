@@ -1,4 +1,11 @@
 Changelog:
+v1.9.24-beta
+* Additional classes implemented
+* Fix for recharge behavior being wonky when abilities trigger recharge updates
+
+v1.9.23
+* Update for BFA Pre-patch
+* Some specs implemented
 
 v1.9.20
 * Update for WoW 7.2.5
@@ -19,7 +26,7 @@ v1.9.19
 
 v1.9.18
   * Issue #17 -- Added support for per-bar configuration of colors and texture options
-  * * This allows you to set most colors on a bar-by-bar basis by adding a "barcolors" option to the config for a spellbar. This option accepts a table of color IDs to the color table (RGBA). 
+  * * This allows you to set most colors on a bar-by-bar basis by adding a "barcolors" option to the config for a spellbar. This option accepts a table of color IDs to the color table (RGBA).
   * * Here is an example for Immolate (a DOT with a cast time):
     -- Immolate
     self:newSpell({
@@ -32,7 +39,7 @@ v1.9.18
             debuffmine = { 1, 0, 0, 1 }
         }
     })
-    
+
   * * This spellbar will have a cast bar shown as a green bar. The debuff will display as red.
   * * A full list of color typeIDs can be found in the main EventHorizon config.lua file under the colors section. Any color which is specific to a bar (IE not a global color such as gcdColor) can be configured on a bar-by-bar basis with this option.
   * Issue #3 -- Added `recharge` option, which displays a segmented bar which shows all charges of an ability, and when each charge will be available. Also displays current number of charges on the icon.
@@ -44,7 +51,7 @@ v1.9.17
  * Updated Destro Class Config to fix faulty merge commit
 
 v1.9.16
- * Updated Class Configs to match talent/spell ID changes for 7.1.5. 
+ * Updated Class Configs to match talent/spell ID changes for 7.1.5.
 
 v1.9.15
  * Fixed inspect Lua error
@@ -54,15 +61,15 @@ v1.9.14
 
 v1.9.13
   * Added Prot Warrior. Fixed requiredArtifactTalent functionality. Added separate EventHorizon_Configs myconfig folder.
-  
+
   *  Added Prot Warrior kindly provided by @jcrate on Github!
   * Disabled debug logging (PR #29)
   * Fixed requiredArtifactTalent functionality. Swapped to new library which should make things more consistent. Minor startup-process rework to support change
   * Added a separate EventHorizon_Configs folder to toc files -- Fix for curse client blowing out myconfigs
   * * This means that you may now specify a my-config file inside the EventHorizon_Configs folder.
-  * * You'll need to create the folder along side the EventHorizon and EventHorizon_Class folders called EventHorizon_Configs. 
-  * * Inside that folder, you can create `core_my_config.lua` file, which is the analogue for EventHorizon/myconfig.lua. 
-  * * There is also `<class>_my_config.lua` for each class, which is the analogue for EventHorizon_<class>/myconfig.lua. 
+  * * You'll need to create the folder along side the EventHorizon and EventHorizon_Class folders called EventHorizon_Configs.
+  * * Inside that folder, you can create `core_my_config.lua` file, which is the analogue for EventHorizon/myconfig.lua.
+  * * There is also `<class>_my_config.lua` for each class, which is the analogue for EventHorizon_<class>/myconfig.lua.
   * * * For example, `EventHorizon_Druid/myconfig.lua` can be put into `EventHorizon_Configs/druid_my_config.lua`, and it'll be persisted between Curse-Client upgrades.
 
 v1.9.12
@@ -83,7 +90,7 @@ v1.9.12
 v1.9.11
   Brusalk - Sat Jul 23 03:17:26 2016 -0700
       Merge pull request #5 from Brusalk/v11_wip
-      
+
       Added many class configs kindly provided by the users.
       Fixed Green texture display bug. Greatly improved user experience with empty or nearly-empty
       class configs. Fixed all the bugs.
@@ -201,7 +208,7 @@ v1.9.5-Beta-1
 *Core:
 - Got core working for WoD. (First rev.)
 - Added notification on first load (one time only) about current state of addon and WoD class config status.
-- Fixed GetTalentInfo, GetSpellInfo, and GetNumTalents MoP -> WoD incompatibility issues. 
+- Fixed GetTalentInfo, GetSpellInfo, and GetNumTalents MoP -> WoD incompatibility issues.
 
 v1.9.5-15
 *Core:
@@ -290,7 +297,7 @@ v1.9.5-7
  - Warlock
    - Commented out Soul Swap for affliction. If you want it back delete the line it says to delete to get it back
    - Fixed error with Shadowflame debuff dot. Should now correctly show the debuff's ticks
-   
+
 
 v1.9.5-6
 *Core:
@@ -349,7 +356,7 @@ v1.9.5:
 *Core:
  - Everything should be working 100%. Trinkets may be bugged.
 
-v1.9.4-3: 
+v1.9.4-3:
 *Class Configurations:
  - Hunter: Updated for MoP
  - Druid: Updated for MoP. Balance may not be working 100%
@@ -380,7 +387,7 @@ v1.9.3-2: Kinda.
 * REMOVAL - nonAffectingHaste removed.
 * Warlock: Removed Drain Mana references, as the spell no longer exists.
 
-Note: I don't have an account, so this release is pretty much triage to fix a few 
+Note: I don't have an account, so this release is pretty much triage to fix a few
 
 v1.9.3: Mmm, ticks. And math. And updates.
 * Core: Tick detection has been completely rewritten and is nearly 100% accurate. I'll spare the details here, check beta comments for how it all works.
@@ -555,7 +562,7 @@ v1.9 r272: Not QUITE Axis, but it's getting there pretty quickly.
 * Shaman: Hey look, I play one these days. Nice little batch of updates.
  - Flame Shock is properly tagged as hasted.
  - Elemental: Added Thunderstorm, changed EM's requiredTalent to EM (was Lightning Mastery for some reason). Folded Lava Burst and its cooldown into Lightning Bolt.
- - Enhancement: Stormstrike debuff is now tracked. Maelstrom Weapon has been folded into Lava Lash's bar. 
+ - Enhancement: Stormstrike debuff is now tracked. Maelstrom Weapon has been folded into Lava Lash's bar.
  - Resto: Folded Earthliving Weapon and Lesser Healing Wave into Healing Wave's bar.
 * Warlock: Could use feedback on the bar placement.
  - The former Shadow Bolt bar now tracks the following casts: Shadow Bolt, Incinerate, Soul Fire, Chaos Bolt (plus cooldown), Drain Life/Mana/Soul (with tick info).
@@ -850,7 +857,7 @@ v1.1: Look, Feel, and Quirks update of d00m.
 Major changes:
 * Core: Class coloring has been implemented. Usage and examples are in config.lua.
 * Core: Tick indicators may now recalculate based on the last tick to fire. This fixes all known cases of incorrect tick displays. This [b]IS[/b] affected by your latency, and will take a tick once a spell is refreshed to update. A 200ms grace period is allowed after a spell ends for the last tick to show. If you have any issues with this, by all means let me know.
-* Config: The following indicators/bars will now be class colored by default: 'sent', 'tick', 'debuffmine', 'debuff' (darkened). The background has been made slightly more opaque for visibility. Priests will find that their class color is automatically darkened a little 
+* Config: The following indicators/bars will now be class colored by default: 'sent', 'tick', 'debuffmine', 'debuff' (darkened). The background has been made slightly more opaque for visibility. Priests will find that their class color is automatically darkened a little
 
 Minor changes:
 * Core: The 'auraunit' class config setting should play nicely with target changes now.
@@ -904,7 +911,7 @@ v0.11:
 
 v0.10b:
 * Druid: Cleaned up comments. Added simple Eclipse tracking (duration and cooldown, no proc info). Rip set to refreshable to fix tick timing with Glyph of Shred.
-* Hunter: Arcane Shot not tracked when Explosive Shot is talented. Moved Steady Shot to above Kill Shot. Cleaned up some oddities with the comments. 
+* Hunter: Arcane Shot not tracked when Explosive Shot is talented. Moved Steady Shot to above Kill Shot. Cleaned up some oddities with the comments.
 * Rogue: Moved ShS nearer to the bottom.
 * Warlock: Added Glyph of Life Tap for all specs. Added Drain Soul when specced Death's Embrace.
 
@@ -958,7 +965,7 @@ v0.7
 * Added config.spacing = <number> to set the space between two bars.
 * Added config.iconborder = <boolean> option to toggle the default Blizzard icon border.
 * Added config.scale = <number> option to scale the main frame.
-* Added GCD indicator: 
+* Added GCD indicator:
  config.gcdStyle = 'line' displays the end of the GCD as a thin line.
  config.gcdStyle = 'bar' displays the GCD as a bar from now to the end.
  config.gcdStyle = nil disables the GCD indicator.
