@@ -1,7 +1,7 @@
 ## Interface: 80000
 ## Title: EventHorizon
 ## Author: Brusalk
-## Version: 1.9.23-beta
+## Version: 1.9.24-beta
 ## Dependencies:
 ## OptDeps: SharedMedia, LibArtifactData-1.0
 ## OptionalDepts: LibArtifactData-1.0

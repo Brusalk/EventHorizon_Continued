@@ -1,4 +1,8 @@
 Changelog:
+v1.9.24-beta
+* Additional classes implemented
+* Fix for recharge behavior being wonky when abilities trigger recharge updates
+
 v1.9.23
 * Update for BFA Pre-patch
 * Some specs implemented
