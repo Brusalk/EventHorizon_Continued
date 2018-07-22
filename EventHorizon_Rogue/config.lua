@@ -1,7 +1,7 @@
 function EventHorizon:InitializeClass()
   self.config.gcdSpellID = 1966
-  self.config.past = -1.5 -- Number of seconds to show in the past. Default = -3
-  self.config.future = 12 -- Number of seconds to show in the future. Default = 12
+  self.config.past = -1 -- Number of seconds to show in the past. Default = -3
+  self.config.future = 1 -- Number of seconds to show in the future. Default = 11
 
   -- Assassination
 
@@ -10,8 +10,8 @@ function EventHorizon:InitializeClass()
     requiredTree = 1,
     requiredTalent = 3,
     playerbuff = 121153,
-     barcolors = {
-     playerbuff = {252/255, 020/255, 020/255, 0.7}
+     barcolors   = {
+     playerbuff  = {252/255, 020/255, 020/255, 0.7}
      },
   })
 ]]
@@ -21,9 +21,9 @@ function EventHorizon:InitializeClass()
     requiredLevel = 12,
     debuff = {703,2},
     cooldown = 703,
-     barcolors = {
-     cooldown = {171/255, 191/255, 181/255, 0.6},
-     debuffmine = {191/255, 040/255, 101/255, 0.5}
+     barcolors   = {
+     cooldown    = {171/255, 191/255, 181/255, 0.6},
+     debuffmine  = {191/255, 040/255, 101/255, 0.5}
      },
   })
 
@@ -34,9 +34,9 @@ function EventHorizon:InitializeClass()
     debuff = {1943,2},
     cooldown = 200806,
     smallCooldown = true,
-     barcolors = {
-     cooldown = {171/255, 191/255, 181/255, 0.6},
-     debuffmine = {252/255, 000/255, 000/255, 0.4}
+     barcolors   = {
+     cooldown    = {171/255, 191/255, 181/255, 0.6},
+     debuffmine  = {252/255, 000/255, 000/255, 0.4}
      },
   })
 
@@ -45,8 +45,8 @@ function EventHorizon:InitializeClass()
     requiredTree = 1,
     requiredTalent = 2,
     playerbuff = 193641,
-     barcolors = {
-     playerbuff = {252/255, 232/255, 060/255, 0.5}
+     barcolors   = {
+     playerbuff  = {252/255, 232/255, 060/255, 0.5}
      },
   })
 
@@ -55,8 +55,8 @@ function EventHorizon:InitializeClass()
     requiredTree = 1,
     requiredTalentUnselected = 9,
     playerbuff = 32645,
-     barcolors = {
-     playerbuff = {030/255, 131/255, 000/255, 0.5}
+     barcolors   = {
+     playerbuff  = {030/255, 131/255, 000/255, 0.5}
      },
   })
 
@@ -67,9 +67,9 @@ function EventHorizon:InitializeClass()
     playerbuff = 32645,
     cooldown = 137619,
     smallCooldown = true,
-     barcolors = {
-     cooldown = {171/255, 191/255, 181/255, 0.6},
-     playerbuff = {030/255, 131/255, 000/255, 0.5}
+     barcolors   = {
+     cooldown    = {171/255, 191/255, 181/255, 0.6},
+     playerbuff  = {030/255, 131/255, 000/255, 0.5}
      },
   })
 
@@ -79,9 +79,9 @@ function EventHorizon:InitializeClass()
     requiredTalent = 17,
     debuff = 245389,
     cooldown = 245388,
-     barcolors = {
-     cooldown = {171/255, 191/255, 181/255, 0.6},
-     debuffmine = {111/255, 151/255, 070/255, 0.9}
+     barcolors   = {
+     cooldown    = {171/255, 191/255, 181/255, 0.6},
+     debuffmine  = {111/255, 151/255, 070/255, 0.9}
      },
   })
 
@@ -91,9 +91,9 @@ function EventHorizon:InitializeClass()
     requiredLevel = 56,
     debuff = {79140,0},
     cooldown = 79140,
-     barcolors = {
-     cooldown = {171/255, 191/255, 181/255, 0.5},
-     debuffmine = {191/255, 171/255, 161/255, 0.5}
+     barcolors   = {
+     cooldown    = {171/255, 191/255, 181/255, 0.5},
+     debuffmine  = {191/255, 171/255, 161/255, 0.5}
      },
   })
 
@@ -104,9 +104,9 @@ function EventHorizon:InitializeClass()
     debuff = {121411, 2},
     smallCooldown = true,
     cooldown = 1856,
-     barcolors = {
-     cooldown = {171/255, 191/255, 181/255, 0.6},
-     debuffmine = {222/255, 060/255, 070/255, 0.4}
+     barcolors   = {
+     cooldown    = {171/255, 191/255, 181/255, 0.6},
+     debuffmine  = {222/255, 060/255, 070/255, 0.4}
      },
    })
 
@@ -115,38 +115,38 @@ function EventHorizon:InitializeClass()
     requiredTree = 1,
     requiredTalentUnselected = 21,
     cooldown = 1856,
-     barcolors = {
-     cooldown = {171/255, 191/255, 181/255, 0.6},
+     barcolors   = {
+     cooldown    = {171/255, 191/255, 181/255, 0.6},
      },
   })
 
   -- Outlaw
 
-  -- Roll the Bones and Sprint cooldown at half height.
+  -- Roll the Bones with Between the Eyes CD at half height.
   self:newSpell({
     requiredTree = 2,
     requiredLevel = 40,
     requiredTalentUnselected = 18,
-    icon = 193316,
+    --icon = 193316,
     playerbuff = {{193356,0},{193357,0},{193358,0},{193359, 0},{199600,0},{199603,0}},
-    cooldown = 2983,
+    cooldown = 199804,
     smallCooldown = true,
-     barcolors = {
-     cooldown = {171/255, 191/255, 181/255, 0.7},
-     playerbuff = {252/255, 101/255, 101/255, 0.7}
+     barcolors   = {
+     cooldown    = {171/255, 191/255, 181/255, 0.8},
+     playerbuff  = {242/255, 242/255, 040/255, 0.6}
      },
   })
 
-  -- Slice and Dice and Sprint cooldown at half height.
+  -- Slice and Dice with Between the Eyes CD at half height.
   self:newSpell({
     requiredTree = 2,
     requiredTalent = 18,
     playerbuff = 5171,
-    cooldown = 2983,
+    cooldown = 199804,
     smallCooldown = true,
-     barcolors = {
-     cooldown = {171/255, 191/255, 181/255, 0.7},
-     playerbuff = {252/255, 101/255, 101/255, 0.7}
+     barcolors   = {
+     cooldown    = {171/255, 191/255, 181/255, 0.8},
+     playerbuff  = {242/255, 242/255, 040/255, 0.6}
      },
   })
 
@@ -157,9 +157,9 @@ function EventHorizon:InitializeClass()
     debuff = 196937,
     cooldown = 196937,
     refreshable = true,
-     barcolors = {
-     cooldown = {171/255, 191/255, 181/255, 0.7},
-     debuffmine = {222/255, 111/255, 111/255, 0.7}
+     barcolors   = {
+     cooldown    = {171/255, 191/255, 181/255, 0.7},
+     debuffmine  = {252/255, 161/255, 010/255, 0.7}
      },
   })
 
@@ -171,9 +171,21 @@ function EventHorizon:InitializeClass()
     cooldown = 137619,
     smallCooldown = true,
     icon = 185763,
-     barcolors = {
-     cooldown = {171/255, 191/255, 181/255, 0.7},
-     playerbuff = {252/255, 030/255, 040/255, 0.7}
+     barcolors   = {
+     cooldown    = {171/255, 191/255, 181/255, 0.7},
+     playerbuff  = {252/255, 030/255, 040/255, 0.7}
+     },
+  })
+
+  -- Blade Flurry
+  self:newSpell({
+    requiredTree = 2,
+    playerbuff = 13877,
+    recharge = 13877,
+    refreshable = true,
+     barcolors   = {
+     recharge    = {171/255, 191/255, 181/255, 0.3},
+     playerbuff  = {252/255, 101/255, 101/255, 0.7}
      },
   })
 
@@ -182,8 +194,8 @@ function EventHorizon:InitializeClass()
     requiredTree = 2,
     requiredTalent = {17, 19},
     playerbuff = 193539,
-     barcolors = {
-     playerbuff = {252/255, 252/255, 151/255, 0.6}
+     barcolors   = {
+     playerbuff  = {252/255, 252/255, 151/255, 0.6}
      },
   })
 
@@ -194,9 +206,9 @@ function EventHorizon:InitializeClass()
     playerbuff = 193539,
     cooldown = 271877,
     smallCooldown = true,
-     barcolors = {
-     cooldown = {171/255, 191/255, 181/255, 0.9},
-     playerbuff = {252/255, 252/255, 151/255, 0.6}
+     barcolors   = {
+     cooldown    = {171/255, 191/255, 181/255, 0.9},
+     playerbuff  = {252/255, 252/255, 151/255, 0.6}
      },
   })
 
@@ -207,9 +219,9 @@ function EventHorizon:InitializeClass()
     playerbuff = 193539,
     cooldown = 51690,
     smallCooldown = true,
-     barcolors = {
-     cooldown = {171/255, 191/255, 181/255, 0.9},
-     playerbuff = {252/255, 252/255, 151/255, 0.6}
+     barcolors   = {
+     cooldown    = {171/255, 191/255, 181/255, 0.9},
+     playerbuff  = {252/255, 252/255, 151/255, 0.6}
      },
   })
 
@@ -218,6 +230,7 @@ function EventHorizon:InitializeClass()
     requiredTree = 2,
     requiredTalent = 20,
     requiredTalentUnselected = 17,
+    playerbuff = 271896,
     cooldown = 271877,
   })
 
@@ -235,9 +248,9 @@ function EventHorizon:InitializeClass()
     requiredLevel = 56,
     playerbuff = 13750,
     cooldown = 13750,
-     barcolors = {
-     cooldown = {171/255, 191/255, 181/255, 0.6},
-     playerbuff = {242/255, 161/255, 040/255, 0.7}
+     barcolors   = {
+     cooldown    = {171/255, 191/255, 181/255, 0.6},
+     playerbuff  = {252/255, 202/255, 121/255, 0.7},
      },
   })
 
@@ -271,9 +284,9 @@ function EventHorizon:InitializeClass()
     debuff = {195452,2},
     cooldown = 137619,
     smallCooldown = true,
-     barcolors = {
-     cooldown = {171/255, 191/255, 181/255, 0.7},
-     debuffmine = {080/255, 030/255, 121/255, 0.6}
+     barcolors   = {
+     cooldown    = {171/255, 191/255, 181/255, 0.7},
+     debuffmine  = {080/255, 030/255, 121/255, 0.6}
      },
   })
 
@@ -283,9 +296,9 @@ function EventHorizon:InitializeClass()
     requiredLevel = 36,
     playerbuff = 212283,
     cooldown = 212283,
-     barcolors = {
-     cooldown = {171/255, 191/255, 181/255, 0.6},
-     playerbuff = {232/255, 010/255, 232/255, 0.7}
+     barcolors   = {
+     cooldown    = {171/255, 191/255, 181/255, 0.6},
+     playerbuff  = {232/255, 010/255, 232/255, 0.7}
      },
   })
 
@@ -295,9 +308,9 @@ function EventHorizon:InitializeClass()
     requiredLevel = 40,
     playerbuff = 185313,
     recharge = 185313,
-     barcolors = {
-     recharge = {121/255, 141/255, 191/255, 0.4},
-     playerbuff = {010/255, 131/255, 202/255, 0.7}
+     barcolors   = {
+     recharge    = {121/255, 141/255, 191/255, 0.4},
+     playerbuff  = {010/255, 131/255, 202/255, 0.7}
      },
   })
 
@@ -305,9 +318,9 @@ function EventHorizon:InitializeClass()
   self:newSpell({
     requiredTree = 3,
     requiredTalent = {17, 19},
-    playerbuff = 193539,
-     barcolors = {
-     playerbuff = {252/255, 252/255, 151/255, 0.6}
+    playerbuff  = 193539,
+     barcolors   = {
+     playerbuff  = {252/255, 252/255, 151/255, 0.6}
      },
   })
 
@@ -318,9 +331,9 @@ function EventHorizon:InitializeClass()
     playerbuff = 193539,
     cooldown = 280719,
     smallCooldown = true,
-     barcolors = {
-     cooldown = {171/255, 191/255, 181/255, 0.9},
-     playerbuff = {252/255, 252/255, 151/255, 0.6}
+     barcolors   = {
+     cooldown    = {171/255, 191/255, 181/255, 0.9},
+     playerbuff  = {252/255, 252/255, 151/255, 0.6}
      },
   })
 
@@ -331,9 +344,32 @@ function EventHorizon:InitializeClass()
     playerbuff = 193539,
     cooldown = 277925,
     smallCooldown = true,
-     barcolors = {
-     cooldown = {171/255, 191/255, 181/255, 0.9},
-     playerbuff = {252/255, 252/255, 151/255, 0.6}
+     barcolors   = {
+     cooldown    = {171/255, 191/255, 181/255, 0.9},
+     playerbuff  = {252/255, 252/255, 151/255, 0.6}
+     },
+  })
+
+  -- Secret Technique
+  self:newSpell({
+    requiredTree = 3,
+    requiredTalent = 20,
+    requiredTalentUnselected = 17,
+    cooldown = 280719,
+     barcolors   = {
+     cooldown    = {171/255, 191/255, 181/255, 0.9},
+     },
+  })
+
+  -- Shuriken Tornado
+  self:newSpell({
+    requiredTree = 3,
+    requiredTalent = 21,
+    requiredTalentUnselected =17,
+    cooldown = 277925,
+    smallCooldown = true,
+     barcolors   = {
+     cooldown    = {171/255, 191/255, 181/255, 0.9},
      },
   })
 
@@ -351,8 +387,8 @@ function EventHorizon:InitializeClass()
     requiredLevel = 56,
     playerbuff = 121471,
     cooldown = 121471,
-     barcolors = {
-     playerbuff = {111/255, 060/255, 202/255, 0.5}
+     barcolors   = {
+     playerbuff  = {111/255, 060/255, 202/255, 0.5}
      },
   })
 
@@ -381,8 +417,8 @@ function EventHorizon:InitializeClass()
   -- Evasion / Riposte
   self:newSpell({
     requiredLevel = 10,
-    playerbuff = {{5277}, {199754}},
-    cooldown = {5277, 199754},
+    playerbuff   = {{5277}, {199754}},
+    cooldown     = {5277, 199754},
   })
 ]]--
 
