@@ -8,58 +8,103 @@ function EventHorizon:InitializeClass()
 
   -- [[ Brewmaster ]] --
   -- keg smash
---   self:newSpell({
---     requiredTree = 1,
---     cooldown = 121253,
---     debuff = 121253,
---   })
+  self:newSpell({
+    requiredTree = 1,
+    cooldown = 121253,
+    debuff = 121253,
+  })
   
---   -- breath of fire
---   self:newSpell({
---     requiredTree = 1,
---     cooldown = 115181,
---     debuff = 115181,
---   })
+  -- breath of fire
+  self:newSpell({
+    requiredTree = 1,
+    cooldown = 115181,
+    debuff = 115181,
+  })
   
---   -- blackout strike
---   self:newSpell({
---     requiredTree = 1,
---     cooldown = 205523,
---   })
+  -- blackout strike
+  self:newSpell({
+    requiredTree = 1,
+    cooldown = 205523,
+  })
 
---   -- rushing jade wind
---   self:newSpell({
---     requiredTree = 1,
---     playerbuff = 116847,
---     requiredTalent = 16,
---   })
-
---   -- ironskin brew
---   self:newSpell({
---     requiredTree = 1,
---     recharge = 115308,
---     playerbuff = 215479,
---     refreshable = true,
---   })  
+  -- chi wave
+  self:newSpell({
+    requiredTree = 1,
+    requiredTalent = 2,
+    cooldown = 115098,
+  })
   
---   -- fortifying brew
---   self:newSpell({
---     requiredTree = 1,
---     cooldown = 115203
---   })
+  -- chi burst
+  self:newSpell({
+    requiredTree = 1,
+    requiredTalent = 3,
+    cooldown = 123986,
+  })
 
---   --zen meditation
---   self:newSpell({
---     requiredTree = 1,
---     cooldown = 115176
---   })
+  -- rushing jade wind
+  self:newSpell({
+    requiredTree = 1,
+    requiredTalent = 17,
+    cooldown = 116847,
+    playerbuff = 116847,
+  })
 
---   -- black ox brew
---   -- self:newSpell({
---   --   requiredTree = 1,
---   --   cooldown = 115399
---   -- })
+  -- ironskin brew
+  self:newSpell({
+    requiredTree = 1,
+    recharge = 115308,
+    playerbuff = 215479,
+    refreshable = true,
+  })  
   
+  -- healing elixir
+  self:newSpell({
+    requiredTree = 1,
+    requiredTalent = 14,
+    recharge = 122281
+  })
+
+  -- Guard
+  self:newSpell({
+    requiredTree = 1,
+    requiredTalent = 20,
+    cooldown = 115295,
+    playerbuff = 115295
+  })
+  
+  --dampen harm
+  self:newSpell({
+    requiredTree = 1,
+    requiredTalent = 15,
+    cooldown = 122278
+  })
+
+  -- invoke niuzau, the black ox
+  self:newSpell({
+    requiredTree = 1,
+    requiredTalent = 18,
+    cooldown = 132578
+  })
+  
+
+  -- fortifying brew
+  self:newSpell({
+    requiredTree = 1,
+    cooldown = 115203
+  })
+
+  --zen meditation
+  self:newSpell({
+    requiredTree = 1,
+    cooldown = 115176
+  })
+
+  -- summon black ox statue
+  -- self:newSpell({
+  --   requiredTree = 1,
+  --   requiredTalent = 11,
+  --   cooldown = 115315,
+  -- })   
   
   -- [[ Windwalker ]] --
   -- Fist of the White Tiger
