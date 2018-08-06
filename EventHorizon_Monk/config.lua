@@ -6,45 +6,144 @@ function EventHorizon:InitializeClass()
   self.config.past = -1.5 -- Number of seconds to show in the past. Default = -3
   self.config.future = 12 -- Number of seconds to show in the future. Default = 12
 
-  -- [[ Windwalker ]] --   
-  -- rising sun kick
+  -- [[ Brewmaster ]] --
+  -- keg smash
+--   self:newSpell({
+--     requiredTree = 1,
+--     cooldown = 121253,
+--     debuff = 121253,
+--   })
+  
+--   -- breath of fire
+--   self:newSpell({
+--     requiredTree = 1,
+--     cooldown = 115181,
+--     debuff = 115181,
+--   })
+  
+--   -- blackout strike
+--   self:newSpell({
+--     requiredTree = 1,
+--     cooldown = 205523,
+--   })
+
+--   -- rushing jade wind
+--   self:newSpell({
+--     requiredTree = 1,
+--     playerbuff = 116847,
+--     requiredTalent = 16,
+--   })
+
+--   -- ironskin brew
+--   self:newSpell({
+--     requiredTree = 1,
+--     recharge = 115308,
+--     playerbuff = 215479,
+--     refreshable = true,
+--   })  
+  
+--   -- fortifying brew
+--   self:newSpell({
+--     requiredTree = 1,
+--     cooldown = 115203
+--   })
+
+--   --zen meditation
+--   self:newSpell({
+--     requiredTree = 1,
+--     cooldown = 115176
+--   })
+
+--   -- black ox brew
+--   -- self:newSpell({
+--   --   requiredTree = 1,
+--   --   cooldown = 115399
+--   -- })
+  
+  
+  -- [[ Windwalker ]] --
+  -- Fist of the White Tiger
   self:newSpell({
-    cooldown = 107428,
-    keepIcon = true,
+    requiredTree = 3,
+    requiredTalent = 8,
+    cooldown = 261947,
   })
 
   -- Fists of Fury
   self:newSpell({
+    requiredTree = 3,
     cooldown = 113656,
     channel = 113656,
-    keepIcon = true,
   })
-
-  -- dragon punch
+  
+  -- rising sun kick
   self:newSpell({
-    cooldown = 152175,
+    requiredTree = 3,
+    cooldown = 107428,
+  })
+  
+  -- whirling dragon punch
+  self:newSpell({
+    requiredTree = 3,
     requiredTalent = 20,
-    keepIcon = true,
+    cooldown = 152175,
+  })
+  
+  -- chi wave
+  self:newSpell({
+    requiredTree = 3,
+    requiredTalent = 2,
+    cooldown = 115098,
+  })
+  
+  -- chi burst
+  self:newSpell({
+    requiredTree = 3,
+    requiredTalent = 3,
+    cooldown = 123986,
   })
 
-  -- touch of death
+  -- Energizing Elixir
   self:newSpell({
+    requiredTree = 3,
+    requiredTalent = 9,
+    cooldown = 115288
+  })
+
+  -- Touch of Death
+  self:newSpell({
+    requiredTree = 3,
     cooldown = 115080,
-    keepIcon = true,
   })
 
   -- Storm, Earth and Fire
   self:newSpell({
+    requiredTree = 3,
+    requiredTalentUnselected = 21,
     cooldown = 137639,
     playerbuff = 137639,
-    keepIcon = true,
+  })
+
+  -- serenity
+  self:newSpell({
+    requiredTree = 3,
+    requiredTalent = 21,
+    cooldown = 152173,
+    playerbuff = 152173,
   })
 
   -- tiger
   self:newSpell({
+    requiredTree = 3,
+    requiredTalent = 18,
     cooldown = 123904,
-    requiredTalent = 17,
-    keepIcon = true,
   })
-
+  
+  -- energizing elixir
+  self:newSpell({
+    requiredTree = 3,
+    requiredTalent = 7,
+    cooldown = 115288,
+  })
+  
 end
