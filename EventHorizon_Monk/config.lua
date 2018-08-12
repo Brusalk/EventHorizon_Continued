@@ -105,7 +105,72 @@ function EventHorizon:InitializeClass()
   --   requiredTalent = 11,
   --   cooldown = 115315,
   -- })   
-  
+
+  -- [[ Mistweaver ]] --
+  -- renewing mist
+  self:newSpell({
+    requiredTree = 2,
+    recharge = 115151
+  })
+
+  -- lifecycles
+  self:newSpell({
+    requiredTree = 2,
+    requiredTalent = 7,
+    playerbuff = {{197919}, {197916}},
+  })
+
+  -- essence font
+  self:newSpell({
+    requiredTree = 2,
+    cooldown = 191837
+  })
+
+  -- chi wave
+  self:newSpell({
+    requiredTree = 2,
+    requiredTalent = 2,
+    cooldown = 115098
+  })
+
+  -- chi burst
+  self:newSpell({
+    requiredTree = 2,
+    requiredTalent = 3,
+    cast = 123986,
+    cooldown = 123986
+  })
+ 
+  --thunder focus tea
+  self:newSpell({
+    requiredTree = 2,
+    cooldown = 116680,
+    playerbuff = 116680
+  })
+
+  -- mana tea
+  self:newSpell({
+    requiredTree = 2,
+    requiredTalent = 9,
+    cooldown = 197908,
+    playerbuff = 197908
+  })
+
+  -- invoke Chi-Ji
+  self:newSpell({
+    requiredTree = 2,
+    requiredTalent = 18,
+    cooldown = 198664
+  })
+
+  -- rising sun kick
+  self:newSpell({
+    requiredTree = 2,
+    cooldown = 107428,
+    playerbuff = 202090,
+    icon = 107428
+  })
+
   -- [[ Windwalker ]] --
   -- Fist of the White Tiger
   self:newSpell({

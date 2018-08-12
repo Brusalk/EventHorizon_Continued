@@ -209,9 +209,6 @@ local BFAClassesNotImplemented = {
   [265] = "Warlock: Affliction",
   [266] = "Warlock: Demonology",
   [267] = "Warlock: Destruction",
-  [268] = "Monk: Brewmaster",
-  [269] = "Monk: Windwalker",
-  [270] = "Monk: Mistweaver",
   [577] = "Demon Hunter: Havoc",
   [581] = "Demon Hunter: Vengeance",
 }
