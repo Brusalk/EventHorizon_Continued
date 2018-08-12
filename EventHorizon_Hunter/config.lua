@@ -1,4 +1,7 @@
---Preliminary Beast Mastery and Survival BFA bars. Combine later with nponoBegHuk's profile at https://pastebin.com/PJn6xDaf
+-- Preliminary bars for BM, MM and SV hunter. 
+-- Needs clean-up: double check required level and required talents on all spells. Some artifact remnants [titanstrike].
+-- Unaccounted for: Survival talents Steel Trap, Murder of Crows, Flanking Strike, Chakrams, Mongoose Bite, Butchery.
+-- Otherwise functional for all three but more or less basic. 
 
 function EventHorizon:InitializeClass()
   self.config.gcdSpellID = 982 -- Revive Pet
@@ -10,15 +13,15 @@ function EventHorizon:InitializeClass()
         -- Barbed Shot
   self:newSpell({
     requiredTree = 1,
-	cooldown = 217200,
+    requiredLevel = 10,
+    playerbuff = {272790, 1.6 },
     recharge = 217200,
-	    auraunit = 'pet',
-			playerbuff = 272790,
+    auraunit = 'pet',
     refreshable = true,
     barcolors = {
-      playerbuff  = {171/255, 191/255, 181/255, 0.5},
-      recharge  = {255/255, 003/255, 062/255, 0.5}
-    },
+      cooldown  = {255/255, 003/255, 062/255, 0.5},
+      playerbuff  = {171/255, 191/255, 181/255, 0.5}
+    }
   })
   
     -- Murder of Crows
@@ -56,7 +59,6 @@ function EventHorizon:InitializeClass()
       playerbuff  = {171/255, 000/255, 040/255, 0.7}
     }
   })
- 
 
   -- Kill Command
   self:newSpell({
@@ -78,7 +80,6 @@ function EventHorizon:InitializeClass()
     }
   })
 
-
   -- Dire Beast
   self:newSpell({
     requiredTree = 1,
@@ -93,10 +94,6 @@ function EventHorizon:InitializeClass()
       playerbuff  = {255/255, 003/255, 062/255, 0.5}
     }
   })
-
-
- 
-
 
   -- Multishot with Titanstrike CD at half height
   self:newSpell({
@@ -124,12 +121,6 @@ function EventHorizon:InitializeClass()
     }
   })
 
-
-
-
-
-
-
   -- Stampede
   self:newSpell({
     requiredTree = 1,
@@ -154,79 +145,84 @@ function EventHorizon:InitializeClass()
 
 
   --Marksmanship Bars
-
-  -- Marking Targets with Sentinel CD at half height, if talented.
+  
+      -- Murder of Crows
   self:newSpell({
     requiredTree = 2,
-    requiredLevel = 20,
-    playerbuff = 223138,
-    cooldown = 206817,
-    smallCooldown = true,
+    requiredTalent = 3,
+    debuff = 131894,
+    cooldown = 131894,
     barcolors = {
-      cooldown  = {171/255, 191/255, 181/255, 0.7},
-      playerbuff  = {255/255, 000/255, 030/255, 0.5}
+      cooldown  = {171/255, 191/255, 181/255, 0.5},
+      debuffmine  = {029/255, 041/255, 081/255, 0.6}
+    }
+  })
+  
+            -- Aimed Shot
+  self:newSpell({
+    requiredTree = 2,
+    requiredLevel = 10,
+	   playerbuff = 194594,
+    recharge = 19434,
+	cast = 19434,
+    barcolors = {
+      casting  = {255/255, 003/255, 062/255, 0.5},
+      cooldown  = {171/255, 191/255, 181/255, 0.5}
+    }
+  })
+  
+      -- Rapid Fire
+  self:newSpell({
+    requiredTree = 2,
+    playerbuff = {257044,0.24},
+    cooldown = 257044,
+    channel = 257044,
+    barcolors = {
+      casting    = {027/255, 147/255, 228/255, 1.0},
+      cooldown  = {171/255, 191/255, 181/255, 0.5}
+    }
+  })
+  
+    -- Precise Shots
+  self:newSpell({
+    requiredTree = 2,
+    playerbuff = {260242, 1.6 },
+    barcolors = {
+      playerbuff  = {212/255, 020/255, 141/255, 0.6}
     }
   })
 
-  -- Hunter's Mark with Windburst CD at half height.
+  -- Steady Focus with Steady Shot CD
   self:newSpell({
     requiredTree = 2,
-    requiredLevel = 12,
-    debuff = 185987,
-    cooldown = 204147,
-    smallCooldown = true,
+    requiredTalent = 10,
+    playerbuff = {193533, 1.6 },
+	cast = 56641,
     barcolors = {
-      cooldown  = {202/255, 161/255, 055/255, 0.5},
-      debuffmine  = {252/255, 088/255, 088/255, 0.7}
-    }
-  })
-
-  -- Vulnerable with casts and Sidewinders recharge or Piercing Shot CD at half height
-  self:newSpell({
-    requiredTree = 2,
-    debuff = {187131, 2},
-    cast = {19434, 204147},
-    recharge = 214579,
-    cooldown = 198670,
-    smallCooldown = true,
-    barcolors = {
-      cooldown  = {171/255, 191/255, 181/255, 0.6},
-      recharge  = {171/255, 191/255, 181/255, 0.6},
-      debuffmine  = {222/255, 090/255, 131/255, 0.8}
-    }
-  })
-
-  -- Steady Focus
-  self:newSpell({
-    requiredTree = 2,
-    requiredTalent = 2,
-    playerbuff = 193534,
-    barcolors = {
+	  casting  = {171/255, 191/255, 181/255, 0.7},
       playerbuff  = {240/255, 225/255, 048/255, 0.6}
     }
   })
-
-  -- Lock and Load & Explosive Shot CD at half height
+  
+    -- Steady Focus with Lethal Shots
   self:newSpell({
     requiredTree = 2,
-    requiredTalent = 4,
-    playerbuff = 194594,
-    cooldown = 212431,
-    smallCooldown = true,
+	requiredTalent = 16,
+	cast = 56641,
+	playerbuff = 260395,
     barcolors = {
-      cooldown  = {255/255, 168/255, 018/255, 0.5},
+	  casting  = {240/255, 225/255, 048/255, 0.6},
+	  playerbuff  = {136/255, 045/255, 023/255, 0.7}
     }
   })
-
-  -- Black Arrow
+  
+      -- Steady Focus
   self:newSpell({
     requiredTree = 2,
-    requiredTalent = 5,
-    cooldown = 194599,
-    debuff = 194599,
+	requiredTalent = {17, 18},
+	cast = 56641,
     barcolors = {
-      cooldown  = {171/255, 191/255, 181/255, 0.5},
-      debuffmine  = {077/255, 000/255, 141/255, 0.7}
+	  casting  = {240/255, 225/255, 048/255, 0.6}
     }
   })
 
@@ -255,18 +251,6 @@ function EventHorizon:InitializeClass()
   })
 --]]
 
-  -- Murder of Crows
-  self:newSpell({
-    requiredTree = 2,
-    requiredTalent = 16,
-    debuff = 131894,
-    cooldown = 131894,
-    barcolors = {
-      cooldown  = {171/255, 191/255, 181/255, 0.5},
-      debuffmine  = {029/255, 041/255, 081/255, 0.6}
-    }
-  })
-
 --[[ included as a half height CD under Hunter's mark above, that was Windburst but I put that on it's onw bar now.
   -- Sentinel
   self:newSpell({
@@ -294,6 +278,7 @@ function EventHorizon:InitializeClass()
     }
   })
 
+  
  -- Survival Bars
 
   -- Serpent Sting
@@ -306,6 +291,18 @@ function EventHorizon:InitializeClass()
     barcolors = {
       cooldown  = {171/255, 191/255, 181/255, 0.5},
       debuffmine  = {000/255, 141/255, 003/255, 0.7}
+    },
+  })
+  
+      -- Kill Command
+  self:newSpell({
+    requiredTree = 3,
+    requiredLevel = 10,
+    cooldown = 259489,
+	recharge = 259489,
+    barcolors = {
+      cooldown  = {232/255, 171/255, 131/255, 0.5},
+	  recharge  = {171/255, 191/255, 181/255, 0.6}
     },
   })
   
@@ -324,19 +321,6 @@ function EventHorizon:InitializeClass()
     },
   })
   
-    -- Kill Command
-  self:newSpell({
-    requiredTree = 3,
-    requiredLevel = 10,
-    cooldown = 259489,
-	recharge = 259489,
-    barcolors = {
-      cooldown  = {232/255, 171/255, 131/255, 0.5},
-	  recharge  = {171/255, 191/255, 181/255, 0.6}
-    },
-  })
-  
-
     -- Coordinated Assault
   self:newSpell({
     requiredTree = 3,
