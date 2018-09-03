@@ -1,9 +1,3 @@
-EventHorizon.config.width = 290
-EventHorizon.config.height = 18
-EventHorizon.config.spacing = 0
-EventHorizon.config.staticheight = nil
-EventHorizon.config.past = -0
-
 function EventHorizon:InitializeClass()
   self.config.gcdSpellID = 118 -- Polymorph
   self.config.hastedSpellID = {118,1.7}
@@ -15,6 +9,7 @@ function EventHorizon:InitializeClass()
   -- Clearcasting proc, casts and Arcane Barrage CD at half height.
   self:newSpell({
     requiredTree = 1,
+    requiredLevel = 10,
     cast = {30451, 44424},
     channel = {5143, 5},
     playerbuff = 276743,
@@ -105,6 +100,7 @@ function EventHorizon:InitializeClass()
 -- Presence of Mind
   self:newSpell({
     requiredTree = 1,
+    requiredLevel = 54,
     cooldown = 205025,
     playerbuff = 205025,
      barcolors   = {
@@ -115,6 +111,7 @@ function EventHorizon:InitializeClass()
 --Arcane Power
   self:newSpell({
     requiredTree = 1,
+    requiredLevel = 40,
     cooldown = 12042,
     playerbuff = 12042,
      barcolors   = {
@@ -125,6 +122,7 @@ function EventHorizon:InitializeClass()
 -- Evocate
   self:newSpell({
     requiredTree = 1,
+    requiredLevel = 20,
     channel = {12051, 3},
     recharge = 12051,
      barcolors   = {
@@ -170,6 +168,7 @@ function EventHorizon:InitializeClass()
 -- Ignite and Dragon's Breath CD at half height.
   self:newSpell({
     requiredTree = 2,
+    requiredLevel = 32,
     debuff = {12654, 1},
     cooldown = 31661,
     smallCooldown = true,
@@ -204,6 +203,7 @@ function EventHorizon:InitializeClass()
 -- Combustion
   self:newSpell({
     requiredTree = 2,
+    requiredLevel = 40,
     cooldown = 190319,
     playerbuff = 190319,
      barcolors   = {
@@ -263,6 +263,7 @@ function EventHorizon:InitializeClass()
   -- Brain Freeze with spell casts and Blizzard CD at half height.
   self:newSpell({
     requiredTree = 3,
+    requiredLevel = 18,
     playerbuff = 190447,
     icon = 190447,
     cooldown = 190356,
@@ -277,6 +278,7 @@ function EventHorizon:InitializeClass()
   -- Fingers of Frost with Frozen Orb CD at half height.
   self:newSpell({
     requiredTree = 3,
+    requiredLevel = 24,
     playerbuff = 112965,
     cooldown = 84714,
     smallCooldown = true,
@@ -286,7 +288,7 @@ function EventHorizon:InitializeClass()
      },
   })
 
-  -- Bone Chilling buff with Freeze CD at half height (pet ability).
+  -- Bone Chilling buff with Freeze CD at half height (pet ability), if you don't want to track the pet CD put -- infront of cooldown. It doesn't add an extra bar with this talent so I thought it was worthwhile.
   self:newSpell({
     requiredTree = 3,
     requiredTalent = 1,
@@ -294,7 +296,15 @@ function EventHorizon:InitializeClass()
     cooldown = 33395,
     smallCooldown = true,
   })
-
+--[[
+  -- Chain Reaction - I tried tracking this to see if you can keep it up by holding FoF procs but it's just too random, uncomment this spell if you'd like to try.
+  self:newSpell({
+    requiredTree = 3,
+    requiredTalent = 1,
+    playerbuff = 278309,
+    smallCooldown = true,
+  })
+]]--
   -- Ice Nova
   self:newSpell({
     requiredTree = 3,
@@ -388,6 +398,7 @@ function EventHorizon:InitializeClass()
   -- Ice Veins
   self:newSpell({
     requiredTree = 3,
+    requiredLevel = 40,
     cooldown = 12472,
     playerbuff = 12472,
      barcolors   = {
