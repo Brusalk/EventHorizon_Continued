@@ -278,7 +278,7 @@ function EventHorizon:InitializeClass()
   self:newSpell({
     requiredTree = 2,
     stance = 2,
-    requiredTalent = 18,
+    requiredTalent = 14,
     playerbuff = 52610,
      barcolors = {
      playerbuff  = {252/255, 181/255, 000/255, 0.6}
@@ -290,30 +290,14 @@ function EventHorizon:InitializeClass()
     requiredTree = 2,
     stance = 2,
     requiredLevel = 8,
-    requiredTalentUnselected = 15,
     debuff = {1822,3},
+    hasted = true,
     refreshable = true,
     cooldown = 274837,
     smallCooldown = true,
      barcolors = {
      cooldown    = {202/255, 161/255, 050/255, 0.5},
      debuffmine  = {191/255, 040/255, 101/255, 0.5}
-     },
-  })
-
-  -- Rake with faster ticks because of Jagged Wounds. The tick time will need to be adjusted if they change the talent, again.
-  self:newSpell({
-    requiredTree = 2,
-    stance = 2,
-    requiredLevel = 8,
-    requiredTalent = 15,
-    debuff = {1822,2.4},
-    refreshable = true,
-    cooldown = 274837,
-    smallCooldown = true,
-     barcolors = {
-     cooldown    = {202/255, 161/255, 050/255, 0.5},
-     debuffmine  = {151/255, 151/255, 151/255, 0.5}
      },
   })
 
@@ -335,8 +319,8 @@ function EventHorizon:InitializeClass()
     requiredTree = 2,
     stance = 2,
     requiredLevel = 20,
-    requiredTalentUnselected = 15,
-    debuff = {1079,2},
+    debuff = {{1079,2}, {285381,2}},
+    hasted = true,
     refreshable = true,
     cooldown = {252216, 108238, 132302},
     smallCooldown = true,
@@ -346,18 +330,44 @@ function EventHorizon:InitializeClass()
      },
   })
 
-  -- Rip with tier two talent cooldowns at half height & faster ticks because of Jagged Wounds. The tick time will need to be adjusted if they change the talent, again.
+  -- Thrash with Brutal Slash recharge, only shown when Brutal Slash selected to cut down on bars.
   self:newSpell({
     requiredTree = 2,
     stance = 2,
-    requiredTalent = 15,
-    debuff = {1079,1.6},
+    requiredLevel = 18,
+    requiredTalent = 17,
+    debuff = {106830,3},
     refreshable = true,
-    cooldown = {252216, 108238, 132302},
-    smallCooldown = true,
+    recharge = 202028,
      barcolors = {
-     cooldown    = {171/255, 191/255, 181/255, 0.6},
-     debuffmine  = {252/255, 000/255, 060/255, 0.5}
+     debuffmine  = {222/255, 010/255, 010/255, 0.5},
+    recharge    = {222/255, 171/255, 171/255, 0.4}
+     },
+  })
+
+  -- Thrash with Brutal Slash recharge, in bear form, just to keep track of it.
+  self:newSpell({
+    requiredTree = 2,
+    stance = 1,
+    requiredLevel = 18,
+    requiredTalent = 17,
+    debuff = {106830,3},
+    refreshable = true,
+    recharge = 202028,
+     barcolors = {
+     debuffmine  = {222/255, 010/255, 010/255, 0.5},
+    recharge    = {222/255, 171/255, 171/255, 0.4}
+     },
+  })
+
+  -- Bloodtalons & Predatory Swiftness, triggered by Regrowth. Only shown when Bloodtalons is selected to keep bar numbers down.
+  self:newSpell({
+    requiredTree = 2,
+    stance = 2,
+    requiredTalent = 20,
+    playerbuff = {{69369},{155672}},
+     barcolors = {
+     playerbuff  = {030/255, 131/255, 000/255, 0.5}
      },
   })
 
@@ -371,46 +381,6 @@ function EventHorizon:InitializeClass()
      barcolors = {
      playerbuff  = {252/255, 232/255, 090/255, 0.6},
      cooldown    = {252/255, 232/255, 090/255, 0.4}
-     },
-  })
-
-    -- Bloodtalons & Predatory Swiftness, triggered by Regrowth.
-  self:newSpell({
-    requiredTree = 2,
-    stance = 2,
-    requiredTalent = 20,
-    playerbuff = {{69369},{155672}},
-     barcolors = {
-     playerbuff  = {030/255, 131/255, 000/255, 0.5}
-     },
-  })
-
-    -- Thrash with Brutal Slash recharge underneath.
-  self:newSpell({
-    requiredTree = 2,
-    stance = 2,
-    requiredLevel = 18,
-    requiredTalentUnselected = 15,
-    debuff = {106830,3},
-    refreshable = true,
-    recharge = 202028,
-     barcolors = {
-     debuffmine  = {222/255, 010/255, 010/255, 0.5},
-    recharge    = {222/255, 171/255, 171/255, 0.4}
-     },
-  })
-
-  -- Thrash with faster ticks because of Jagged Wounds, Brutal Slash recharge underneath. The tick time will need to be adjusted if they change the talent, again.
-  self:newSpell({
-    requiredTree = 2,
-    stance = 2,
-    requiredTalent = 15,
-    debuff = {106830,2.4},
-    refreshable = true,
-    recharge = 202028,
-     barcolors = {
-     debuffmine  = {222/255, 010/255, 010/255, 0.7},
-     recharge    = {171/255, 191/255, 181/255, 0.4}
      },
   })
 
@@ -444,7 +414,7 @@ function EventHorizon:InitializeClass()
      playerbuff  = {040/255, 090/255, 191/255, 0.6},
      recharge    = {232/255, 161/255, 101/255, 0.3}
     }
-   })
+  })
 
   -- Balance Affinity
   -- Moonfire
@@ -552,8 +522,8 @@ function EventHorizon:InitializeClass()
      barcolors = {
      cooldown    = {171/255, 191/255, 181/255, 0.6},
      playerbuff  = {232/255, 060/255, 202/255, 0.5}
-    }
-   })
+     }
+  })
 
   -- Regrowth
   self:newSpell({
@@ -568,8 +538,8 @@ function EventHorizon:InitializeClass()
      barcolors = {
      casting     = {252/255, 121/255, 000/255, 0.8},
      playerbuff  = {020/255, 212/255, 050/255, 0.7}
-    }
-   })
+     }
+  })
 
 -- Guardian bars
 
@@ -768,8 +738,8 @@ function EventHorizon:InitializeClass()
      barcolors = {
      cooldown    = {171/255, 191/255, 181/255, 0.6},
      playerbuff  = {232/255, 060/255, 202/255, 0.5}
-    }
-   })
+     }
+  })
 
   -- Regrowth
   self:newSpell({
@@ -784,8 +754,8 @@ function EventHorizon:InitializeClass()
      barcolors = {
      casting     = {252/255, 121/255, 000/255, 0.8},
      playerbuff  = {020/255, 212/255, 050/255, 0.7}
-    }
-   })
+     }
+  })
 
   -- Bristling Fur
   self:newSpell({
@@ -870,7 +840,7 @@ function EventHorizon:InitializeClass()
      cooldown    = {171/255, 191/255, 181/255, 0.6},
      playerbuff  = {099/255, 232/255, 121/255, 0.5}
      }
-   })
+  })
 
   -- Lifebloom + Wild Growth CD, cast and HT cast
   self:newSpell({
@@ -890,7 +860,7 @@ function EventHorizon:InitializeClass()
      cooldown    = {171/255, 191/255, 181/255, 0.6},
      playerbuff  = {099/255, 232/255, 121/255, 0.5}
      }
-   })
+  })
 
   -- Rejuvenation + Swiftmend
   self:newSpell({
@@ -908,7 +878,7 @@ function EventHorizon:InitializeClass()
      cooldown    = {171/255, 191/255, 181/255, 0.6},
      playerbuff  = {232/255, 066/255, 202/255, 0.6}
      }
-   })
+  })
 
   -- Rejuvenation + Swiftmend
   self:newSpell({
@@ -926,7 +896,7 @@ function EventHorizon:InitializeClass()
      cooldown    = {171/255, 191/255, 181/255, 0.6},
      playerbuff  = {232/255, 066/255, 202/255, 0.6}
      }
-   })
+  })
 
   -- Rejuvenation + Swiftmend
   self:newSpell({
@@ -943,7 +913,7 @@ function EventHorizon:InitializeClass()
      recharge    = {171/255, 191/255, 181/255, 0.3},
      playerbuff  = {232/255, 066/255, 202/255, 0.6}
      }
-   })
+  })
 
   -- Rejuvenation + Swiftmend
   self:newSpell({
@@ -960,7 +930,7 @@ function EventHorizon:InitializeClass()
      cooldown    = {171/255, 191/255, 181/255, 0.6},
      playerbuff  = {232/255, 066/255, 202/255, 0.6}
      }
-   })
+  })
 
   -- Rejuvenation + Swiftmend
   self:newSpell({
@@ -975,7 +945,7 @@ function EventHorizon:InitializeClass()
      recharge    = {171/255, 191/255, 181/255, 0.3},
      playerbuff  = {232/255, 066/255, 202/255, 0.6}
      }
-   })
+  })
 
   -- Germination
   self:newSpell({
@@ -989,7 +959,7 @@ function EventHorizon:InitializeClass()
      barcolors = {
      playerbuff  = {171/255, 066/255, 202/255, 0.7}
      }
-   })
+  })
 
   -- Germination
   self:newSpell({
@@ -1003,7 +973,7 @@ function EventHorizon:InitializeClass()
      barcolors = {
      playerbuff  = {171/255, 66/255, 202/255, 0.7}
      }
-   })
+  })
 
   -- Regrowth
   self:newSpell({
@@ -1023,7 +993,7 @@ function EventHorizon:InitializeClass()
      cooldown    = {202/255, 161/255, 055/255, 0.9},
      playerbuff  = {022/255, 212/255, 055/255, 0.4}
      }
-   })
+  })
 
   -- Regrowth
   self:newSpell({
@@ -1042,7 +1012,7 @@ function EventHorizon:InitializeClass()
      cooldown    = {202/255, 161/255, 055/255, 0.9},
      playerbuff  = {022/255, 212/255, 055/255, 0.4}
     }
-   })
+  })
 
   -- Cenarion Ward
   self:newSpell({
@@ -1057,7 +1027,7 @@ function EventHorizon:InitializeClass()
      cooldown    = {171/255, 191/255, 181/255, 0.6},
      playerbuff  = {151/255, 171/255, 090/255, 0.7}
     }
-   })
+  })
 
   -- Cenarion Ward
   self:newSpell({
@@ -1071,7 +1041,7 @@ function EventHorizon:InitializeClass()
      cooldown    = {171/255, 191/255, 181/255, 0.6},
      playerbuff  = {151/255, 171/255, 090/255, 0.7}
      }
-   })
+  })
 --[[
   -- Efflorescence - no way of tracking this yet.
   self:newSpell({
@@ -1091,7 +1061,7 @@ function EventHorizon:InitializeClass()
      barcolors = {
      cooldown    = {171/255, 191/255, 181/255, 0.6}
      }
-   })
+  })
 
   -- Flourish
   self:newSpell({
@@ -1102,7 +1072,7 @@ function EventHorizon:InitializeClass()
      barcolors = {
      cooldown    = {171/255, 191/255, 181/255, 0.6}
      }
-   })
+  })
 
   -- Ironbark
   self:newSpell({
@@ -1116,7 +1086,7 @@ function EventHorizon:InitializeClass()
      cooldown    = {171/255, 191/255, 181/255, 0.6},
      playerbuff  = {161/255, 088/255, 077/255, 0.8}
      }
-   })
+  })
 
   -- Ironbark
   self:newSpell({
@@ -1130,7 +1100,7 @@ function EventHorizon:InitializeClass()
      cooldown    = {171/255, 191/255, 181/255, 0.6},
      playerbuff  = {161/255, 088/255, 077/255, 0.8}
      }
-   })
+  })
 
   -- Omen of Clarity / Moment of Clarity and Innervate cooldown.
   self:newSpell({
@@ -1145,7 +1115,7 @@ function EventHorizon:InitializeClass()
      cooldown    = {171/255, 191/255, 181/255, 0.6},
      playerbuff  = {040/255, 090/255, 191/255, 0.5}
      }
-   })
+  })
 
   -- Omen of Clarity / Moment of Clarity and Innervate cooldown.
   self:newSpell({
@@ -1159,7 +1129,7 @@ function EventHorizon:InitializeClass()
      cooldown    = {171/255, 191/255, 181/255, 0.6},
      playerbuff  = {040/255, 090/255, 191/255, 0.5}
      }
-   })
+  })
 
   -- Barkskin
   self:newSpell({
