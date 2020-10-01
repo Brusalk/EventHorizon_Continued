@@ -1981,7 +1981,8 @@ local SpellFrame_SPELL_UPDATE_COOLDOWN = function (self)
       if not(self.coolingdown) then  -- No CD bar exists.
         self.coolingdown = self:AddSegment('cooldown', self.smallCooldown and 'smallCooldown' or 'cooldown', start, ready)
       elseif self.coolingdown.stop and self.coolingdown.stop ~= ready then  -- cd exists but has changed
-        self.coolingdown.start = start
+        -- nponoBegHuk: if you want a good story about changing past, watch Steins;Gate. 
+        -- self.coolingdown.start = start
         self.coolingdown.stop = ready
       end
       self.cooldown = ready
