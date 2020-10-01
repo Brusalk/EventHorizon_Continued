@@ -1,2 +1,2 @@
 # EventHorizon_Continued
-EventHorizon_Continued for Legion+
+EventHorizon_Continued for Shadowlands
