@@ -1,4 +1,12 @@
 Changelog:
+v1.10.1-beta
+* Shadowlands Core Support (#116) @Brusalk
+* Prevent overlapping bars in "past" on CD reset. (#104) @Salchichaky
+* Update config.lua [hunter] (#108) @Nakauri
+* Druid config for 8.1 patch. (#112) @Cluuey
+* Shaman 8.1 config. (#113) @Cluuey
+
+
 v1.9.24-beta
 * Additional classes implemented
 * Fix for recharge behavior being wonky when abilities trigger recharge updates
