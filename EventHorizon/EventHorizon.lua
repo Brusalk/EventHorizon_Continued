@@ -9,11 +9,10 @@ local Mop = select(4,GetBuildInfo()) >= 50000
 local Wod = select(4,GetBuildInfo()) >= 60000
 local Legion = select(4,GetBuildInfo()) >= 70000
 local BFA = select(4,GetBuildInfo()) >= 80000
+local Shadowlands = select(4, GetBuildInfo()) >= 90000
 
 local DEBUG = false
 local spellIDsEnabled = DEBUG -- Toggles display of spellIDs in tooltips. Useful for working on spell configs
-
-local LA = LibStub("LibArtifactData-1.0")
 
 -- Wod Changes
 local _GetSpellInfo, _GetTalentInfo, _GetNumTalents, _GetAddOnInfo = GetSpellInfo, GetTalentInfo, GetNumTalents, GetAddOnInfo
@@ -224,6 +223,19 @@ local BuildBFAClassConfigStatusText = function()
   end
   ret = ret .. "\nIf your spec is Not Yet Implemented (NYI), please send me your customized config via Discord, so I can add it as the default config for your spec!\n"
   return ret
+end
+
+-- Shadowlands Changes
+local _CreateFrame = CreateFrame
+local CreateFrame = _CreateFrame
+if Shadowlands then
+  CreateFrame = function(frameType, frameName, parentFrame, inheritsFrame)
+    if not inheritsFrame then
+      -- Frames must inherit from the backdrop mixin in order to have the backdrop-associated APIs now
+      inheritsFrame = "BackdropTemplate"
+    end
+    return _CreateFrame(frameType, frameName, parentFrame, inheritsFrame)
+  end
 end
 
 
@@ -2179,13 +2191,11 @@ function ns:CheckRequirements()
     local rL = config.requiredLevel or 1
     local rT = config.requiredTalent
     local nRT = config.requiredTalentUnselected
-    local rA = config.requiredArtifactTalent
 
     local haveSpecReq = true
     local haveTalentReq = true
     local haveTalentRequiredUnselected = true
     local haveLevelReq = rL <= vars.currentLevel
-    local haveArtifactTalentReq = true
 
     if rS then
       haveSpecReq = nil
@@ -2204,71 +2214,28 @@ function ns:CheckRequirements()
         -- All talents must be active for it to work
     if rT then
       haveTalentReq = true
-            if type(rT) == 'number' then
-                rT = {rT}
-            end
+      if type(rT) == 'number' then
+          rT = {rT}
+      end
       --nameTalent, icon, tier, column, active = GetTalentInfo(rT);
-            for i, talent in ipairs(rT) do
-                haveTalentReq = haveTalentReq and vars.currentTalents[talent]
-            end
-        end
-
-        --print("nRT Check:", nRT, vars.currentTalents[nRT])
-        if nRT then
-            if vars.currentTalents[nRT] then
-                haveTalentRequiredUnselected = nil
-            end
-        end
-
-    -- Can be a spellID that must have at least one point, OR
-    -- Can be a table {spellID, x} for the spellID that must have at least x points,
-    -- Can be a list { {spellID1, x1}, {spellID2, x2} ... } such that all spellIDs must have at least their number of points selected
-    if rA then
-      haveArtifactTalentReq = false -- If there's one configured, we want to require all of them
-
-      if type(rA) == 'number' then
-        rA = {rA, 1} -- Should have one rank applied
-      end
-
-      if type(rA[1]) == 'number' then -- case 2 (simple table)
-        rA = { rA } -- Convert to known case three of an array of talent tables
-      end
-
-      -- Special logic to handle cases where minimum rank is 0 or less
-      -- In such a situation we basically ignore it.
-      local emptyMatches = 0
-      for _, artTalentTab in ipairs(rA) do
-        if artTalentTab[2] < 1 then
-          emptyMatches = emptyMatches + 1
-        end
-      end
-      local requiredMatches = #rA - emptyMatches -- We need to have this many matches for all talents to have matched
-      local matches = 0
-
-      local artifactID, traits = LA:GetArtifactTraits()
-      for i, traitData in pairs(traits or {}) do
-        debug("traitData", traitData)
-
-        for _, artTalentTab in ipairs(rA) do
-          local artifactTalentSpellID, requiredMinimumRank = unpack(artTalentTab)
-          debug("artTalentTab", artTalentTab, artifactTalentSpellID, requiredMinimumRank)
-          if traitData.spellID == artifactTalentSpellID and traitData.currentRank >= requiredMinimumRank then
-            matches = matches + 1
-            debug("Matched " .. traitData.spellID .. " | " .. matches .. " / " .. requiredMatches)
-          end
-        end
-      end
-
-      if matches >= requiredMatches then
-        haveArtifactTalentReq = true
+      for i, talent in ipairs(rT) do
+          haveTalentReq = haveTalentReq and vars.currentTalents[talent]
       end
     end
+
+      --print("nRT Check:", nRT, vars.currentTalents[nRT])
+    if nRT then
+      if vars.currentTalents[nRT] then
+        haveTalentRequiredUnselected = nil
+      end
+    end
+
 
     -- Check if there already is a frame
     local spellframe = self.frames.frames[i]
     local frameExists = spellframe~=nil
 
-    if haveSpecReq and haveLevelReq and haveTalentReq and haveTalentRequiredUnselected and haveArtifactTalentReq then
+    if haveSpecReq and haveLevelReq and haveTalentReq and haveTalentRequiredUnselected then
       if frameExists then
         spellframe:Activate()
       else
@@ -3036,7 +3003,6 @@ function ns:Initialize()
   --self.Initialize = nil
   --print('initialize')
   self:InitDB()
-
   local popupIn = function(popup_to_show, delay)
     local popup_f = CreateFrame("frame")
     local elapsedTime = 0
@@ -3416,55 +3382,14 @@ function ns:Initialize()
   end
 
   ns.mainframe:Hide() -- Hide EH until the config loads
-  ns:DelayLoad()
+  ns:Load()
 
 end
 
-function ns:DelayLoad()
 
-  -- Talent Checking -- This is super ugly and I hate Blizzard for shipping without an Artifact Addon API
-
-  -- Optimization for people who can't possibly have talents
-  if UnitLevel("PLAYER") <= 99 then ns:DelayedLoad() return end
-
-  LA.RegisterCallback(ns, "ARTIFACT_ADDED", function()
-    LA.UnregisterCallback(ns, "ARTIFACT_ADDED")
-    debug("ADDED", LA:GetActiveArtifactID())
-    LA.RegisterCallback(ns, "ARTIFACT_ACTIVE_CHANGED", function() ns:DelayedLoad(); LA.UnregisterCallback(ns, "ARTIFACT_ACTIVE_CHANGED") end)
-  end)
-
-  -- Wait at most 10 seconds for artifact talent data -- if none then oh well
-  C_Timer.After(10, function()
-    ns:DelayedLoad();
-    LA.UnregisterCallback(ns, "ARTIFACT_ACTIVE_CHANGED")
-    LA.UnregisterCallback(ns, "ARTIFACT_ADDED")
-  end)
-
-end
-
-function ns:DelayedLoad()
+function ns:Load()
   if self.isReady then return end
   self.isReady = true
-
-  -- Artifact checkRequirements events
-  local interestingArtifactLibEvents = {
-    ["ARTIFACT_ADDED"] = ns.CheckTalents, -- Fires if no artifact equipped on load
-    ["ARTIFACT_ACTIVE_CHANGED"] = ns.CheckTalents,
-    --"ARTIFACT_DATA_MISSING",
-    ["ARTIFACT_EQUIPPED_CHANGED"] = ns.CheckTalents,
-    --"ARTIFACT_KNOWLEDGE_CHANGED",
-    --"ARTIFACT_POWER_CHANGED",
-    --"ARTIFACT_RELIC_CHANGED",
-    ["ARTIFACT_TRAITS_CHANGED"] = ns.CheckTalents
-  }
-
-  for event, handler in pairs(interestingArtifactLibEvents) do
-    LA.RegisterCallback(ns, event, function()
-      debug("called ", event, "handler")
-      handler(ns)
-    end)
-  end
-
   self:CheckRequirements()
   self:LoadModules()
 

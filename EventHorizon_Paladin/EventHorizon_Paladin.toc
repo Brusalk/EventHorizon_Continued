@@ -1,4 +1,4 @@
-## Interface: 80000
+## Interface: 90001
 ## Title: EventHorizon_|c50f58cbaPaladin|r
 ## Author: Brusalk, Kerriodos
 ## Dependencies: EventHorizon

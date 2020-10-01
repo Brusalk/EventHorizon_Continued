@@ -1,4 +1,4 @@
-## Interface: 80000
+## Interface: 90001
 ## Title: EventHorizon_|cFFC79C6EWarrior|r
 ## Author: Brusalk, JCrate
 ## LoadOnDemand: 1

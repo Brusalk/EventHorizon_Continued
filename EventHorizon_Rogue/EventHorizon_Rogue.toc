@@ -1,4 +1,4 @@
-## Interface: 80000
+## Interface: 90001
 ## Title: EventHorizon_|c70fff569Rogue|r
 ## Author: Brusalk, PessimiStick, Neloangelo13
 ## Dependencies: EventHorizon

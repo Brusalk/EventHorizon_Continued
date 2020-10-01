@@ -1,4 +1,4 @@
-## Interface: 80000
+## Interface: 90001
 ## Title: EventHorizon_|c802459ffShaman|r
 ## Author: Brusalk, Binkenstein, Hekili!, StragaSevera
 ## Dependencies: EventHorizon
