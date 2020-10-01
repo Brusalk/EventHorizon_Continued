@@ -9,11 +9,10 @@ local Mop = select(4,GetBuildInfo()) >= 50000
 local Wod = select(4,GetBuildInfo()) >= 60000
 local Legion = select(4,GetBuildInfo()) >= 70000
 local BFA = select(4,GetBuildInfo()) >= 80000
+local Shadowlands = select(4, GetBuildInfo()) >= 90000
 
 local DEBUG = false
 local spellIDsEnabled = DEBUG -- Toggles display of spellIDs in tooltips. Useful for working on spell configs
-
-local LA = LibStub("LibArtifactData-1.0")
 
 -- Wod Changes
 local _GetSpellInfo, _GetTalentInfo, _GetNumTalents, _GetAddOnInfo = GetSpellInfo, GetTalentInfo, GetNumTalents, GetAddOnInfo
@@ -223,6 +222,117 @@ local BuildBFAClassConfigStatusText = function()
     end
   end
   ret = ret .. "\nIf your spec is Not Yet Implemented (NYI), please send me your customized config via Discord, so I can add it as the default config for your spec!\n"
+  return ret
+end
+
+-- Shadowlands Changes
+local _CreateFrame = CreateFrame
+local CreateFrame = _CreateFrame
+if Shadowlands then
+  CreateFrame = function(frameType, frameName, parentFrame, inheritsFrame)
+    if not inheritsFrame then
+      -- Frames must inherit from the backdrop mixin in order to have the backdrop-associated APIs now
+      inheritsFrame = "BackdropTemplate"
+    end
+    return _CreateFrame(frameType, frameName, parentFrame, inheritsFrame)
+  end
+end
+
+local ShadowlandsStatusText = ""
+
+ShadowlandsStatusText = ShadowlandsStatusText .. "Welcome to EventHorizon for Shadowlands -- This is a beta release, but things should work. "
+ShadowlandsStatusText = ShadowlandsStatusText .. "If you do encounter a bug, please copy the whole error message including stack trace and post it in EventHorizon's discord \n\n"
+ShadowlandsStatusText = ShadowlandsStatusText .. "Just like BFA, I won't be able to update spec configs to the quality bar I expect of myself. \n"
+ShadowlandsStatusText = ShadowlandsStatusText .. "If you have an updated class config for your spec, please post it to EventHorizon's Discord so I can add it! \n\n  Thanks!\n - Discord: Brusalk#2615 \n\n"
+
+local ShadowlandsSpecIDMapping = {
+  [62] = "Mage: Arcane",
+  [63] = "Mage: Fire",
+  [64] = "Mage: Frost",
+  [65] = "Paladin: Holy",
+  [66] = "Paladin: Protection",
+  [70] = "Paladin: Retribution",
+  [71] = "Warrior: Arms",
+  [72] = "Warrior: Fury",
+  [73] = "Warrior: Protection",
+  [102] = "Druid: Balance",
+  [103] = "Druid: Feral",
+  [104] = "Druid: Guardian",
+  [105] = "Druid: Restoration",
+  [250] = "Death Knight: Blood",
+  [251] = "Death Knight: Frost",
+  [252] = "Death Knight: Unholy",
+  [253] = "Hunter: Beast Mastery",
+  [254] = "Hunter: Marksmanship",
+  [255] = "Hunter: Survival",
+  [256] = "Priest: Discipline",
+  [257] = "Priest: Holy",
+  [258] = "Priest: Shadow",
+  [259] = "Rogue: Assassination",
+  [260] = "Rogue: Outlaw",
+  [261] = "Rogue: Subtlety",
+  [262] = "Shaman: Elemental",
+  [263] = "Shaman: Enhancement",
+  [264] = "Shaman: Restoration",
+  [265] = "Warlock: Affliction",
+  [266] = "Warlock: Demonology",
+  [267] = "Warlock: Destruction",
+  [268] = "Monk: Brewmaster",
+  [269] = "Monk: Windwalker",
+  [270] = "Monk: Mistweaver",
+  [577] = "Demon Hunter: Havoc",
+  [581] = "Demon Hunter: Vengeance",
+}
+
+local ShadowlandsClassesNotImplemented = {
+  [62] = "Mage: Arcane",
+  [63] = "Mage: Fire",
+  [64] = "Mage: Frost",
+  [65] = "Paladin: Holy",
+  [66] = "Paladin: Protection",
+  [70] = "Paladin: Retribution",
+  [71] = "Warrior: Arms",
+  [72] = "Warrior: Fury",
+  [73] = "Warrior: Protection",
+  [102] = "Druid: Balance",
+  [103] = "Druid: Feral",
+  [104] = "Druid: Guardian",
+  [105] = "Druid: Restoration",
+  [250] = "Death Knight: Blood",
+  [251] = "Death Knight: Frost",
+  [252] = "Death Knight: Unholy",
+  [253] = "Hunter: Beast Mastery",
+  [254] = "Hunter: Marksmanship",
+  [255] = "Hunter: Survival",
+  [256] = "Priest: Discipline",
+  [257] = "Priest: Holy",
+  [258] = "Priest: Shadow",
+  [259] = "Rogue: Assassination",
+  [260] = "Rogue: Outlaw",
+  [261] = "Rogue: Subtlety",
+  [262] = "Shaman: Elemental",
+  [263] = "Shaman: Enhancement",
+  [264] = "Shaman: Restoration",
+  [265] = "Warlock: Affliction",
+  [266] = "Warlock: Demonology",
+  [267] = "Warlock: Destruction",
+  [268] = "Monk: Brewmaster",
+  [269] = "Monk: Windwalker",
+  [270] = "Monk: Mistweaver",
+  [577] = "Demon Hunter: Havoc",
+  [581] = "Demon Hunter: Vengeance",
+}
+
+
+local BuildShadowlandsClassConfigStatusText = function()
+  local ret = "EventHorizon - Shadowlands Alpha Release\nCurrent Class Status \n\n"
+  for specID, classname in pairs(ShadowlandsSpecIDMapping) do
+    local id, name, desc, icon, background, role, class = GetSpecializationInfoByID(specID)
+    if ShadowlandsClassesNotImplemented[specID] then
+      ret = ret .. name .. " | NYI \n"
+    end
+  end
+  ret = ret .. "\nIf your spec is Not Yet Implemented (NYI), please send me your customized config via Github or Discord, so I can add it as the default config for your spec!\n"
   return ret
 end
 
@@ -2179,13 +2289,11 @@ function ns:CheckRequirements()
     local rL = config.requiredLevel or 1
     local rT = config.requiredTalent
     local nRT = config.requiredTalentUnselected
-    local rA = config.requiredArtifactTalent
 
     local haveSpecReq = true
     local haveTalentReq = true
     local haveTalentRequiredUnselected = true
     local haveLevelReq = rL <= vars.currentLevel
-    local haveArtifactTalentReq = true
 
     if rS then
       haveSpecReq = nil
@@ -2204,71 +2312,28 @@ function ns:CheckRequirements()
         -- All talents must be active for it to work
     if rT then
       haveTalentReq = true
-            if type(rT) == 'number' then
-                rT = {rT}
-            end
+      if type(rT) == 'number' then
+          rT = {rT}
+      end
       --nameTalent, icon, tier, column, active = GetTalentInfo(rT);
-            for i, talent in ipairs(rT) do
-                haveTalentReq = haveTalentReq and vars.currentTalents[talent]
-            end
-        end
-
-        --print("nRT Check:", nRT, vars.currentTalents[nRT])
-        if nRT then
-            if vars.currentTalents[nRT] then
-                haveTalentRequiredUnselected = nil
-            end
-        end
-
-    -- Can be a spellID that must have at least one point, OR
-    -- Can be a table {spellID, x} for the spellID that must have at least x points,
-    -- Can be a list { {spellID1, x1}, {spellID2, x2} ... } such that all spellIDs must have at least their number of points selected
-    if rA then
-      haveArtifactTalentReq = false -- If there's one configured, we want to require all of them
-
-      if type(rA) == 'number' then
-        rA = {rA, 1} -- Should have one rank applied
-      end
-
-      if type(rA[1]) == 'number' then -- case 2 (simple table)
-        rA = { rA } -- Convert to known case three of an array of talent tables
-      end
-
-      -- Special logic to handle cases where minimum rank is 0 or less
-      -- In such a situation we basically ignore it.
-      local emptyMatches = 0
-      for _, artTalentTab in ipairs(rA) do
-        if artTalentTab[2] < 1 then
-          emptyMatches = emptyMatches + 1
-        end
-      end
-      local requiredMatches = #rA - emptyMatches -- We need to have this many matches for all talents to have matched
-      local matches = 0
-
-      local artifactID, traits = LA:GetArtifactTraits()
-      for i, traitData in pairs(traits or {}) do
-        debug("traitData", traitData)
-
-        for _, artTalentTab in ipairs(rA) do
-          local artifactTalentSpellID, requiredMinimumRank = unpack(artTalentTab)
-          debug("artTalentTab", artTalentTab, artifactTalentSpellID, requiredMinimumRank)
-          if traitData.spellID == artifactTalentSpellID and traitData.currentRank >= requiredMinimumRank then
-            matches = matches + 1
-            debug("Matched " .. traitData.spellID .. " | " .. matches .. " / " .. requiredMatches)
-          end
-        end
-      end
-
-      if matches >= requiredMatches then
-        haveArtifactTalentReq = true
+      for i, talent in ipairs(rT) do
+          haveTalentReq = haveTalentReq and vars.currentTalents[talent]
       end
     end
+
+      --print("nRT Check:", nRT, vars.currentTalents[nRT])
+    if nRT then
+      if vars.currentTalents[nRT] then
+        haveTalentRequiredUnselected = nil
+      end
+    end
+
 
     -- Check if there already is a frame
     local spellframe = self.frames.frames[i]
     local frameExists = spellframe~=nil
 
-    if haveSpecReq and haveLevelReq and haveTalentReq and haveTalentRequiredUnselected and haveArtifactTalentReq then
+    if haveSpecReq and haveLevelReq and haveTalentReq and haveTalentRequiredUnselected then
       if frameExists then
         spellframe:Activate()
       else
@@ -3036,7 +3101,6 @@ function ns:Initialize()
   --self.Initialize = nil
   --print('initialize')
   self:InitDB()
-
   local popupIn = function(popup_to_show, delay)
     local popup_f = CreateFrame("frame")
     local elapsedTime = 0
@@ -3075,7 +3139,7 @@ function ns:Initialize()
     end,
     OnAccept = function()
       StaticPopup_Hide("EH_GithubDialog1")
-      EventHorizonDB.__GithubDialog1NotificationBFA = true
+      EventHorizonDB.__GithubDialog1NotificationShadowlands = true
     end,
   }
 
@@ -3091,11 +3155,11 @@ function ns:Initialize()
       self:SetText("discord.gg/mR8xUUK") -- Esentially don't allow them to change the value
     end,
     OnAccept = function()
-      EventHorizonDB.__DiscordDialog1NotificationBFA = true
+      EventHorizonDB.__DiscordDialog1NotificationShadowlands = true
     end,
     OnHide = function()
       StaticPopup_Hide("EH_DiscordDialog1")
-      if not EventHorizonDB.__GithubDialog1NotificationBFA then
+      if not EventHorizonDB.__GithubDialog1NotificationShadowlands then
          popupIn("EH_GithubDialog1", 0.5)
       end
     end,
@@ -3192,7 +3256,59 @@ function ns:Initialize()
     hideOnEscape = 1
   }
 
-  if BFA then
+
+  StaticPopupDialogs["EH_ShadowlandsDialog2"] = {
+    text = BuildShadowlandsClassConfigStatusText(),
+    showAlert = true,
+    button1 = "Hide Forever",
+    button2 = "Hide",
+    hideOnEscape = 1,
+    OnAccept = function()
+      EventHorizonDB.__ShadowlandsClassConfigStatusNotification2 = true
+    end,
+    OnHide = function()
+      StaticPopup_Hide("EH_ShadowlandsDialog2")
+      if not EventHorizonDB.__DiscordDialog1Notification then
+        popupIn("EH_DiscordDialog1", 0.5)
+      end
+    end,
+  }
+
+
+  StaticPopupDialogs["EH_ShadowlandsDialog1"] = {
+    text = ShadowlandsStatusText,
+    showAlert = true,
+    button1 = "Hide Forever",
+    button2 = "Hide",
+    hideOnEscape = 1,
+    OnAccept = function()
+      EventHorizonDB.__ShadowlandsClassStatusNotification2 = true
+    end,
+    OnHide = function()
+      StaticPopup_Hide("EH_ShadowlandsDialog1")
+      if not EventHorizonDB.__ShadowlandsClassConfigStatusNotification2 then
+        popupIn("EH_ShadowlandsDialog2", 0.5)
+      end
+    end,
+  }
+
+  if Shadowlands then
+    if EventHorizonDB.__ShadowlandsClassStatusNotification2 then -- Dialog1 hidden
+      if EventHorizonDB.__ShadowlandsClassConfigStatusNotification2 then -- We've hidden dialog2
+        if EventHorizonDB.__DiscordDialog1NotificationShadowlands then
+          if not EventHorizonDB.__GithubDialog1NotificationShadowlands then
+            popupIn("EH_GithubDialog1", 2)
+          end
+        else
+          popupIn("EH_DiscordDialog1", 2)
+        end
+      else
+        popupIn("EH_ShadowlandsDialog2", 2)
+      end
+    else
+      popupIn("EH_ShadowlandsDialog1", 2) -- Need to show Dialog1
+    end
+  elseif BFA then
     if EventHorizonDB.__BFAClassStatusNotification2 then -- Dialog1 hidden
       if EventHorizonDB.__BFAClassConfigStatusNotification2 then -- We've hidden dialog2
         if EventHorizonDB.__DiscordDialog1NotificationBFA then
@@ -3416,55 +3532,14 @@ function ns:Initialize()
   end
 
   ns.mainframe:Hide() -- Hide EH until the config loads
-  ns:DelayLoad()
+  ns:Load()
 
 end
 
-function ns:DelayLoad()
 
-  -- Talent Checking -- This is super ugly and I hate Blizzard for shipping without an Artifact Addon API
-
-  -- Optimization for people who can't possibly have talents
-  if UnitLevel("PLAYER") <= 99 then ns:DelayedLoad() return end
-
-  LA.RegisterCallback(ns, "ARTIFACT_ADDED", function()
-    LA.UnregisterCallback(ns, "ARTIFACT_ADDED")
-    debug("ADDED", LA:GetActiveArtifactID())
-    LA.RegisterCallback(ns, "ARTIFACT_ACTIVE_CHANGED", function() ns:DelayedLoad(); LA.UnregisterCallback(ns, "ARTIFACT_ACTIVE_CHANGED") end)
-  end)
-
-  -- Wait at most 10 seconds for artifact talent data -- if none then oh well
-  C_Timer.After(10, function()
-    ns:DelayedLoad();
-    LA.UnregisterCallback(ns, "ARTIFACT_ACTIVE_CHANGED")
-    LA.UnregisterCallback(ns, "ARTIFACT_ADDED")
-  end)
-
-end
-
-function ns:DelayedLoad()
+function ns:Load()
   if self.isReady then return end
   self.isReady = true
-
-  -- Artifact checkRequirements events
-  local interestingArtifactLibEvents = {
-    ["ARTIFACT_ADDED"] = ns.CheckTalents, -- Fires if no artifact equipped on load
-    ["ARTIFACT_ACTIVE_CHANGED"] = ns.CheckTalents,
-    --"ARTIFACT_DATA_MISSING",
-    ["ARTIFACT_EQUIPPED_CHANGED"] = ns.CheckTalents,
-    --"ARTIFACT_KNOWLEDGE_CHANGED",
-    --"ARTIFACT_POWER_CHANGED",
-    --"ARTIFACT_RELIC_CHANGED",
-    ["ARTIFACT_TRAITS_CHANGED"] = ns.CheckTalents
-  }
-
-  for event, handler in pairs(interestingArtifactLibEvents) do
-    LA.RegisterCallback(ns, event, function()
-      debug("called ", event, "handler")
-      handler(ns)
-    end)
-  end
-
   self:CheckRequirements()
   self:LoadModules()
 
