@@ -6,6 +6,17 @@ function EventHorizon:InitializeClass()
   self.config.past = -1.5 -- Number of seconds to show in the past. Default = -1.5
   self.config.future = 12 -- Number of seconds to show in the future. Default = 12
 
+
+  -- Mangle in bear form - Guardian Affinity no longer required after 9.0 patch.
+  self:newSpell({
+    requiredTree = 2,
+    stance = 1,
+    cooldown = 33917,
+     barcolors = {
+     cooldown    = {171/255, 191/255, 181/255, 0.6}
+     },
+  })
+
 -- Balance bars
 
   -- New Moon
@@ -23,8 +34,9 @@ function EventHorizon:InitializeClass()
   -- Moonfire with Force of Nature or Warrior of Elune cooldown at half height.
   self:newSpell({
     requiredTree = 1,
-    stance = {0,1,2,4},
-    requiredLevel = 10,
+    stance = {0,4,5},
+    requiredLevel = 2,
+    cast = {339, 2637, 5176, 8936, 20484, 33786, 48438, 197626, 197628},
     debuff = {164812,2},
     refreshable = true,
     cooldown = {202425, 205636},
@@ -39,7 +51,7 @@ function EventHorizon:InitializeClass()
   self:newSpell({
     requiredTree = 1,
     stance = {0,4},
-    requiredLevel = 24,
+    requiredLevel = 23,
     debuff = {164815,2},
     refreshable = true,
     cooldown = 202770,
@@ -62,36 +74,48 @@ function EventHorizon:InitializeClass()
      },
   })
 
-  -- Starsurge  -- There are two bars for this as it provides two different buffs stacking up to three, the buffs are then consumed by different spell schools separately so both are needed.
+  -- Starlord
+  self:newSpell({
+    requiredTree = 1,
+    stance = {0,4},
+    requiredTalent = 14,
+    playerbuff = 202345,
+    refreshable = true,
+     barcolors = {
+     playerbuff  = {111/255, 222/255, 232/255, 0.6}
+     },
+  })
+
+  -- Starsurge  -- There are two bars for this as it provides two different buffs. Not convinced this is needed as the default hud makes it more obvious.
   -- Tier 2 talent CD at half height.
   self:newSpell({
     requiredTree = 1,
     stance = {0,4},
-    requiredLevel = 10,
-    playerbuff = 164545,
-    cast = 190984,
-    cooldown = {252216, 108238, 132302},
+    requiredLevel = 12,
+    playerbuff = 48517,
+    icon = 48517,
+    cooldown = {1850, 108238, 102401},
     smallCooldown = true,
      barcolors = {
      playerbuff  = {252/255, 252/255, 090/255, 0.5},
      cooldown    = {171/255, 191/255, 181/255, 0.6}
      },
   })
-
-  -- Tier 4 talent CD at half height.
+  -- Tier 4 CD at half height.
   self:newSpell({
     requiredTree = 1,
     stance = {0,4},
-    requiredLevel = 10,
-    playerbuff = 164547,
-    cast = 194153,
-    cooldown = {5211, 102359, 132469},
+    requiredLevel = 12,
+    playerbuff = 48518,
+    icon = 48518,
+    cooldown = {5211, 102359, 319454},
     smallCooldown = true,
      barcolors = {
      playerbuff  = {151/255, 101/255, 161/255, 0.5},
      cooldown    = {171/255, 191/255, 181/255, 0.6}
      },
   })
+
 --[[
     -- Starfall  -- Not really sure if this needs to be tracked as the spell area is very obvious and the buff only affects targets within it.
   self:newSpell({
@@ -128,16 +152,6 @@ function EventHorizon:InitializeClass()
   })
 
   -- Guardian Affinity
-  -- Mangle
-  self:newSpell({
-    requiredTree = 1,
-    stance = 1,
-    cooldown = 33917,
-     barcolors = {
-     cooldown    = {171/255, 191/255, 181/255, 0.6}
-     },
-  })
-
   -- Thrash 
   self:newSpell({
     requiredTree = 1,
@@ -156,7 +170,6 @@ function EventHorizon:InitializeClass()
   self:newSpell({
     requiredTree = 1,
     stance = 1,
-    requiredTalent = 8,
     playerbuff = 192081,
      barcolors = {
      playerbuff  = {040/255, 070/255, 181/255, 0.6}
@@ -180,7 +193,7 @@ function EventHorizon:InitializeClass()
   self:newSpell({
     requiredTree = 1,
     stance = {0,1,2,4},
-    requiredLevel = 64,
+    requiredLevel = 39,
     requiredTalentUnselected = 15,
     cooldown = 194223,
     playerbuff = 194223,
@@ -204,35 +217,14 @@ function EventHorizon:InitializeClass()
   })
 
   -- Restoration Affinity
-  -- Rejuvenation + Swiftmend CD
+  -- Swiftmend CD - currently always showing except cat form.
   self:newSpell({
     requiredTree = 1,
-    stance = 0,
+    stance = {0,1,3,4,5,6},
     requiredTalent = 9,
     cooldown = 18562,
-    smallCooldown = true,
-    playerbuff = {774,3},
-    auraunit = usemouseover and 'mouseover' or 'target',
-    refreshable = true,
      barcolors = {
-     cooldown    = {171/255, 191/255, 181/255, 0.6},
-     playerbuff  = {232/255, 060/255, 202/255, 0.5}
-     }
-  })
-
-  -- Regrowth
-  self:newSpell({
-    requiredTree = 1,
-    stance = 0,
-    requiredTalent = 9,
-    playerbuff = {8936,2},
-    auraunit = usemouseover and 'mouseover' or 'target',
-    refreshable = true,
-    cast = 8936,
-    recast = true,
-     barcolors = {
-     casting     = {252/255, 121/255, 000/255, 0.8},
-     playerbuff  = {020/255, 212/255, 050/255, 0.7}
+     cooldown    = {171/255, 191/255, 181/255, 0.6}
      }
   })
 
@@ -242,7 +234,7 @@ function EventHorizon:InitializeClass()
   self:newSpell({
     requiredTree = 1,
     stance = {0,1,2,3,4},
-    requiredLevel = 36,
+    requiredLevel = 24,
     cooldown = 22812,
      barcolors = {
      playerbuff  = {141/255, 070/255, 030/255, 0.6},
@@ -253,24 +245,16 @@ function EventHorizon:InitializeClass()
 
 -- Feral bars
 
-  -- Mangle in bear form - Guardian Affinity no longer required after 8.0.1 patch.
+  -- Moonfire with spell casts (like a cast bar).
   self:newSpell({
     requiredTree = 2,
-    stance = 1,
-    cooldown = 33917,
-     barcolors = {
-     cooldown    = {171/255, 191/255, 181/255, 0.6}
-     },
-  })
-
-  -- Moonfire in bear as it always has access to it.
-  self:newSpell({
-    requiredTree = 2,
-    stance = 1,
+    stance = {0,4,5},
+    requiredLevel = 2,
     debuff = {164812,2},
     refreshable = true,
+    cast = {339, 2637, 5176, 8936, 20484, 33786, 48438, 197626, 197628},
      barcolors = {
-     debuffmine  = {050/255, 101/255, 252/255, 0.5}
+     debuffmine  = {050/255, 100/255, 255/255, 0.5}
      },
   })
 
@@ -289,7 +273,7 @@ function EventHorizon:InitializeClass()
   self:newSpell({
     requiredTree = 2,
     stance = 2,
-    requiredLevel = 8,
+    requiredLevel = 10,
     debuff = {1822,3},
     hasted = true,
     refreshable = true,
@@ -318,7 +302,7 @@ function EventHorizon:InitializeClass()
   self:newSpell({
     requiredTree = 2,
     stance = 2,
-    requiredLevel = 20,
+    requiredLevel = 21,
     debuff = {{1079,2}, {285381,2}},
     hasted = true,
     refreshable = true,
@@ -330,42 +314,27 @@ function EventHorizon:InitializeClass()
      },
   })
 
-  -- Thrash with Brutal Slash recharge, only shown when Brutal Slash selected to cut down on bars.
+  -- Thrash plus Brutal Slash recharge. Always showing in pre-patch as you'll probably have Wildfleshrending.
   self:newSpell({
     requiredTree = 2,
     stance = 2,
-    requiredLevel = 18,
-    requiredTalent = 17,
+    requiredLevel = 11,
+    --requiredTalent = 17,
     debuff = {106830,3},
     refreshable = true,
     recharge = 202028,
      barcolors = {
      debuffmine  = {222/255, 010/255, 010/255, 0.5},
-    recharge    = {222/255, 171/255, 171/255, 0.4}
+     recharge    = {222/255, 171/255, 171/255, 0.4}
      },
   })
 
-  -- Thrash with Brutal Slash recharge, in bear form, just to keep track of it.
-  self:newSpell({
-    requiredTree = 2,
-    stance = 1,
-    requiredLevel = 18,
-    requiredTalent = 17,
-    debuff = {106830,3},
-    refreshable = true,
-    recharge = 202028,
-     barcolors = {
-     debuffmine  = {222/255, 010/255, 010/255, 0.5},
-    recharge    = {222/255, 171/255, 171/255, 0.4}
-     },
-  })
-
-  -- Bloodtalons & Predatory Swiftness, triggered by Regrowth. Only shown when Bloodtalons is selected to keep bar numbers down.
+  -- Bloodtalons, only shown when Bloodtalons is selected to keep bar numbers down.
   self:newSpell({
     requiredTree = 2,
     stance = 2,
     requiredTalent = 20,
-    playerbuff = {{69369},{155672}},
+    playerbuff = 319439,
      barcolors = {
      playerbuff  = {030/255, 131/255, 000/255, 0.5}
      },
@@ -388,7 +357,7 @@ function EventHorizon:InitializeClass()
   self:newSpell({
     requiredTree = 2,
     stance = 2,
-    requiredLevel = 48,
+    requiredLevel = 34,
     requiredTalentUnselected = 15,
     cooldown = 106951,
     playerbuff = 106951,
@@ -418,17 +387,6 @@ function EventHorizon:InitializeClass()
 
   -- Balance Affinity
   -- Moonfire
-  self:newSpell({
-    requiredTree = 2,
-    stance = 4,
-    requiredTalent = 7,
-    debuff = {164812,2},
-    refreshable = true,
-     barcolors = {
-     debuffmine  = {050/255, 101/255, 252/255, 0.5}
-     },
-  })
-
   -- Sunfire
   self:newSpell({
     requiredTree = 2,
@@ -440,18 +398,17 @@ function EventHorizon:InitializeClass()
      },
   })
 
-  -- Starsurge  -- There are two bars for this as it provides two different buffs stacking up to three, the buffs are then consumed by different spell schools separately so both are needed.
+  -- Starsurge  -- There are two bars for this as it gives a different buff for either Wrath or Starfire.
   self:newSpell({
     requiredTree = 2,
     stance = 4,
     requiredTalent = 7,
     cooldown = 197626,
-    playerbuff = 164547,
-    icon = 164547,
+    playerbuff = 48517,
+    icon = 48517,
     cast = 197626,
-    recast = true,
      barcolors = {
-     playerbuff  = {151/255, 101/255, 161/255, 0.5}
+     playerbuff  = {252/255, 252/255, 090/255, 0.5}
      },
   })
 
@@ -460,12 +417,11 @@ function EventHorizon:InitializeClass()
     stance = 4,
     requiredTalent = 7,
     cooldown = 197626,
-    playerbuff = 164545,
-    icon = 164545,
+    playerbuff = 48518,
+    icon = 48518,
     cast = 197626,
-    recast = true,
      barcolors = {
-     playerbuff  = {252/255, 252/255, 090/255, 0.5}
+     playerbuff  = {151/255, 101/255, 161/255, 0.5}
      },
   })
 
@@ -474,7 +430,7 @@ function EventHorizon:InitializeClass()
   self:newSpell({
     requiredTree = 2,
     stance = 1,
-    requiredLevel = 18,
+    requiredLevel = 11,
     cooldown = 77758,
     debuff = {192090,3},
     refreshable = true,
@@ -484,12 +440,14 @@ function EventHorizon:InitializeClass()
      },
   })
 
-  -- Ironfur
+  -- Ironfur with Incapacitating Roar cooldown at half height.
   self:newSpell({
     requiredTree = 2,
-    requiredTalent = 8,
     stance = 1,
-    playerbuff = {192081,6},
+    requiredLevel = 18,
+    cooldown = 99,
+    smallCooldown = true,
+    playerbuff = 192081,
      barcolors = {
      playerbuff  = {040/255, 070/255, 181/255, 0.6}
      },
@@ -500,7 +458,7 @@ function EventHorizon:InitializeClass()
     requiredTree = 2,
     stance = 1,
     requiredTalent = 8,
-    recharge = 22842,
+    cooldown = 22842,
     playerbuff = 22842,
      barcolors = {
      playerbuff  = {101/255, 181/255, 141/255, 0.8},
@@ -509,45 +467,38 @@ function EventHorizon:InitializeClass()
   })
 
   -- Restoration Affinity
-  -- Rejuvenation + Swiftmend CD
+  -- Restoration Affinity
+  -- Swiftmend CD - currently always showing.
   self:newSpell({
-    requiredTree = 2,
-    stance = 0,
+    requiredTree = 1,
+    stance = {0,1,2,3,4,5,6},
     requiredTalent = 9,
     cooldown = 18562,
-    smallCooldown = true,
-    playerbuff = {774,3},
-    auraunit = usemouseover and 'mouseover' or 'target',
-    refreshable = true,
      barcolors = {
-     cooldown    = {171/255, 191/255, 181/255, 0.6},
-     playerbuff  = {232/255, 060/255, 202/255, 0.5}
-     }
-  })
-
-  -- Regrowth
-  self:newSpell({
-    requiredTree = 2,
-    stance = 0,
-    requiredTalent = 9,
-    playerbuff = {8936,2},
-    auraunit = usemouseover and 'mouseover' or 'target',
-    refreshable = true,
-    cast = 8936,
-    recast = true,
-     barcolors = {
-     casting     = {252/255, 121/255, 000/255, 0.8},
-     playerbuff  = {020/255, 212/255, 050/255, 0.7}
+     cooldown    = {171/255, 191/255, 181/255, 0.6}
      }
   })
 
 -- Guardian bars
 
+  -- Moonfire with spell casts (like a cast bar).
+  self:newSpell({
+    requiredTree = 3,
+    stance = {0,4,5},
+    requiredLevel = 2,
+    debuff = {164812,2},
+    refreshable = true,
+    cast = {339, 2637, 5176, 8936, 20484, 33786, 48438, 197626, 197628},
+     barcolors = {
+     debuffmine  = {050/255, 100/255, 255/255, 0.5}
+     },
+  })
+
   -- Mangle
   self:newSpell({
     requiredTree = 3,
     stance = 1,
-    requiredLevel = 10,
+    requiredLevel = 8,
     cooldown = 33917,
     playerbuff = {{93622}, {213708}},
      barcolors = {
@@ -557,11 +508,26 @@ function EventHorizon:InitializeClass()
      },
   })
 
+  -- Moonfire with tier two talent cooldowns at half height.
+  self:newSpell({
+    requiredTree = 3,
+    stance = 1,
+    requiredLevel = 8,
+    debuff = {164812,2},
+    refreshable = true,
+    cooldown = {108238, 102401, 252216},
+    smallCooldown = true,
+     barcolors = {
+     debuffmine  = {050/255, 100/255, 255/255, 0.5},
+     cooldown    = {171/255, 191/255, 181/255, 0.6}
+     },
+  })
+
   -- Thrash
   self:newSpell({
     requiredTree = 3,
     stance = {1, 2},
-    requiredLevel = 10,
+    requiredLevel = 11,
     debuff = {77758,3},
     cooldown = 77758,
     refreshable = true,
@@ -576,24 +542,10 @@ function EventHorizon:InitializeClass()
     requiredTree = 3,
     stance = 1,
     requiredTalent = 21,
-    playerbuff = 158792,
+    debuff = 80313,
+    cooldown = 80313,
      barcolors = {
      playerbuff  = {030/255, 121/255, 121/255, 0.6},
-     },
-  })
-
-  -- Moonfire with tier two talent cooldowns at half height.
-  self:newSpell({
-    requiredTree = 3,
-    stance = {0,1,3,4,5,6},
-    requiredLevel = 10,
-    debuff = {164812,2},
-    refreshable = true,
-    cooldown = {102280, 102401, 252216},
-    smallCooldown = true,
-     barcolors = {
-     debuffmine  = {050/255, 100/255, 255/255, 0.5},
-     cooldown    = {171/255, 191/255, 181/255, 0.6}
      },
   })
 
@@ -628,14 +580,14 @@ function EventHorizon:InitializeClass()
      },
   })
 
-  -- Ironfur with Typhoon cooldown at half height.
+  -- Ironfur with Heart of the Wild cooldown at half height.
   self:newSpell({
     requiredTree = 3,
     stance = 1,
     requiredLevel = 20,
     requiredTalent = 12,
     playerbuff = 192081,
-    cooldown = 132469,
+    cooldown = 319454,
     smallCooldown = true,
      barcolors = {
      playerbuff  = {111/255, 111/255, 151/255, 0.6},
@@ -668,18 +620,17 @@ function EventHorizon:InitializeClass()
      },
   })
 
-  -- Starsurge  -- There are two bars for this as it provides two different buffs stacking up to three, the buffs are then consumed by different spell schools separately so both are needed.
+  -- Starsurge  -- There are two bars for this as it gives a different buff for either Wrath or Starfire.
   self:newSpell({
     requiredTree = 3,
     stance = 4,
     requiredTalent = 7,
     cooldown = 197626,
-    playerbuff = 164547,
+    playerbuff = 48517,
+    icon = 48517,
     cast = 197626,
-    recast = true,
-    icon = 194153,
      barcolors = {
-     playerbuff  = {151/255, 101/255, 161/255, 0.5}
+     playerbuff  = {252/255, 252/255, 090/255, 0.5}
      },
   })
 
@@ -688,12 +639,11 @@ function EventHorizon:InitializeClass()
     stance = 4,
     requiredTalent = 7,
     cooldown = 197626,
-    playerbuff = 164545,
+    playerbuff = 48518,
+    icon = 48518,
     cast = 197626,
-    recast = true,
-    icon = 190984,
      barcolors = {
-     playerbuff  = {252/255, 252/255, 090/255, 0.5}
+     playerbuff  = {151/255, 101/255, 161/255, 0.5}
      },
   })
 
@@ -724,37 +674,12 @@ function EventHorizon:InitializeClass()
      },
   })
 
-  -- Restoration Affinity
-  -- Rejuvenation + Swiftmend CD
+  -- Tooth and Claw
   self:newSpell({
     requiredTree = 3,
-    stance = 0,
-    requiredTalent = 9,
-    cooldown = 18562,
-    smallCooldown = true,
-    playerbuff = {774,3},
-    auraunit = usemouseover and 'mouseover' or 'target',
-    refreshable = true,
-     barcolors = {
-     cooldown    = {171/255, 191/255, 181/255, 0.6},
-     playerbuff  = {232/255, 060/255, 202/255, 0.5}
-     }
-  })
-
-  -- Regrowth
-  self:newSpell({
-    requiredTree = 3,
-    stance = 0,
-    requiredTalent = 9,
-    playerbuff = {8936,2},
-    auraunit = usemouseover and 'mouseover' or 'target',
-    refreshable = true,
-    cast = 8936,
-    recast = true,
-     barcolors = {
-     casting     = {252/255, 121/255, 000/255, 0.8},
-     playerbuff  = {020/255, 212/255, 050/255, 0.7}
-     }
+    stance = {0,1,2,3,4},
+    requiredTalent = 20,
+    playerbuff = 135286,
   })
 
   -- Bristling Fur
@@ -768,15 +693,6 @@ function EventHorizon:InitializeClass()
      playerbuff  = {252/255, 111/255, 030/255, 0.6},
      cooldown    = {171/255, 191/255, 181/255, 0.6}
      },
-  })
-
-  -- Lunar Beam
-  self:newSpell({
-    requiredTree = 3,
-    stance = {0,1,2,3,4},
-    requiredTalent = 20,
-    cooldown = 204066,
-    playerbuff = 204066,
   })
 
   -- Barkskin
@@ -816,9 +732,274 @@ function EventHorizon:InitializeClass()
      },
   })
 
--- Restoration bars
-  --Note that there are two, or more, entries for the same spell for many of these bars, this is to have them show up in the correct stances with or without Balance Affinity taken. Additionally there will be a few players out there who prefer to be a treant, all this effort was for you.
+  -- Restoration Affinity
+  -- Swiftmend CD - currently always showing.
+  self:newSpell({
+    requiredTree = 1,
+    stance = {0,1,2,3,4,5,6},
+    requiredTalent = 9,
+    cooldown = 18562,
+     barcolors = {
+     cooldown    = {171/255, 191/255, 181/255, 0.6}
+     }
+  })
 
+-- Restoration bars
+  -- Redisign to show only the offensive spells as this looks like it will be more important in Shadowlands and I'm not aware of any healer who isn't tracking their HoT's on their party/raid frames.
+  -- Longer healing CD shown at the end in increasing duration order, CD > 90 seconds not shown by default.
+  -- If you'd like to return to the old design please ask in the Discord server for help if you can't do it yourself.
+
+  -- Note that there are two, or more, entries for the same spell for many of these bars, this is to have them show up in the correct stances with or without Balance Affinity taken. Additionally there will be a few players out there who prefer to be a treant, all this effort was for you.
+
+  -- Moonfire with spell casts (like a cast bar) and Wild Growth CD at half height.
+  self:newSpell({
+    requiredTree = 4,
+    stance = {0,4,5},
+    requiredLevel = 2,
+    debuff = {164812,2},
+    refreshable = true,
+    cast = {339, 2637, 5176, 8936, 20484, 33786, 48438, 197626, 197628},
+    cooldown = 48438,
+    smallCooldown = true,
+     barcolors = {
+     cooldown    = {171/255, 191/255, 181/255, 0.6},
+     debuffmine  = {050/255, 100/255, 255/255, 0.5}
+     },
+  })
+
+  -- Sunfire with Swiftmend CD at half height.
+  self:newSpell({
+    requiredTree = 4,
+    stance = {0,5},
+    requiredLevel = 23,
+    debuff = {164815,2},
+    refreshable = true,
+    cooldown = 18562,
+    smallCooldown = true,
+    icon = 164815,
+     barcolors = {
+     cooldown    = {171/255, 191/255, 181/255, 0.6},
+     debuffmine  = {121/255, 010/255, 000/255, 0.6}
+     },
+  })
+
+  -- Balance Affinity
+  -- Starsurge  -- There are two bars for this as it gives a different buff for either Wrath or Starfire.
+  self:newSpell({
+    requiredTree = 4,
+    stance = 4,
+    requiredTalent = 7,
+    cooldown = 197626,
+    playerbuff = 48517,
+    icon = 48517,
+    cast = 197626,
+     barcolors = {
+     playerbuff  = {252/255, 252/255, 090/255, 0.5}
+     },
+  })
+
+  self:newSpell({
+    requiredTree = 4,
+    stance = 4,
+    requiredTalent = 7,
+    cooldown = 197626,
+    playerbuff = 48518,
+    icon = 48518,
+    cast = 197626,
+     barcolors = {
+     playerbuff  = {151/255, 101/255, 161/255, 0.5}
+     },
+  })
+
+  -- Feral Affinity
+  -- Rake
+  self:newSpell({
+    requiredTree = 4,
+    stance = 2,
+    requiredTalent = 8,
+    debuff = {1822,3},
+    refreshable = true,
+     barcolors = {
+     debuffmine  = {191/255, 040/255, 101/255, 0.5}
+     },
+  })
+
+  -- Rip 
+  self:newSpell({
+    requiredTree = 4,
+    stance = 2,
+    requiredTalent = 8,
+    debuff = {1079,2},
+    refreshable = true,
+     barcolors = {
+     debuffmine  = {252/255, 000/255, 060/255, 0.5}
+     },
+  })
+
+  -- Guardian Affinity
+  -- Thrash 
+  self:newSpell({
+    requiredTree = 4,
+    stance = 1,
+    requiredTalent = 9,
+    debuff = {77758,3},
+    cooldown = 77758,
+    refreshable = true,
+     barcolors = {
+     debuffmine  = {070/255, 050/255, 040/255, 0.6},
+     cooldown    = {171/255, 191/255, 181/255, 0.6}
+     },
+  })
+
+  -- Ironfur
+  self:newSpell({
+    requiredTree = 4,
+    stance = 1,
+    requiredTalent = 9,
+    playerbuff = 192081,
+     barcolors = {
+     playerbuff  = {040/255, 070/255, 181/255, 0.6}
+     },
+  })
+
+  -- Frenzied Regeneration
+  self:newSpell({
+    requiredTree = 4,
+    stance = 1,
+    requiredTalent = 9,
+    recharge = 22842,
+    playerbuff = 22842,
+     barcolors = {
+     playerbuff  = {101/255, 181/255, 141/255, 0.8},
+     recharge    = {030/255, 222/255, 040/255, 0.4}
+     },
+  })
+
+  -- Healing CD
+  -- Cenarion Ward
+  self:newSpell({
+    requiredTree = 4,
+    stance = {0,4},
+    requiredTalentUnselected = 7,
+    requiredTalent = 3,
+    cooldown = 102351,
+     barcolors = {
+     cooldown    = {171/255, 191/255, 181/255, 0.6},
+    }
+  })
+
+  -- Cenarion Ward
+  self:newSpell({
+    requiredTree = 4,
+    stance = {0,5},
+    requiredTalent = {3,7},
+    cooldown = 102351,
+     barcolors = {
+     cooldown    = {171/255, 191/255, 181/255, 0.6},
+     }
+  })
+
+  -- Overgrowth
+  self:newSpell({
+    requiredTree = 4,
+    stance = {0,4},
+    requiredTalent = 18,
+    requiredTalentUnselected = 7,
+    cooldown = 203651,
+    barcolors = {
+     cooldown    = {171/255, 222/255, 181/255, 0.6},
+     }
+   })
+
+  -- Overgrowth
+  self:newSpell({
+    requiredTree = 4,
+    stance = {0,5},
+    requiredTalent = 18,
+    cooldown = 203651,
+    barcolors = {
+     cooldown    = {171/255, 222/255, 181/255, 0.6},
+     }
+   })
+
+  -- Nature's Swiftness
+  self:newSpell({
+    requiredTree = 4,
+    stance = {0,4},
+    requiredLevel = 58,
+    requiredTalentUnselected = 7,
+    cooldown = 102351,
+  })
+
+  -- Nature's Swiftness
+  self:newSpell({
+    requiredTree = 4,
+    stance = {0,5},
+    requiredLevel = 58,
+    requiredTalent = {3,7},
+    cooldown = 102351,
+  })
+
+  -- Ironbark
+  self:newSpell({
+    requiredTree = 4,
+    stance = {0,4},
+    requiredTalentUnselected = 7,
+    requiredLevel = 12,
+    cooldown = 102342,
+     barcolors = {
+     cooldown    = {171/255, 191/255, 181/255, 0.6},
+     }
+  })
+
+  -- Ironbark
+  self:newSpell({
+    requiredTree = 4,
+    stance = {0,5},
+    requiredTalent = 7,
+    cooldown = 102342,
+     barcolors = {
+     cooldown    = {171/255, 191/255, 181/255, 0.6},
+     }
+  })
+
+  -- Flourish
+  self:newSpell({
+    requiredTree = 4,
+    stance = {0,4},
+    requiredTalent = 21,
+    requiredTalentUnselected = 7,
+    cooldown = 197721,
+     barcolors = {
+     cooldown    = {171/255, 191/255, 181/255, 0.6}
+     }
+  })
+
+  -- Flourish
+  self:newSpell({
+    requiredTree = 4,
+    stance = {0,4},
+    requiredTalent = {7,21},
+    cooldown = 197721,
+     barcolors = {
+     cooldown    = {171/255, 191/255, 181/255, 0.6}
+     }
+  })
+
+  -- Barkskin
+  self:newSpell({
+    requiredTree = 4,
+    stance = {0,1,2,3,4,5},
+    requiredLevel = 24,
+    cooldown = 22812,
+    playerbuff = 22812,
+     barcolors = {
+     playerbuff  = {141/255, 070/255, 030/255, 0.8},
+     cooldown    = {171/255, 191/255, 181/255, 0.6}
+     },
+  })
+
+--[[ HoT tracking bars, delete this line and the second last to have them show.
   -- The first spell bar is for Lifebloom. This huge note is so you can get Lifebloom to track your focus frame. As many healers, especially in a dungeon group, will set the tank as their focus so this seemed like a good addition however the default is the same mouseover behaviour as the other spells. Just change the comment markers "--" on the auraunit lines. Do this for the both "Lifebloom + Wild Growth CD" spell bars, I know that seemes excessive but it's the only way I could make it work for people who like being a Treant while healing and sometimes have Balance affinity.
 
   -- Lifebloom + Wild Growth CD, cast and HT cast
@@ -826,7 +1007,7 @@ function EventHorizon:InitializeClass()
     requiredTree = 4,
     stance = {0,4},
     requiredTalentUnselected = 7,
-    requiredLevel = 32,
+    requiredLevel = 21,
     cast = 48438,
     playerbuff = {33763,1},
     auraunit = usemouseover and 'mouseover' or 'target',
@@ -866,7 +1047,7 @@ function EventHorizon:InitializeClass()
   self:newSpell({
     requiredTree = 4,
     stance = {0,4},
-    requiredTalent = 3,
+    requiredLevel = 10,
     requiredTalentUnselected = 7,
     requiredLevel = 10,
     playerbuff = {774,3},
@@ -884,7 +1065,7 @@ function EventHorizon:InitializeClass()
   self:newSpell({
     requiredTree = 4,
     stance = {0,4},
-    requiredTalent = 1,
+    requiredLevel = 10,
     requiredTalentUnselected = 7,
     requiredLevel = 10,
     playerbuff = {774,3},
@@ -894,55 +1075,6 @@ function EventHorizon:InitializeClass()
     refreshable = true,
      barcolors = {
      cooldown    = {171/255, 191/255, 181/255, 0.6},
-     playerbuff  = {232/255, 066/255, 202/255, 0.6}
-     }
-  })
-
-  -- Rejuvenation + Swiftmend
-  self:newSpell({
-    requiredTree = 4,
-    stance = {0,4},
-    requiredTalent = 2,
-    requiredTalentUnselected = 7,
-    requiredLevel = 10,
-    playerbuff = {774,3},
-    recharge = 18562,
-    auraunit = usemouseover and 'mouseover' or 'target',
-    refreshable = true,
-     barcolors = {
-     recharge    = {171/255, 191/255, 181/255, 0.3},
-     playerbuff  = {232/255, 066/255, 202/255, 0.6}
-     }
-  })
-
-  -- Rejuvenation + Swiftmend
-  self:newSpell({
-    requiredTree = 4,
-    stance = {0,5},
-    requiredTalent = 7,
-    requiredTalentUnselected = 2,
-    playerbuff = {774,3},
-    cooldown = 18562,
-    smallCooldown = true,
-    auraunit = usemouseover and 'mouseover' or 'target',
-    refreshable = true,
-     barcolors = {
-     cooldown    = {171/255, 191/255, 181/255, 0.6},
-     playerbuff  = {232/255, 066/255, 202/255, 0.6}
-     }
-  })
-
-  -- Rejuvenation + Swiftmend
-  self:newSpell({
-    requiredTree = 4,
-    stance = {0,5},
-    requiredTalent = {2,7},
-    playerbuff = {774,3},
-    recharge = 18562,
-    auraunit = usemouseover and 'mouseover' or 'target',
-    refreshable = true,
-     barcolors = {
-     recharge    = {171/255, 191/255, 181/255, 0.3},
      playerbuff  = {232/255, 066/255, 202/255, 0.6}
      }
   })
@@ -979,7 +1111,7 @@ function EventHorizon:InitializeClass()
   self:newSpell({
     requiredTree = 4,
     stance = {0,4},
-    requiredLevel = 10,
+    requiredLevel = 3,
     requiredTalentUnselected = 7,
     cooldown = 197721,
     cast = 8936,
@@ -1042,72 +1174,13 @@ function EventHorizon:InitializeClass()
      playerbuff  = {151/255, 171/255, 090/255, 0.7}
      }
   })
---[[
-  -- Efflorescence - no way of tracking this yet.
-  self:newSpell({
-    requiredTree = 4,
-    stance = 0,
-    requiredLevel = 83,
-    playerbuff = {145205,2},
-  })
-]]--
-  -- Flourish
-  self:newSpell({
-    requiredTree = 4,
-    stance = {0,4},
-    requiredTalent = 21,
-    requiredTalentUnselected = 7,
-    cooldown = 197721,
-     barcolors = {
-     cooldown    = {171/255, 191/255, 181/255, 0.6}
-     }
-  })
-
-  -- Flourish
-  self:newSpell({
-    requiredTree = 4,
-    stance = {0,4},
-    requiredTalent = {7, 21},
-    cooldown = 197721,
-     barcolors = {
-     cooldown    = {171/255, 191/255, 181/255, 0.6}
-     }
-  })
-
-  -- Ironbark
-  self:newSpell({
-    requiredTree = 4,
-    stance = {0,4},
-    requiredTalentUnselected = 7,
-    requiredLevel = 52,
-    playerbuff = 102342,
-    cooldown = 102342,
-     barcolors = {
-     cooldown    = {171/255, 191/255, 181/255, 0.6},
-     playerbuff  = {161/255, 088/255, 077/255, 0.8}
-     }
-  })
-
-  -- Ironbark
-  self:newSpell({
-    requiredTree = 4,
-    stance = {0,5},
-    requiredTalent = 7,
-    requiredLevel = 52,
-    playerbuff = 102342,
-    cooldown = 102342,
-     barcolors = {
-     cooldown    = {171/255, 191/255, 181/255, 0.6},
-     playerbuff  = {161/255, 088/255, 077/255, 0.8}
-     }
-  })
 
   -- Omen of Clarity / Moment of Clarity and Innervate cooldown.
   self:newSpell({
     requiredTree = 4,
     stance = {0,4},
     requiredTalentUnselected = 7,
-    requiredLevel = 12,
+    requiredLevel = 33,
     cooldown = 29166,
     playerbuff = 16870,
     smallCooldown = true,
@@ -1122,6 +1195,7 @@ function EventHorizon:InitializeClass()
     requiredTree = 4,
     stance = {0,5},
     requiredTalent = 7,
+    requiredLevel = 33,
     cooldown = 29166,
     playerbuff = 16870,
     smallCooldown = true,
@@ -1131,144 +1205,20 @@ function EventHorizon:InitializeClass()
      }
   })
 
-  -- Barkskin
+  -- Tranquility
   self:newSpell({
     requiredTree = 4,
-    stance = {0,1,2,3,4,5},
-    requiredLevel = 26,
-    cooldown = 22812,
-    playerbuff = 22812,
-     barcolors = {
-     playerbuff  = {141/255, 070/255, 030/255, 0.8},
-     cooldown    = {171/255, 191/255, 181/255, 0.6}
-     },
+    requiredLevel = 37,
+    channel = 740,
+    cooldown = 740,
+    playerbuff = 740,
   })
 
-  -- Balance Affinity
-  -- Moonfire
+  -- Innervate
   self:newSpell({
     requiredTree = 4,
-    stance = {1,4},
-    requiredTalent = 7,
-    debuff = {164812,2},
-    refreshable = true,
-     barcolors = {
-     debuffmine  = {050/255, 100/255, 255/255, 0.5}
-     },
-  })
-
-  -- Sunfire
-  self:newSpell({
-    requiredTree = 4,
-    stance = 4,
-    requiredTalent = 7,
-    debuff = {93402,2},
-     barcolors = {
-     debuffmine  = {121/255, 010/255, 000/255, 0.6}
-     },
-  })
-
-  -- Starsurge  -- There are two bars for this as it provides two different buffs stacking up to three, the buffs are then consumed by different spell schools separately so both are needed.
-  self:newSpell({
-    requiredTree = 4,
-    stance = 4,
-    requiredTalent = 7,
-    cooldown = 197626,
-    playerbuff = 164547,
-    icon = 164547,
-    cast = 197626,
-    recast = true,
-     barcolors = {
-     playerbuff  = {151/255, 101/255, 161/255, 0.5}
-     },
-  })
-
-  self:newSpell({
-    requiredTree = 4,
-    stance = 4,
-    requiredTalent = 7,
-    cooldown = 197626,
-    playerbuff = 164545,
-    icon = 164545,
-    cast = 197626,
-    recast = true,
-     barcolors = {
-     playerbuff  = {252/255, 252/255, 090/255, 0.5}
-     },
-  })
-
-  -- Feral Affinity
-  -- Rake
-  self:newSpell({
-    requiredTree = 4,
-    stance = 2,
-    requiredTalent = 8,
-    debuff = {1822,3},
-    refreshable = true,
-     barcolors = {
-     debuffmine  = {191/255, 040/255, 101/255, 0.5}
-     },
-  })
-
-  -- Rip 
-  self:newSpell({
-    requiredTree = 4,
-    stance = 2,
-    requiredTalent = 8,
-    debuff = {1079,2},
-    refreshable = true,
-     barcolors = {
-     debuffmine  = {252/255, 000/255, 060/255, 0.5}
-     },
-  })
-
-  -- Guardian Affinity
-  -- Mangle
-  self:newSpell({
-    requiredTree = 4,
-    stance = 1,
-    cooldown = 33917,
-     barcolors = {
-     cooldown    = {171/255, 191/255, 181/255, 0.6}
-     },
-  })
-
-  -- Thrash 
-  self:newSpell({
-    requiredTree = 4,
-    stance = 1,
-    requiredTalent = 9,
-    debuff = {77758,3},
-    cooldown = 77758,
-    refreshable = true,
-     barcolors = {
-     debuffmine  = {070/255, 050/255, 040/255, 0.6},
-     cooldown    = {171/255, 191/255, 181/255, 0.6}
-     },
-  })
-
-  -- Ironfur
-  self:newSpell({
-    requiredTree = 4,
-    stance = 1,
-    requiredTalent = 9,
-    playerbuff = 192081,
-     barcolors = {
-     playerbuff  = {040/255, 070/255, 181/255, 0.6}
-     },
-  })
-
-  -- Frenzied Regeneration
-  self:newSpell({
-    requiredTree = 4,
-    stance = 1,
-    requiredTalent = 9,
-    recharge = 22842,
-    playerbuff = 22842,
-     barcolors = {
-     playerbuff  = {101/255, 181/255, 141/255, 0.8},
-     recharge    = {030/255, 222/255, 040/255, 0.4}
-     },
+    requiredLevel = 42,
+    cooldown = 29166,
   })
 
   -- Incarnation: Tree of Life
@@ -1279,61 +1229,5 @@ function EventHorizon:InitializeClass()
     playerbuff = 117679,
   })
 
-  --The following bars are hidden by default as, depending on talent choices, you can end up with up to ELEVEN bars showing!
-  --If you'd like the offensive spell DoT's tracked uncomment the following four sections by removing the --[[ and ]] from the next line and the second last line of the file.
---[[
-  -- Moonfire
-  self:newSpell({
-    requiredTree = 4,
-    stance = {0,4},
-    requiredTalentUnselected = 7,
-    requiredLevel = 10,
-    debuff = {164812,2},
-    refreshable = true,
-     barcolors = {
-     debuffmine  = {050/255, 100/255, 255/255, 0.5}
-     },
-  })
-
-  -- Moonfire
-  self:newSpell({
-    requiredTree = 4,
-    stance = {0,5},
-    requiredTalent = 7,
-    debuff = {164812,2},
-    refreshable = true,
-     barcolors = {
-     debuffmine  = {050/255, 100/255, 255/255, 0.5}
-     },
-  })
-
-  -- Sunfire with Solar Wrath cast.
-  self:newSpell({
-    requiredTree = 4,
-    stance = {0,4},
-    requiredTalentUnselected = 7,
-    requiredLevel = 24,
-    debuff = {164815,2},
-    refreshable = true,
-    icon = 164815,
-    cast = 5176,
-     barcolors = {
-     debuffmine  = {121/255, 010/255, 000/255, 0.6}
-     },
-  })
-
-  -- Sunfire with Solar Wrath cast.
-  self:newSpell({
-    requiredTree = 4,
-    stance = {0,5},
-    requiredTalent = 7,
-    debuff = {164815,2},
-    refreshable = true,
-    icon = 164815,
-    cast = 5176,
-     barcolors = {
-     debuffmine  = {121/255, 010/255, 000/255, 0.6}
-     },
-  })
 ]]
 end
