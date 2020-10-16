@@ -1,9 +1,3 @@
-EventHorizon.config.width = 290
-EventHorizon.config.height = 18
-EventHorizon.config.spacing = 0
-EventHorizon.config.staticheight = nil
-EventHorizon.config.past = -0
-
 function EventHorizon:InitializeClass()
   self.config.gcdSpellID = 118 -- Polymorph
   self.config.hastedSpellID = {118,1.7}
@@ -287,18 +281,6 @@ function EventHorizon:InitializeClass()
     cooldown = 153595,
   })
 
-  -- Ray of Frost
-  self:newSpell({
-    requiredTree = 3,
-    requiredTalent = 20,
-    debuff = {205021, 1},
-    cooldown = 205021,
-    channel = 205021,
-     barcolors   = {
-     cooldown    = {040/255, 040/255, 232/255, 0.4},
-    },
-  })
-
   -- Ebonbolt
   self:newSpell({
     requiredTree = 3,
@@ -347,6 +329,18 @@ function EventHorizon:InitializeClass()
      playerbuff  = {171/255, 070/255, 171/255, 0.5},
      recharge    = {171/255, 191/255, 181/255, 0.4}
      },
+  })
+
+  -- Ray of Frost
+  self:newSpell({
+    requiredTree = 3,
+    requiredTalent = 20,
+    debuff = {205021, 1},
+    cooldown = 205021,
+    channel = 205021,
+     barcolors   = {
+     cooldown    = {040/255, 040/255, 232/255, 0.4},
+    },
   })
 
   -- Ice Veins
