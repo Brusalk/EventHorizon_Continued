@@ -15,10 +15,23 @@ function EventHorizon:InitializeClass()
      },
   })
 ]]
+  -- Slice and Dice with Vanish CD at half height.
+  self:newSpell({
+    requiredTree = 1,
+    requiredLevel = 9,
+    playerbuff = 315496,
+    smallCooldown = true,
+    cooldown = 1856,
+     barcolors   = {
+     cooldown    = {171/255, 191/255, 181/255, 0.6},
+     playerbuff  = {242/255, 242/255, 040/255, 0.6}
+     },
+  })
+
   -- Garrote
   self:newSpell({
     requiredTree = 1,
-    requiredLevel = 12,
+    requiredLevel = 16,
     debuff = {703,2},
     cooldown = 703,
      barcolors   = {
@@ -73,12 +86,12 @@ function EventHorizon:InitializeClass()
      },
   })
 
-  -- Toxic Blade
+  -- Shiv (currently guessing at debuff name for the Rank 2 version)
   self:newSpell({
     requiredTree = 1,
-    requiredTalent = 17,
-    debuff = 245389,
-    cooldown = 245388,
+    requiredLevel = 32,
+    cooldown = 5938,
+    debuff = 319032,
      barcolors   = {
      cooldown    = {171/255, 191/255, 181/255, 0.6},
      debuffmine  = {111/255, 151/255, 070/255, 0.9}
@@ -88,7 +101,7 @@ function EventHorizon:InitializeClass()
   -- Vendetta
   self:newSpell({
     requiredTree = 1,
-    requiredLevel = 56,
+    requiredLevel = 42,
     debuff = {79140,0},
     cooldown = 79140,
      barcolors   = {
@@ -97,20 +110,19 @@ function EventHorizon:InitializeClass()
      },
   })
 
-  -- Crimson Tempest with Vanish CD at half height.
+  -- Crimson Tempest
   self:newSpell({
     requiredTree = 1,
     requiredTalent = 21,
     debuff = {121411, 2},
-    smallCooldown = true,
-    cooldown = 1856,
      barcolors   = {
      cooldown    = {171/255, 191/255, 181/255, 0.6},
      debuffmine  = {222/255, 060/255, 070/255, 0.4}
      },
    })
 
-  -- Vanish
+--[[ testing this as a CD under the S&D bar.
+   -- Vanish
   self:newSpell({
     requiredTree = 1,
     requiredTalentUnselected = 21,
@@ -119,17 +131,15 @@ function EventHorizon:InitializeClass()
      cooldown    = {171/255, 191/255, 181/255, 0.6},
      },
   })
-
+]]
   -- Outlaw
 
-  -- Roll the Bones with Between the Eyes CD at half height.
+  -- Slice and Dice with Roll the Bones CD at half height. 315341
   self:newSpell({
     requiredTree = 2,
-    requiredLevel = 40,
-    requiredTalentUnselected = 18,
-    --icon = 193316,
-    playerbuff = {{193356,0},{193357,0},{193358,0},{193359, 0},{199600,0},{199603,0}},
-    cooldown = 199804,
+    requiredLevel = 9,
+    playerbuff = 315496,
+    cooldown = 315508,
     smallCooldown = true,
      barcolors   = {
      cooldown    = {171/255, 191/255, 181/255, 0.8},
@@ -137,16 +147,15 @@ function EventHorizon:InitializeClass()
      },
   })
 
-  -- Slice and Dice with Between the Eyes CD at half height.
+  -- Between the Eyes
   self:newSpell({
     requiredTree = 2,
-    requiredTalent = 18,
-    playerbuff = 5171,
-    cooldown = 199804,
-    smallCooldown = true,
+    requiredLevel = 40,
+    debuff = 315341,
+    cooldown = 315341,
      barcolors   = {
      cooldown    = {171/255, 191/255, 181/255, 0.8},
-     playerbuff  = {242/255, 242/255, 040/255, 0.6}
+     debuffmine  = {161/255, 090/255, 020/255, 0.6}
      },
   })
 
@@ -181,15 +190,30 @@ function EventHorizon:InitializeClass()
   self:newSpell({
     requiredTree = 2,
     playerbuff = 13877,
-    recharge = 13877,
+    cooldown = 13877,
     refreshable = true,
      barcolors   = {
-     recharge    = {171/255, 191/255, 181/255, 0.3},
+     cooldown    = {171/255, 191/255, 181/255, 0.3},
      playerbuff  = {252/255, 101/255, 101/255, 0.7}
      },
   })
+--[[
+  -- Blade Rush
+  self:newSpell({
+    requiredTree = 2,
+    requiredTalent = 20,
+    playerbuff = 271896,
+    cooldown = 271877,
+  })
 
-  -- Alacrity
+  -- Killing Spree
+  self:newSpell({
+    requiredTree = 2,
+    requiredTalent = 21,
+    cooldown = 51690,
+  })
+]]
+    -- Alacrity
   self:newSpell({
     requiredTree = 2,
     requiredTalent = {17, 19},
@@ -208,7 +232,7 @@ function EventHorizon:InitializeClass()
     smallCooldown = true,
      barcolors   = {
      cooldown    = {171/255, 191/255, 181/255, 0.9},
-     playerbuff  = {252/255, 252/255, 151/255, 0.6}
+     playerbuff  = {252/255, 252/255, 151/255, 0.5}
      },
   })
 
@@ -221,7 +245,7 @@ function EventHorizon:InitializeClass()
     smallCooldown = true,
      barcolors   = {
      cooldown    = {171/255, 191/255, 181/255, 0.9},
-     playerbuff  = {252/255, 252/255, 151/255, 0.6}
+     playerbuff  = {252/255, 252/255, 151/255, 0.5}
      },
   })
 
@@ -234,6 +258,17 @@ function EventHorizon:InitializeClass()
     cooldown = 271877,
   })
 
+  -- Dreadblades
+  self:newSpell({
+    requiredTree = 2,
+    requiredTalent = 18,
+    playerbuff = 343142,
+    cooldown = 343142,
+    barcolors = {
+      cooldown    = {202/255, 161/255, 050/255, 0.5},
+      },
+   })
+
   -- Killing Spree if Alacrity not taken.
   self:newSpell({
     requiredTree = 2,
@@ -245,7 +280,7 @@ function EventHorizon:InitializeClass()
   -- Adrenaline Rush
   self:newSpell({
     requiredTree = 2,
-    requiredLevel = 56,
+    requiredLevel = 42,
     playerbuff = 13750,
     cooldown = 13750,
      barcolors   = {
@@ -253,17 +288,6 @@ function EventHorizon:InitializeClass()
      playerbuff  = {252/255, 202/255, 121/255, 0.7},
      },
   })
-
-  -- Remove the --[[ and ]]-- from around the next spell config if you'd like to track this stun finisher, probably a PvP option although solo and dungeons may sometimes find this useful.
---[[
-  -- Between the Eyes
-  self:newSpell({
-    requiredTree = 2,
-    requiredLevel = 25,
-    cooldown = 199804,
-    debuff = 199804,
-  })
-]]--
 
   -- Remove the --[[ and ]]-- from around the next spell config if you'd like to track Vanish as an Outlaw. Not tracked by default as it doesn't provide a DPS buff for this spec.
 --[[
@@ -277,23 +301,36 @@ function EventHorizon:InitializeClass()
 
   -- Subtlety
 
-  -- Nightblade with Marked for Death cooldown at half height, if selected.
+  -- Slice and Dice with Vanish CD at half height.
   self:newSpell({
     requiredTree = 3,
-    requiredLevel = 20,
-    debuff = {195452,2},
+    requiredLevel = 9,
+    playerbuff = 315496,
+    smallCooldown = true,
+    cooldown = 1856,
+     barcolors   = {
+     cooldown    = {171/255, 191/255, 181/255, 0.6},
+     playerbuff  = {242/255, 242/255, 040/255, 0.6}
+     },
+  })
+
+  -- Rupture with Marked for Death cooldown at half height, if selected.
+  self:newSpell({
+    requiredTree = 3,
+    requiredLevel = 17,
+    debuff = {1943,2},
     cooldown = 137619,
     smallCooldown = true,
      barcolors   = {
-     cooldown    = {171/255, 191/255, 181/255, 0.7},
-     debuffmine  = {080/255, 030/255, 121/255, 0.6}
+     cooldown    = {171/255, 191/255, 181/255, 0.6},
+     debuffmine  = {252/255, 000/255, 000/255, 0.4}
      },
   })
 
   -- Symbols of Death
   self:newSpell({
     requiredTree = 3,
-    requiredLevel = 36,
+    requiredLevel = 29,
     playerbuff = 212283,
     cooldown = 212283,
      barcolors   = {
@@ -305,7 +342,7 @@ function EventHorizon:InitializeClass()
   -- Shadow Dance
   self:newSpell({
     requiredTree = 3,
-    requiredLevel = 40,
+    requiredLevel = 22,
     playerbuff = 185313,
     recharge = 185313,
      barcolors   = {
@@ -314,77 +351,61 @@ function EventHorizon:InitializeClass()
      },
   })
 
+  -- Find Weakness
+  self:newSpell({
+    requiredTree = 3,
+    requiredLevel = 37,
+    requiredTalent = 19,
+    debuff  = 316220,
+     barcolors   = {
+     debuffmine  = {010/255, 212/255, 080/255, 0.6}
+     },
+  })
+
+  -- Find Weakness with Secret Technique cooldown at half height.
+  self:newSpell({
+    requiredTree = 3,
+    requiredLevel = 37,
+    requiredTalent = 20,
+    debuff  = 316220,
+    cooldown = 280719,
+    smallCooldown = true,
+     barcolors   = {
+     debuffmine  = {010/255, 212/255, 080/255, 0.6},
+     cooldown    = {171/255, 191/255, 181/255, 0.9}
+     },
+  })
+
+  -- Find Weakness with Shuriken Tornado cooldown at half height.
+  self:newSpell({
+    requiredTree = 3,
+    requiredLevel = 37,
+    requiredTalent = 21,
+    debuff  = 316220,
+    cooldown = 277925,
+    smallCooldown = true,
+     barcolors   = {
+     debuffmine  = {010/255, 212/255, 080/255, 0.6},
+     cooldown    = {171/255, 191/255, 181/255, 0.9}
+     },
+  })
+
+  --[[ Not sure if this should be tracked or not.
   -- Alacrity
   self:newSpell({
     requiredTree = 3,
-    requiredTalent = {17, 19},
+    requiredTalent = 17,
     playerbuff  = 193539,
      barcolors   = {
      playerbuff  = {252/255, 252/255, 151/255, 0.6}
      },
   })
-
-  -- Alacrity with Secret Technique cooldown at half height.
-  self:newSpell({
-    requiredTree = 3,
-    requiredTalent = {17, 20},
-    playerbuff = 193539,
-    cooldown = 280719,
-    smallCooldown = true,
-     barcolors   = {
-     cooldown    = {171/255, 191/255, 181/255, 0.9},
-     playerbuff  = {252/255, 252/255, 151/255, 0.6}
-     },
-  })
-
-  -- Alacrity with Shuriken Tornado cooldown at half height.
-  self:newSpell({
-    requiredTree = 3,
-    requiredTalent = {17, 21},
-    playerbuff = 193539,
-    cooldown = 277925,
-    smallCooldown = true,
-     barcolors   = {
-     cooldown    = {171/255, 191/255, 181/255, 0.9},
-     playerbuff  = {252/255, 252/255, 151/255, 0.6}
-     },
-  })
-
-  -- Secret Technique
-  self:newSpell({
-    requiredTree = 3,
-    requiredTalent = 20,
-    requiredTalentUnselected = 17,
-    cooldown = 280719,
-     barcolors   = {
-     cooldown    = {171/255, 191/255, 181/255, 0.9},
-     },
-  })
-
-  -- Shuriken Tornado
-  self:newSpell({
-    requiredTree = 3,
-    requiredTalent = 21,
-    requiredTalentUnselected =17,
-    cooldown = 277925,
-    smallCooldown = true,
-     barcolors   = {
-     cooldown    = {171/255, 191/255, 181/255, 0.9},
-     },
-  })
-
-  -- Vanish
-  self:newSpell({
-    requiredTree = 3,
-    requiredTalentUnselected = 1, 
-    requiredLevel = 48,
-    cooldown = 1856,
-  })
+]]
 
   -- Shadow Blades
   self:newSpell({
     requiredTree = 3,
-    requiredLevel = 56,
+    requiredLevel = 42,
     playerbuff = 121471,
     cooldown = 121471,
      barcolors   = {
@@ -397,7 +418,7 @@ function EventHorizon:InitializeClass()
 --[[
   -- Feint & Crimson Vial
   self:newSpell({
-    requiredLevel = 16,
+    requiredLevel = 8,
     playerbuff = {{1966}, {185311}},
     cooldown = 185311,
     smallCooldown = true,
@@ -407,19 +428,20 @@ function EventHorizon:InitializeClass()
 --[[
   -- Cloak of Shadows
   self:newSpell({
-    requiredLevel = 80,
+    requiredLevel = 47,
     playerbuff = 31224,
     cooldown = 31224,
   })
 ]]--
 
 --[[
-  -- Evasion / Riposte
+  -- Evasion
   self:newSpell({
     requiredLevel = 10,
-    playerbuff   = {{5277}, {199754}},
-    cooldown     = {5277, 199754},
+    playerbuff   = 5277,
+    cooldown     = 5277,
   })
 ]]--
+
 
 end
