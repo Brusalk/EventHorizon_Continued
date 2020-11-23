@@ -1,6 +1,6 @@
 ## Interface: 90002
 ## Title: EventHorizon_|c909482c9Warlock|r
-## Author: Brusalk, BackJauer
+## Author: Brusalk, BackJauer, Csahosbolt
 ## LoadOnDemand: 1
 ## Dependencies: EventHorizon
 ## OptDeps: 

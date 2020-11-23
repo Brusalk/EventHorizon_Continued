@@ -1,6 +1,6 @@
 ## Interface: 90002
 ## Title: EventHorizon_|c60ffffffPriest|r
-## Author: Brusalk, Vaelynn, Sig
+## Author: Brusalk, Vaelynn, Sig, Desiday
 ## Dependencies: EventHorizon
 ## LoadOnDemand: 1
 ## OptDeps: 
