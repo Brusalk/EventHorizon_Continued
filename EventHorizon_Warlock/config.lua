@@ -5,43 +5,7 @@ function EventHorizon:InitializeClass()
   self.config.future = 12 -- Number of seconds to show in the future. Default = 12
   
   -- *** Affliction *** --
-  -- Unstable Affliction
-  self:newSpell({
-    requiredTree = 1,
-    requiredLevel = 14,
-    cast = 30108,
-    debuff = {30108, 2}
-  })
-  
-  -- Agony
-  self:newSpell({
-    requiredTree = 1,
-    requiredLevel = 10,
-    debuff = {980, 2},
-    refreshable = true,
-  })
-  
-  -- [Seed of] Corruption
-  self:newSpell({
-    requiredTree = 1,
-    requiredLevel = 3,
-    debuff = {{172, 2}, {27243, 2}},
-    icon = 172,
-    cast = 27243,
-    refreshable = true,
-  })
-  
-  --Siphon Life
-  self:newSpell({
-    requiredTree = 1,
-    requiredTalent = 6,
-    cast = 63106,
-    debuff = {63106, 3},
-    hasted = true,
-    recast = true,
-  })
-  
-  -- Haunt
+    -- Haunt
   self:newSpell({
     requiredTree = 1,
     requiredTalent = 17,
@@ -50,31 +14,48 @@ function EventHorizon:InitializeClass()
     debuff = 48181,
   })
   
-  -- Deathbolt
-  self:newSpell({
-    requiredTree = 1,
-    requiredTalent = 3,
-    cast = 264106,
-    cooldown = 264106
-  })
   
-  -- Shadowbolt
+  -- Unstable Affliction
   self:newSpell({
     requiredTree = 1,
-    requiredTalentUnselected = 2,
-    cast = 686,
-    playerbuff = 108558
-  })
-  
-  -- Drain Soul
-  self:newSpell({
-    requiredTree = 1,
-    requiredTalent = 2,
-    channel = {{198590, 6}},
+    requiredLevel = 13,
+    cast = 30108,
+    debuff = {30108, 2},
     hasted = true,
-    icon = 198590
+    recast = true,
   })
   
+    -- [Seed of] Corruption
+  self:newSpell({
+    requiredTree = 1,
+    requiredLevel = 2,
+    debuff = {{172, 2}, {27243, 2}},
+    icon = 172,
+    cast = 27243,
+	  hasted = true,
+    refreshable = true,
+  })
+  
+  -- Agony
+  self:newSpell({
+    requiredTree = 1,
+    requiredLevel = 10,
+    debuff = {980, 2},
+	  hasted = true,
+    refreshable = true,
+  })
+  
+  
+  --Siphon Life
+  self:newSpell({
+    requiredTree = 1,
+    requiredTalent = 6,
+    cast = 63106,
+    debuff = {63106, 3},
+    hasted = true,
+  })
+  
+
   -- Phantom Singularity
   self:newSpell({
     requiredTree = 1,
@@ -82,7 +63,7 @@ function EventHorizon:InitializeClass()
     debuff = {205179, 2},
     cooldown = 205179,
     refreshable = false,
-    hasted = false,
+    hasted = true,
   })
   
   --Vile Taint
@@ -90,29 +71,54 @@ function EventHorizon:InitializeClass()
     requiredTree = 1,
     requiredTalent = 12,
     cast = 278350,
-    debuff = 278350,
-    cooldown = 278350
+    debuff = {278350, 2},
+    cooldown = 278350,
+	  hasted = true,
+  })
+    -- Shadowbolt
+  self:newSpell({
+    requiredTree = 1,
+    requiredTalent = 1,
+    cast = 686,
+    playerbuff = 108558
+  })
+  
+      -- Shadowbolt
+  self:newSpell({
+    requiredTree = 1,
+    requiredTalent = 2,
+    cast = 686,
+    playerbuff = 334319
+  })
+  
+  -- Drain Soul
+  self:newSpell({
+    requiredTree = 1,
+    requiredTalent = 3,
+    channel = {{198590, 5}},
+    hasted = true,
+    icon = 198590
   })
   
   -- Dark Soul: Misery
-  self:newSpell({
-    requiredTree = 1,
-    requiredTalent = 21,
-    cooldown = 113860,
-    playerbuff = 113860
-  })
+--  self:newSpell({
+--    requiredTree = 1,
+--    requiredTalent = 21,
+--    cooldown = 113860,
+--    playerbuff = 113860,
+--  })
   
   -- Summon Darkglare
-  self:newSpell({
-    requiredTree = 1,
-    cooldown = 205180
-  })
+--  self:newSpell({
+--    requiredTree = 1,
+--    cooldown = 205180
+--  })
   
   --** Demonology **--
   -- Doom
   self:newSpell({
     requiredTree = 2,
-    debuff = {603, 15},
+    debuff = {603, 20},
     refreshable = true,
     hasted = false,
     requiredTalent = 6,
@@ -128,7 +134,7 @@ function EventHorizon:InitializeClass()
   -- Bilescourge Bombers
   self:newSpell({
     requiredTree = 2,
-    requiredTalent = 3,
+    requiredTalent = 2,
     cooldown = 267211
   })
   
@@ -140,32 +146,39 @@ function EventHorizon:InitializeClass()
     cooldown = 264119
   })
   
-  -- Grimoire: Felguard
+    -- Felstorm
   self:newSpell({
     requiredTree = 2,
-    requiredTalent = 18,
-    cooldown = 111898
+    cooldown = 89751
   })
   
-  -- Demonic Tyrant
+    -- Demonic Strength
   self:newSpell({
     requiredTree = 2,
-    cast = 265187,
-    cooldown = 265187
+    requiredTalent = 3,
+    cooldown = 267171
   })
+  
+  
+  -- Grimoire: Felguard
+--self:newSpell({
+--  requiredTree = 2,
+--  requiredTalent = 18,
+--  cooldown = 111898
+--  })
+  
+  -- Demonic Tyrant
+--  self:newSpell({
+--    requiredTree = 2,
+--    cast = 265187,
+--    cooldown = 265187
+--  })
   
   -- Shadowbolt
   self:newSpell({
     requiredTree = 2,
     cast = {686, 105174, 264178},
     playerbuff = 264173
-  })
-  
-  -- Demonic Strength
-  self:newSpell({
-    requiredTree = 2,
-    requiredTalent = 2,
-    cooldown = 267171
   })
   
   -- Power Siphon
@@ -257,6 +270,9 @@ function EventHorizon:InitializeClass()
     requiredTree = 3,
     debuff = {80240, 0},
     cooldown = 80240,
+    barcolors = {
+      debuff  = {255/255, 000/255, 000/255, 0.7}
+    },
   })
   
   -- Dark Soul: Instability
@@ -269,9 +285,10 @@ function EventHorizon:InitializeClass()
   
   -- Summon Infernal
   self:newSpell({
-    requiredTree = 3,
-    requiredLevel = 50,
-    cooldown = 1122,
+   requiredTree = 3,
+   requiredLevel = 50,
+   cooldown = 1122,
+   playerbuff = 40948,
   })
   
 end

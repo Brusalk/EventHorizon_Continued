@@ -233,6 +233,21 @@ function EventHorizon:InitializeClass()
 
   -- Shadow
 
+  -- Devouring Plague
+  self:newSpell({
+    requiredTree = 3,
+    cast = 335467,
+    debuff = {335467, 3},
+    refreshable = true,
+    smallCooldown = true,
+    recast = true,
+     barcolors   = {
+     cooldown    = {202/255, 161/255, 050/255, 0.7},
+     channeltick = {232/255, 000/255, 000/255, 0.7},
+     debuffmine  = {000/255, 090/255, 101/255, 0.5}
+     },
+  })
+
   -- Vampiric Touch & Void Torrent channel and CD at half height if you took the talent.
   self:newSpell({
     requiredTree = 3,

@@ -1,6 +1,6 @@
-## Interface: 90001
+## Interface: 90002
 ## Title: EventHorizon_|c50f58cbaPaladin|r
-## Author: Brusalk, Kerriodos
+## Author: Brusalk, Kerriodos, StragaSevera
 ## Dependencies: EventHorizon
 ## LoadOnDemand: 1
 ## OptDeps: 
