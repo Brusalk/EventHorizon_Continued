@@ -6,16 +6,15 @@ function EventHorizon:InitializeClass()
 
 -- Arcane
 
-  -- Clearcasting proc, casts and Arcane Barrage CD at half height.
+  -- Clearcasting proc, Touch of the Magi CD, at half height and spell casts. *Note: I removed Arcane Barrage CD as it seemed pointless.
   self:newSpell({
     requiredTree = 1,
     requiredLevel = 10,
-    cast = {30451, 44424},
+    cast = {116, 118, 759, 30451, 116011, 190336, 321507},
     channel = {5143, 5},
     playerbuff = 276743,
-    cooldown = 44425,
+    cooldown = 321507,
     smallCooldown = true,
-    cast = {30451, 44424},
     channel = {5143, 5},
      barcolors   = {
      cooldown    = {171/255, 191/255, 181/255, 0.6},
@@ -25,18 +24,18 @@ function EventHorizon:InitializeClass()
   -- Nether Tempest
   self:newSpell({
     requiredTree = 1,
-    requiredTalent = {10, 18},
+    requiredTalent = {12,16},
     debuff = {114923, 1},
      barcolors   = {
-     debuffmine  = {252/255, 212/255, 252/255, 0.8},
+     debuffmine  = {252/255, 212/255, 252/255, 0.7},
      },
   })
 
-  -- Nether Tempest with Charged up CD at half height if both taken.
+  -- Nether Tempest with Arcane Orb CD at half height, if both talents are taken.
   self:newSpell({
     requiredTree = 1,
-    requiredTalent = {11, 18},
-    cooldown = 205032,
+    requiredTalent = {12,17},
+    cooldown = 153626,
     smallCooldown = true,
     debuff = {114923, 1},
      barcolors   = {
@@ -45,10 +44,10 @@ function EventHorizon:InitializeClass()
      },
   })
 
-  -- Nether Tempest with Supernova CD at half height if both taken.
+  -- Nether Tempest with Supernova at half height, if both talents are taken.
   self:newSpell({
     requiredTree = 1,
-    requiredTalent = {12, 18},
+    requiredTalent = {12,18},
     cooldown = 157980,
     smallCooldown = true,
     debuff = {114923, 1},
@@ -61,7 +60,8 @@ function EventHorizon:InitializeClass()
   -- Arcane Orb
   self:newSpell({
     requiredTree = 1,
-    requiredTalent = 21,
+    requiredTalent = 17,
+    requiredTalentUnselected = 12,
     cooldown = 153626,
      barcolors   = {
      cooldown  = {242/255, 161/255, 252/255, 0.65},
@@ -71,17 +71,9 @@ function EventHorizon:InitializeClass()
   -- Supernova
   self:newSpell({
     requiredTree = 1,
-    requiredTalent = 12,
-    requiredTalentUnselected = 18,
+    requiredTalent = 18,
+    requiredTalentUnselected = 12,
     cooldown = 157980,
-  })
-
-  -- Charged Up
-  self:newSpell({
-    requiredTree = 1,
-    requiredTalent = 11,
-    requiredTalentUnselected = 18,
-    cooldown = 205032,
   })
 
   -- Rune of Power
@@ -100,7 +92,7 @@ function EventHorizon:InitializeClass()
 -- Presence of Mind
   self:newSpell({
     requiredTree = 1,
-    requiredLevel = 54,
+    requiredLevel = 42,
     cooldown = 205025,
     playerbuff = 205025,
      barcolors   = {
@@ -111,7 +103,7 @@ function EventHorizon:InitializeClass()
 --Arcane Power
   self:newSpell({
     requiredTree = 1,
-    requiredLevel = 40,
+    requiredLevel = 29,
     cooldown = 12042,
     playerbuff = 12042,
      barcolors   = {
@@ -122,7 +114,7 @@ function EventHorizon:InitializeClass()
 -- Evocate
   self:newSpell({
     requiredTree = 1,
-    requiredLevel = 20,
+    requiredLevel = 27,
     channel = {12051, 3},
     recharge = 12051,
      barcolors   = {
@@ -130,22 +122,13 @@ function EventHorizon:InitializeClass()
     },
   })
 
-  -- Mirror Image
-  self:newSpell({
-    requiredTree = 1,
-    requiredTalent = 8,
-    cooldown = 55342,
-     barcolors   = {
-     cooldown    = {171/255, 191/255, 181/255, 0.6},
-     },
-})
-
 --  Fire
 
   -- Heating up with casts and Fireblast recharge.
   self:newSpell({
     requiredTree = 2,
-    cast = {133, 2948, 11366},
+    requiredLevel = 10,
+    cast = {133, 116, 118, 2120, 2948, 11366, 116011, 190336},
     playerbuff = 48107,
     recharge = 108853,
      barcolors   = {
@@ -157,6 +140,7 @@ function EventHorizon:InitializeClass()
   -- Hot Streak! and Phoenix's Flames recharge.
   self:newSpell({
     requiredTree = 2,
+    requiredLevel = 14,
     recharge = 257541,
     playerbuff = 48108,
      barcolors   = {
@@ -168,7 +152,7 @@ function EventHorizon:InitializeClass()
 -- Ignite and Dragon's Breath CD at half height.
   self:newSpell({
     requiredTree = 2,
-    requiredLevel = 32,
+    requiredLevel = 14,
     debuff = {12654, 1},
     cooldown = 31661,
     smallCooldown = true,
@@ -200,10 +184,23 @@ function EventHorizon:InitializeClass()
      },
   })
 
+  -- Rune of Power
+  self:newSpell({
+    requiredTree = 2,
+    requiredTalent = 9,
+    recharge = 116011,
+    playerbuff = {116011,18},
+    cast = 116011,
+     barcolors   = {
+     playerbuff  = {171/255, 070/255, 171/255, 0.5},
+     recharge    = {151/255, 191/255, 252/255, 0.4}
+     },
+  })
+
 -- Combustion
   self:newSpell({
     requiredTree = 2,
-    requiredLevel = 40,
+    requiredLevel = 29,
     cooldown = 190319,
     playerbuff = 190319,
      barcolors   = {
@@ -212,63 +209,24 @@ function EventHorizon:InitializeClass()
      },
   })
 
-  -- Rune of Power
-  self:newSpell({
-    requiredTree = 2,
-    requiredTalent = 9,
-    recharge = 116011,
-    playerbuff = 116011,
-    cast = 116011,
-     barcolors   = {
-     playerbuff  = {171/255, 070/255, 171/255, 0.5},
-     recharge    = {171/255, 191/255, 181/255, 0.4}
-     },
-  })
-
   -- Pyroclasm
   self:newSpell({
     requiredTree = 2,
     requiredTalent = 20,
-    requiredTalentUnselected = 8,
     playerbuff = 269650,
   })
-
-  -- Pyroclasm with Mirror Image CD at half height, if both are taken.
-  self:newSpell({
-    requiredTree = 2,
-    requiredTalent = {8 ,20},
-    playerbuff = 269650,
-    cooldown = 55342,
-    smallCooldown = true,
-     barcolors   = {
-     playerbuff  = {242/255, 161/255, 010/255, 0.5},
-     cooldown    = {171/255, 191/255, 181/255, 0.8}
-     },
-  })
-
--- Mirror Image
-  self:newSpell({
-    requiredTree = 2,
-    requiredTalent = 8,
-    requiredTalentUnselected = 20,
-    cooldown = 55342,
-     barcolors   = {
-     playerbuff  = {242/255, 161/255, 010/255, 0.7},
-     cooldown    = {171/255, 191/255, 181/255, 0.6}
-     },
-})
 
 -- Frost
 
   -- Brain Freeze with spell casts and Blizzard CD at half height.
   self:newSpell({
     requiredTree = 3,
-    requiredLevel = 18,
+    requiredLevel = 10,
     playerbuff = 190447,
     icon = 190447,
     cooldown = 190356,
     smallCooldown = true,
-    cast = {116, 31687, 190356, 199786, 257537},
+    cast = {116, 31687, 190336, 190356, 199786, 257537, 319836},
      barcolors   = {
      playerbuff  = {252/255, 232/255, 252/255, 0.5},
      cooldown    = {030/255, 030/255, 252/255, 0.9},
@@ -278,7 +236,7 @@ function EventHorizon:InitializeClass()
   -- Fingers of Frost with Frozen Orb CD at half height.
   self:newSpell({
     requiredTree = 3,
-    requiredLevel = 24,
+    requiredLevel = 13,
     playerbuff = 112965,
     cooldown = 84714,
     smallCooldown = true,
@@ -300,7 +258,7 @@ function EventHorizon:InitializeClass()
   -- Chain Reaction - I tried tracking this to see if you can keep it up by holding FoF procs but it's just too random, uncomment this spell if you'd like to try.
   self:newSpell({
     requiredTree = 3,
-    requiredTalent = 1,
+    requiredTalent = 11,
     playerbuff = 278309,
     smallCooldown = true,
   })
@@ -360,18 +318,6 @@ function EventHorizon:InitializeClass()
      },
   })
 
-  -- Ray of Frost
-  self:newSpell({
-    requiredTree = 3,
-    requiredTalent = 20,
-    debuff = {205021, 1},
-    cooldown = 205021,
-    channel = 205021,
-     barcolors   = {
-     cooldown    = {040/255, 040/255, 232/255, 0.4},
-    },
-  })
-
   -- Rune of Power
   self:newSpell({
     requiredTree = 3,
@@ -385,15 +331,17 @@ function EventHorizon:InitializeClass()
      },
   })
 
-  -- Mirror Image
+  -- Ray of Frost
   self:newSpell({
     requiredTree = 3,
-    requiredTalent = 8,
-    cooldown = 55342,
+    requiredTalent = 20,
+    debuff = {205021, 1},
+    cooldown = 205021,
+    channel = 205021,
      barcolors   = {
-     cooldown    = {171/255, 191/255, 181/255, 0.6},
-     },
-})
+     cooldown    = {040/255, 040/255, 232/255, 0.4},
+    },
+  })
 
   -- Ice Veins
   self:newSpell({
