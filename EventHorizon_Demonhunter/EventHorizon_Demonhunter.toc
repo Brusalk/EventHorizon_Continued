@@ -1,4 +1,4 @@
-## Interface: 90001
+## Interface: 90002
 ## Title: EventHorizon_|c99A330C9DemonHunter|r
 ## Author: Brusalk
 ## Dependencies: EventHorizon
