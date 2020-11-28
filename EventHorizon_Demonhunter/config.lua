@@ -33,13 +33,6 @@ function EventHorizon:InitializeClass()
     cooldown = 198793,
   })
 
-  -- Throw Glaive
-  self:newSpell({
-    requiredTree = 1,
-    requiredLevel = 10,
-    recharge = 185123,
-  })
-
   -- Glaive Tempest
   self:newSpell({
     requiredTree = 1,
@@ -63,11 +56,19 @@ function EventHorizon:InitializeClass()
     cooldown = 211881,
   })
 
-  -- -- Eye Beam
+  -- Eye Beam
   self:newSpell({
     requiredTree = 1,
     requiredLevel = 11,
     cooldown = 198013,
+  })
+
+  -- Immolation Auro
+  self:newSpell({
+    requiredTree = 1,
+    requiredLevel = 27,
+    playerbuff = 258920,
+    cooldown = 258920,
   })
 
   -- Fel Barrage
@@ -77,20 +78,27 @@ function EventHorizon:InitializeClass()
     cooldown = 258925,
   })
 
-  -- Fury of the Illidari
+  -- -- Fury of the Illidari
+  -- self:newSpell({
+  --   requiredTree = 1,
+  --   requiredArtifactTalent = 201467,
+  --   playerbuff = 201467,
+  --   cooldown = 201467,
+  -- })
+
+  -- Throw Glaive
   self:newSpell({
     requiredTree = 1,
-    requiredArtifactTalent = 201467,
-    playerbuff = 201467,
-    cooldown = 201467,
+    requiredLevel = 10,
+    recharge = 185123,
   })
 
   -- Chaos Nova
-  self:newSpell({
-    requiredTree = 1,
-    -- requiredLevel = 100,
-    cooldown = 179057,
-  })
+  -- self:newSpell({
+  --   requiredTree = 1,
+  --   requiredLevel = 100,
+  --   cooldown = 179057,
+  -- })
 
 
   -- Defensive abilities, hidden by default due to the huge ammount of bars this spec has, remove the --[[ and ]]-- from the spell configs for any you'd like to display.
