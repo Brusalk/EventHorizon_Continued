@@ -93,24 +93,33 @@ function EventHorizon:InitializeClass()
   })
 
 
-  -- -- Defensive abilities, hidden by default due to the huge ammount of bars this spec has, remove the --[[ and ]]-- from the spell configs for any you'd like to display.
-  -- --[[
-  -- -- Blur
-  -- self:newSpell({
-  --   requiredTree = 1,
-  --   requiredLevel = 100,
-  --   cooldown = 198589,
-  -- })
-  -- ]]--
+  -- Defensive abilities, hidden by default due to the huge ammount of bars this spec has, remove the --[[ and ]]-- from the spell configs for any you'd like to display.
+  --[[
+  -- Blur
+  self:newSpell({
+    requiredTree = 1,
+    requiredLevel = 21,
+    cooldown = 198589,
+  })
+  ]]--
 
-  -- --[[
-  -- -- Darkness
-  -- self:newSpell({
-  --   requiredTree = 1,
-  --   requiredLevel = 100,
-  --   cooldown = 196718,
-  -- })
-  -- ]]--
+  --[[
+  -- Darkness
+  self:newSpell({
+    requiredTree = 1,
+    requiredLevel = 39,
+    cooldown = 196718,
+  })
+  ]]--
+
+  --[[
+  -- Netherwalk
+  self:newSpell({
+    requiredTree = 1,
+    requiredTalent = 12,
+    cooldown = 196555,
+  })
+  ]]--
 
   -- -- Vengeance
 
