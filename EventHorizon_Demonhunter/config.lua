@@ -142,6 +142,18 @@ function EventHorizon:InitializeClass()
     },
   })
 
+  -- Demon Spikes
+  self:newSpell({
+    requiredTree = 2,
+    requiredLevel = 1,
+    playerbuff = 203720,
+    recharge = 203720,
+    barcolors = {
+      playerbuff = {232/255, 202/255, 000/255, 0.7},
+      recharge = {171/255, 191/255, 181/255, 0.4}
+    },
+  })
+
   -- Immolation Aura
   self:newSpell({
     requiredTree = 2,
@@ -154,17 +166,6 @@ function EventHorizon:InitializeClass()
     },
   })
 
-  -- Demon Spikes
-  self:newSpell({
-    requiredTree = 2,
-    requiredLevel = 1,
-    playerbuff = 203720,
-    recharge = 203720,
-    barcolors = {
-      playerbuff = {232/255, 202/255, 000/255, 0.7},
-      recharge = {171/255, 191/255, 181/255, 0.4}
-    },
-  })
 
   -- Felblade
   self:newSpell({
