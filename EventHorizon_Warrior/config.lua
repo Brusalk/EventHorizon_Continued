@@ -45,9 +45,10 @@ function EventHorizon:InitializeClass()
         requiredTree = 1,
     })
 
-    -- Sweeping Strikes
+    -- Sweeping Strikes + Collateral damage
     self:newSpell({
-        playerbuff = 260708,
+        keepIcon = true,
+        playerbuff = {{260708}, {334783}},
         cooldown = 260708,
         requiredTree = 1,
     })
