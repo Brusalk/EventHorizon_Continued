@@ -90,18 +90,16 @@ function EventHorizon:InitializeClass()
         requiredTree = 2,
     })
  
-    -- Bloodthirst + Furious Slash
+    -- Bloodthirst
     self:newSpell({
         cooldown = 23881,
-        playerbuff = 202539,
         keepIcon = true,
         requiredTree = 2,
     })
 
-    -- Raging Blow + Frothing Berserker
+    -- Raging Blow
     self:newSpell({
         recharge = 85288,
-        playerbuff = 215572,
         keepIcon = true,
         requiredTree = 2,
     })
@@ -122,6 +120,12 @@ function EventHorizon:InitializeClass()
         requiredTree = 2,
     })
 
+    -- Onslaught
+    self:newSpell({
+      requiredTree = 2,
+      requiredTalent = 9,      
+      cooldown = 315720
+    })
 
     -- Recklessness
     self:newSpell({
