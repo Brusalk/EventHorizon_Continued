@@ -149,4 +149,81 @@ function EventHorizon:InitializeClass()
         requiredTalent = 18,
         requiredTree = 2,
     })
+
+    -- -- Protection
+    -- Shield Block
+    self:newSpell({
+      requiredTree = 3,
+      recharge = 2565,
+      playerbuff = 2565
+    })
+
+    -- Ignore Pain
+    self:newSpell({
+      requiredTree = 3,
+      playerbuff = 190456,
+      cooldown = 190456,
+    })
+
+    -- Slam + Best Served Cold
+    self:newSpell({
+      requiredTree = 3,
+      cooldown = 23922,
+    })
+
+    -- Dragon Roar
+    self:newSpell({
+      requiredTree = 3,
+      requiredTalent = 9,
+      cooldown = 118000,
+    })
+
+    -- Ravager
+    self:newSpell({
+      requiredTree = 3,
+      requiredTalent = 18,
+      cooldown = 228920,
+    })
+
+    -- Thunder Clap
+    self:newSpell({
+      requiredTree = 3,
+      cooldown = 6343,
+      debuff = 6343
+    })
+
+    -- Shockwave
+    self:newSpell({
+      requiredTree = 3,
+      cooldown = 46968,
+      debuff = 46968,
+    })
+
+    -- Demoralizing Shout
+    self:newSpell({
+      requiredTree = 3,
+      cooldown = 1160,
+      debuff = 1160,
+    })
+
+    -- Spell Reflection
+    -- self:newSpell({
+    --   requiredTree = 3,
+    --   cooldown = 23920,
+    --   playerbuff = 23920,
+    -- })
+
+    -- Last Stand
+    self:newSpell({
+      requiredTree = 3,
+      cooldown = 12975,
+      playerbuff = 12975,
+    })
+
+    -- Shield Wall
+    self:newSpell({
+      requiredTree = 3,
+      cooldown = 871,
+      playerbuff = 871
+    })
 end
