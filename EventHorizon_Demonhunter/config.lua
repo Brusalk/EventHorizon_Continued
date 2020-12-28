@@ -8,7 +8,7 @@ function EventHorizon:InitializeClass()
   -- Blade Dance
   self:newSpell({
     requiredTree = 1,
-    requiredLevel = 100,
+    requiredLevel = 12,
     cooldown = 188499,
     playerbuff = 188499,
   })
@@ -16,36 +16,42 @@ function EventHorizon:InitializeClass()
   -- Fel Rush
   self:newSpell({
     requiredTree = 1,
-    requiredLevel = 98,
+    -- requiredLevel = 98,
     recharge = 195072,
   })
 
   -- Felblade
   self:newSpell({
     requiredTree = 1,
-    requiredTalent = 2,
+    requiredTalent = 3,
     cooldown = 232893,
   })
 
   -- Vengeful Retreat
   self:newSpell({
     requiredTree = 1,
-    requiredLevel = 100,
     cooldown = 198793,
   })
 
-  -- Throw Glaive
+  -- Glaive Tempest
   self:newSpell({
     requiredTree = 1,
-    requiredLevel = 99,
-    debuff = 206478,
-    recharge = 185123,
+    requiredTalent = 9,
+    cooldown = 342817
+  })
+
+  -- Essence Break
+  self:newSpell({
+    requiredTree = 1,
+    requiredTalent = 15,
+    cooldown = 258860,
+    debuff = 320338
   })
 
   -- Fel Eruption
   self:newSpell({
     requiredTree = 1,
-    requiredTalent = 14,
+    requiredTalent = 18,
     debuff = 211881,
     cooldown = 211881,
   })
@@ -53,54 +59,54 @@ function EventHorizon:InitializeClass()
   -- Eye Beam
   self:newSpell({
     requiredTree = 1,
-    requiredLevel = 100,
+    requiredLevel = 11,
     cooldown = 198013,
+  })
+
+  -- Immolation Auro
+  self:newSpell({
+    requiredTree = 1,
+    requiredLevel = 27,
+    playerbuff = 258920,
+    cooldown = 258920,
   })
 
   -- Fel Barrage
   self:newSpell({
     requiredTree = 1,
-    requiredTalent = 20,
-    cooldown = 211053,
+    requiredTalent = 21,
+    cooldown = 258925,
   })
 
-  -- Fury of the Illidari
+  -- -- Fury of the Illidari
+  -- self:newSpell({
+  --   requiredTree = 1,
+  --   requiredArtifactTalent = 201467,
+  --   playerbuff = 201467,
+  --   cooldown = 201467,
+  -- })
+
+  -- Throw Glaive
   self:newSpell({
     requiredTree = 1,
-    requiredArtifactTalent = 201467,
-    playerbuff = 201467,
-    cooldown = 201467,
+    requiredLevel = 10,
+    recharge = 185123,
   })
 
   -- Chaos Nova
-  self:newSpell({
-    requiredTree = 1,
-    requiredLevel = 100,
-    cooldown = 179057,
-  })
+  -- self:newSpell({
+  --   requiredTree = 1,
+  --   requiredLevel = 100,
+  --   cooldown = 179057,
+  -- })
 
-  -- Chaos Blades
-  self:newSpell({
-    requiredTree = 1,
-    requiredTalent = 19,
-    playerbuff = 211048,
-    cooldown = 211048,
-  })
-
-  -- Nemesis
-  self:newSpell({
-    requiredTree = 1,
-    requiredTalent = 15,
-    playerbuff = 206491,
-    cooldown = 206491,
-  })
 
   -- Defensive abilities, hidden by default due to the huge ammount of bars this spec has, remove the --[[ and ]]-- from the spell configs for any you'd like to display.
   --[[
   -- Blur
   self:newSpell({
     requiredTree = 1,
-    requiredLevel = 100,
+    requiredLevel = 21,
     cooldown = 198589,
   })
   ]]--
@@ -109,8 +115,17 @@ function EventHorizon:InitializeClass()
   -- Darkness
   self:newSpell({
     requiredTree = 1,
-    requiredLevel = 100,
+    requiredLevel = 39,
     cooldown = 196718,
+  })
+  ]]--
+
+  --[[
+  -- Netherwalk
+  self:newSpell({
+    requiredTree = 1,
+    requiredTalent = 12,
+    cooldown = 196555,
   })
   ]]--
 
@@ -127,22 +142,10 @@ function EventHorizon:InitializeClass()
     },
   })
 
-  -- Immolation Aura
-  self:newSpell({
-    requiredTree = 2,
-    requiredLevel = 100,
-    playerbuff = 178740,
-    cooldown = 178740,
-    barcolors = {
-      playerbuff = {205/255, 237/255, 069/255, 0.7},
-      cooldown = {171/255, 191/255, 181/255, 0.5}
-    },
-  })
-
   -- Demon Spikes
   self:newSpell({
     requiredTree = 2,
-    requiredLevel = 100,
+    requiredLevel = 1,
     playerbuff = 203720,
     recharge = 203720,
     barcolors = {
@@ -151,31 +154,52 @@ function EventHorizon:InitializeClass()
     },
   })
 
+  -- Immolation Aura
+  self:newSpell({
+    requiredTree = 2,
+    requiredLevel = 14,
+    playerbuff = 258920,
+    cooldown = 258920,
+    barcolors = {
+      playerbuff = {205/255, 237/255, 069/255, 0.7},
+      cooldown = {171/255, 191/255, 181/255, 0.5}
+    },
+  })
+
+
   -- Felblade
   self:newSpell({
     requiredTree = 2,
-    requiredTalent = 7,
-    cooldown = 213241,
+    requiredTalent = 3,
+    cooldown = 232893,
   })
 
   -- Spirit Bomb
   self:newSpell({
     requiredTree = 2,
-    requiredTalent = 18,
+    requiredTalent = 9,
     debuff = 247456,
   })
 
-  -- Fel Eruption
+  -- Fracture
   self:newSpell({
     requiredTree = 2,
-    requiredTalent = 9,
-    playerbuff = 211881,
-    cooldown = 211881,
+    requiredTalent = 12,
+    recharge = 263642
   })
+
+  -- Fel Eruption
+  -- self:newSpell({
+  --   requiredTree = 2,
+  --   requiredTalent = 9,
+  --   playerbuff = 211881,
+  --   cooldown = 211881,
+  -- })
 
   -- Sigil of Flame
   self:newSpell({
     requiredTree = 2,
+    requiredLevel = 12,
     debuff = 204596,
     cooldown = 204596,
     barcolors = {
@@ -187,27 +211,34 @@ function EventHorizon:InitializeClass()
   -- Soul Barrier
   self:newSpell({
     requiredTree = 2,
+    requiredTalent = 18,
+    playerbuff = 263648,
+    cooldown = 263648,
+  })
+
+  -- Bulk Extraction
+  self:newSpell({
+    requiredTree = 2,
     requiredTalent = 21,
-    playerbuff = 227225,
-    cooldown = 227225,
+    cooldown = 320341
   })
 
   -- Soul Carver
-  self:newSpell({
-    requiredTree = 2,
-    requiredArtifactTalent = 207407,
-    cooldown = 207407,
-    debuff = 207407,
-    barcolors = {
-      debuffmine = {202/255, 161/255, 055/255, 0.9},
-      cooldown = {202/255, 161/255, 055/255, 0.5}
-    },
-  })
+  -- self:newSpell({
+  --   requiredTree = 2,
+  --   requiredArtifactTalent = 207407,
+  --   cooldown = 207407,
+  --   debuff = 207407,
+  --   barcolors = {
+  --     debuffmine = {202/255, 161/255, 055/255, 0.9},
+  --     cooldown = {202/255, 161/255, 055/255, 0.5}
+  --   },
+  -- })
 
   -- Sigil of Chains
   self:newSpell({
     requiredTree = 2,
-    requiredTalent = 14,
+    requiredTalent = 15,
     debuff = 202138,
     cooldown = 202138,
   })
@@ -215,34 +246,14 @@ function EventHorizon:InitializeClass()
   -- Fel Devastation
   self:newSpell({
     requiredTree = 2,
-    requiredTalent = 16,
-    debuff = 212084,
+    requiredLevel = 11,
     cooldown = 212084,
-  })
-
-  -- Demonic Infusion
-  self:newSpell({
-    requiredTree = 2,
-    requiredTalent = 20,
-    cooldown = 236189,
-  })
-
-  -- Empower Wards
-  self:newSpell({
-    requiredTree = 2,
-    requiredLevel = 103,
-    playerbuff = 218256,
-    recharge = 218256,
-    barcolors = {
-      playerbuff = {040/255, 050/255, 050/255, 0.7},
-      recharge = {171/255, 191/255, 181/255, 0.5}
-    },
   })
 
   -- Fiery Brand
   self:newSpell({
     requiredTree = 2,
-    requiredLevel = 100,
+    requiredLevel = 1,
     debuff = 207744,
     cooldown = 204021,
     barcolors = {
@@ -254,7 +265,6 @@ function EventHorizon:InitializeClass()
   -- Metamorphosis
   self:newSpell({
     requiredTree = 2,
-    requiredLevel = 98,
     playerbuff = 187827,
     cooldown = 187827,
     barcolors = {
