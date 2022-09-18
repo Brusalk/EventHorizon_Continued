@@ -614,6 +614,7 @@ ns.defaultcolors = {
   bgcolor = {0,0,0,0.6},
   bordercolor = {1,1,1,1},
   gcdColor = {1,1,1,0.5},
+  timer = {true,class == 'PRIEST' and 0.7 or 1,0.3},
 }
 
 ns.defaultlayouts = {
@@ -693,6 +694,7 @@ local draworder = {
   channeltick = 0,
   now = 1,
   gcd = 2,
+  timer = 3,
   nowI = 7,
 }
 
@@ -1520,7 +1522,9 @@ local SpellFrame_COMBAT_LOG_EVENT_UNFILTERED = function (...)
   if event == 'SPELL_CAST_SUCCESS' then
     --debug('SPELL_CAST_SUCCESS',destguid)
     self.castsuccess[destguid] = now
-
+    timerAfterCast = self.timerAfterCast
+    if timerAfterCast == nil or timerAfterCast[1] ~= spellid then return end
+    self:AddSegment('timer', 'timer', now, now + timerAfterCast[2])
   elseif tickevents[event] then
     local isInvalid = not(self.dot) and (self.cast and self.cast[spellname] and not(self.cast[spellname].numhits))  -- filter out cast+channel bars
     if isInvalid then return end
@@ -2463,7 +2467,7 @@ end
 
 -- Dispatch the CLEU.
 local mainframe_COMBAT_LOG_EVENT_UNFILTERED = function (...)
-  local self,time, event, hideCaster, srcguid,srcname,srcflags, destguid,destname,destflags, spellid,spellname = ...
+  local self,time, event, hideCaster, srcguid,srcname,srcflags,srcraidflags,destguid,destname,destflags, destraidflags,spellid,spellname = ...
   if srcguid~=vars.playerguid or event:sub(1,5)~='SPELL' then return end
   local spellframe = self.framebyspell[spellname]
   if ns.otherIDs[spellname] then
@@ -2530,6 +2534,7 @@ function ns:newSpell(config) -- New class config to old class config
   n.cooldown = c.cooldown
   n.recharge = c.recharge
   n.rechargeMaxDisplayCount = c.rechargeMaxDisplayCount
+  n.timerAfterCast = c.timerAfterCast
   n.refreshable = c.refreshable == false and false or true
 
   if type(c.debuff) == "table" then
@@ -2658,6 +2663,11 @@ local function SetSpellAttributes(spellframe,config)
   spellframe.iconTexture = tex
 
   interestingEvent['UNIT_SPELLCAST_SENT'] = true
+  if config.timerAfterCast then
+    interestingCLEU.SPELL_CAST_SUCCESS=true
+    spellframe.castsuccess = {}
+    spellframe.timerAfterCast = config.timerAfterCast
+  end
 
   if config.itemID or config.slotID then
     spellframe.cooldown = true  -- Not getting out of this one. It's an item, what else do you watch?
