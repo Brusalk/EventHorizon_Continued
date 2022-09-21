@@ -1522,9 +1522,13 @@ local SpellFrame_COMBAT_LOG_EVENT_UNFILTERED = function (...)
   if event == 'SPELL_CAST_SUCCESS' then
     --debug('SPELL_CAST_SUCCESS',destguid)
     self.castsuccess[destguid] = now
-    timerAfterCast = self.timerAfterCast
+    local timerAfterCast = self.timerAfterCast
     if timerAfterCast == nil or timerAfterCast[1] ~= spellid then return end
-    self:AddSegment('timer', 'timer', now, now + timerAfterCast[2])
+    if self.timersegment and self.timersegment.stop > now then
+      self.timersegment.stop = now + timerAfterCast[2]
+    else
+      self.timersegment = self:AddSegment('timer', 'timer', now, now + timerAfterCast[2])
+    end
   elseif tickevents[event] then
     local isInvalid = not(self.dot) and (self.cast and self.cast[spellname] and not(self.cast[spellname].numhits))  -- filter out cast+channel bars
     if isInvalid then return end
