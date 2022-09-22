@@ -2144,7 +2144,16 @@ local SpellFrame_Deactivate = function (self)
   --debug('unregistering events for', self.spellname)
   self:UnregisterAllEvents()
   if self.interestingCLEU then
-    mainframe.framebyspell[self.spellname] = nil
+    local activeFrame = nil
+    for _, frame in ipairs(ns.frames.active) do
+      if frame.spellname == self.spellname then
+        activeFrame = frame
+        break
+      end
+    end
+    if not activeFrame then
+      mainframe.framebyspell[self.spellname] = nil
+    end
   end
   self:Hide()
   for index=#self.indicators,1,-1 do
