@@ -614,7 +614,7 @@ ns.defaultcolors = {
   bgcolor = {0,0,0,0.6},
   bordercolor = {1,1,1,1},
   gcdColor = {1,1,1,0.5},
-  timer = {true,class == 'PRIEST' and 0.7 or 1,0.3},
+  timerAfterCast = {true,class == 'PRIEST' and 0.7 or 1,0.3},
 }
 
 ns.defaultlayouts = {
@@ -694,7 +694,7 @@ local draworder = {
   channeltick = 0,
   now = 1,
   gcd = 2,
-  timer = 3,
+  timerAfterCast = 3,
   nowI = 7,
 }
 
@@ -1476,6 +1476,32 @@ local mainframe_CLEU_OtherInterestingSpell = function (self, time, event, hideCa
           break
         end
       end
+    elseif event == 'SPELL_CAST_SUCCESS' and id.isTimer then
+      for i in pairs(bf) do
+        local showTimer = false
+        local timerAfterCast = bf[i].timerAfterCast
+        if timerAfterCast then
+          if type(timerAfterCast[1]) == "number" and timerAfterCast[1] == spellid then
+            showTimer = true
+          elseif type(timerAfterCast[1]) == "table" then
+            for _, value in pairs(timerAfterCast[1]) do
+              if value == spellid then
+                showTimer = true
+                break
+              end
+            end
+          end
+          if showTimer then
+            local now = GetTime()
+            if bf[i].timersegment and bf[i].timersegment.stop > now then
+              bf[i].timersegment.stop = now + timerAfterCast[2]
+            else
+              bf[i].timersegment = bf[i]:AddSegment('timerAfterCast', 'timerAfterCast', now, now + timerAfterCast[2])
+            end
+            break
+          end
+        end
+      end
     end
   end
 end
@@ -1522,13 +1548,6 @@ local SpellFrame_COMBAT_LOG_EVENT_UNFILTERED = function (...)
   if event == 'SPELL_CAST_SUCCESS' then
     --debug('SPELL_CAST_SUCCESS',destguid)
     self.castsuccess[destguid] = now
-    local timerAfterCast = self.timerAfterCast
-    if timerAfterCast == nil or timerAfterCast[1] ~= spellid then return end
-    if self.timersegment and self.timersegment.stop > now then
-      self.timersegment.stop = now + timerAfterCast[2]
-    else
-      self.timersegment = self:AddSegment('timer', 'timer', now, now + timerAfterCast[2])
-    end
   elseif tickevents[event] then
     local isInvalid = not(self.dot) and (self.cast and self.cast[spellname] and not(self.cast[spellname].numhits))  -- filter out cast+channel bars
     if isInvalid then return end
@@ -2677,9 +2696,20 @@ local function SetSpellAttributes(spellframe,config)
 
   interestingEvent['UNIT_SPELLCAST_SENT'] = true
   if config.timerAfterCast then
-    interestingCLEU.SPELL_CAST_SUCCESS=true
+    local timerAfterCast = config.timerAfterCast
     spellframe.castsuccess = {}
-    spellframe.timerAfterCast = config.timerAfterCast
+    spellframe.timerAfterCast = timerAfterCast
+
+    local sn = GetSpellInfo(config.channeled)
+    if type(timerAfterCast[1]) == "number" then
+      local sn = GetSpellInfo(timerAfterCast[1])
+      otherids[sn] = {isTimer = true}
+    elseif type(timerAfterCast[1]) == "table" then
+      for _, value in pairs(timerAfterCast[1]) do
+        local sn = GetSpellInfo(value)
+        otherids[sn] = {isTimer = true}
+      end
+    end
   end
 
   if config.itemID or config.slotID then
