@@ -1,7 +1,7 @@
-## Interface: 90002
+## Interface: 100002
 ## Title: EventHorizon
 ## Author: Brusalk
-## Version: 1.10.1-beta
+## Version: 1.11.0-beta
 ## Dependencies:
 ## OptDeps: SharedMedia, LibArtifactData-1.0
 ## OptionalDepts: LibArtifactData-1.0
@@ -10,7 +10,7 @@
 
 EventHorizon.lua
 config.lua
-myconfig.lua
+# myconfig.lua
 trinkets.lua
 
 # Custom myconfigs not in existing folder
