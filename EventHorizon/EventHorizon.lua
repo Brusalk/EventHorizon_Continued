@@ -2378,6 +2378,7 @@ function ns:SetFrameDimensions()
     end
   end
 end
+
 --[[
 function ns:AddCheckedTalent(tab,index)
   local required = true
@@ -2391,6 +2392,7 @@ function ns:AddCheckedTalent(tab,index)
   end
 end
 ]]
+
 function ns:CheckRequirements()
   if not ns.isReady then return end
 
@@ -2421,7 +2423,7 @@ function ns:CheckRequirements()
         for _, nodeId in ipairs(nodes) do
           local node = C_Traits.GetNodeInfo(configId, nodeId)
           if node and node.ID ~= 0 then
-            for _, talentId in ipairs(node.entryIDs) do
+            for _, talentId in ipairs(node.entryIDsWithCommittedRanks) do
               local entryInfo = C_Traits.GetEntryInfo(configId, talentId)
               local definitionInfo = C_Traits.GetDefinitionInfo(entryInfo.definitionID)
 --	        print("tId="..talentId, "sId="..definitionInfo.spellID, select(1,GetSpellInfo(definitionInfo.spellID)).." rank "..node.currentRank)
@@ -2469,10 +2471,9 @@ function ns:CheckRequirements()
           rT = {rT}
       end
       --nameTalent, icon, tier, column, active = GetTalentInfo(rT);
-      -- NOTE: double and to check for the talent to be defined (as in before DF) and for the rank to be >0 (for DF)
       for i, talent in ipairs(rT) do
       	  --print(talent..' check')
-          haveTalentReq = haveTalentReq and (vars.currentTalents[talent] and vars.currentTalents[talent] ~= 0)
+          haveTalentReq = haveTalentReq and vars.currentTalents[talent]
       end
     end
 
@@ -3314,7 +3315,7 @@ function ns:Initialize()
     end,
     OnAccept = function()
       StaticPopup_Hide("EH_GithubDialog1")
-      EventHorizonDB.__GithubDialog1NotificationShadowlands = true
+      EventHorizonDB.__GithubDialog1NotificationDragonflight = true
     end,
   }
 
@@ -3330,11 +3331,11 @@ function ns:Initialize()
       self:SetText("discord.gg/mR8xUUK") -- Esentially don't allow them to change the value
     end,
     OnAccept = function()
-      EventHorizonDB.__DiscordDialog1NotificationShadowlands = true
+      EventHorizonDB.__DiscordDialog1NotificationDragonflight = true
     end,
     OnHide = function()
       StaticPopup_Hide("EH_DiscordDialog1")
-      if not EventHorizonDB.__GithubDialog1NotificationShadowlands then
+      if not EventHorizonDB.__GithubDialog1NotificationDragonflight then
          popupIn("EH_GithubDialog1", 0.5)
       end
     end,

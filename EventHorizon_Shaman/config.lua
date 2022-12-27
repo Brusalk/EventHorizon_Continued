@@ -123,13 +123,103 @@ function EventHorizon:InitializeClass()
      playerbuff  = {232/255, 191/255, 181/255, 0.4}
      },
   })
-]]
-  -- Enhancement
+]]--
 
+-- Enhancement
+
+  -- Stormstrike
+  self:newSpell({
+    requiredTree = 2,
+    cooldown = 17364,
+    playerbuff = 201846,
+     barcolors   = {
+     playerbuff  = {010/255, 010/255, 171/255, 0.6},
+     cooldown    = {171/255, 191/255, 181/255, 0.6}
+     },
+  })
+
+  -- Frost Shock
+  self:newSpell({
+    requiredTree = 2,
+    cooldown = 196840,
+    playerbuff = 384357,
+     barcolors   = {
+     playerbuff  = {192/255, 192/255, 192/255, 0.6},
+     cooldown    = {171/255, 191/255, 181/255, 0.6}
+     },
+  })
+
+  -- Crash Lightning
+  self:newSpell({
+    requiredTree = 2,
+    cooldown = 187874,
+    playerbuff = 187878,
+  })
+
+  -- Ice Strike
+  self:newSpell({
+    requiredTree = 2,
+    cooldown = 342240,
+--    playerbuff = 384357,
+     barcolors   = {
+--     playerbuff  = {192/255, 192/255, 192/255, 0.6},
+     cooldown    = {171/255, 191/255, 181/255, 0.6}
+     },
+  })
+
+  -- Flame Shock
+  self:newSpell({
+    requiredTree = 2,
+    cooldown = 188389,
+    debuff = {188389, 2},
+     barcolors   = {
+     cooldown    = {171/255, 191/255, 181/255, 0.7},
+     tick        = {222/255, 040/255, 010/255, 0.9},
+     debuffmine  = {242/255, 141/255, 010/255, 0.5}
+     },
+  })
+
+  -- Lava Lash
+  self:newSpell({
+    requiredTree = 2,
+    cooldown = 60103,
+--    playerbuff = 194084,
+     barcolors   = {
+--     playerbuff  = {252/255, 141/255, 040/255, 0.6},
+     cooldown    = {171/255, 191/255, 181/255, 0.6}
+     },
+  })
+
+  -- Maelstrom Weapon
+  self:newSpell({
+    requiredTree = 2,
+--    cooldown = 17364,
+    playerbuff = 344179,
+     barcolors   = {
+     playerbuff  = {010/255, 010/255, 171/255, 0.6},
+--     cooldown    = {171/255, 191/255, 181/255, 0.6}
+     },
+  })
+
+  -- Sundering
+  self:newSpell({
+    requiredTree = 2,
+    cooldown = 197214,
+  })
+
+  -- Thunderstorm
+  self:newSpell({
+    requiredTree = 2,
+    requiredTalent = 51490,
+    cooldown = 51490,
+  })
+
+
+
+--[[
   -- Rockbiter with Hot Hand
   self:newSpell({
     requiredTree = 2,
-    requiredLevel = 10,
     recharge = 193786,
     playerbuff = 215785,
      barcolors   = {
@@ -141,7 +231,6 @@ function EventHorizon:InitializeClass()
   -- Flametongue
   self:newSpell({
     requiredTree = 2,
-    requiredLevel = 12,
     requiredTalentUnselected = 10,
     cooldown = 193796,
     playerbuff = 194084,
@@ -154,7 +243,6 @@ function EventHorizon:InitializeClass()
   -- Searing Assault
   self:newSpell({
     requiredTree = 2,
-    requiredTalent= 10,
     cooldown = 193796,
     debuff = {268429, 2},
      barcolors   = {
@@ -164,23 +252,9 @@ function EventHorizon:InitializeClass()
      },
   })
 
-  -- Stormstrike
-  self:newSpell({
-    requiredTree = 2,
-    requiredLevel = 20,
-    cooldown = 17364,
-    playerbuff = 201846,
-     barcolors   = {
-     playerbuff  = {010/255, 010/255, 171/255, 0.6},
-     cooldown    = {171/255, 191/255, 181/255, 0.6}
-     },
-  })
-
   -- Frostbrand - only with Hailstorm talented.
   self:newSpell({
     requiredTree = 2,
-    requiredLevel = 38,
-    requiredTalent = 11,
     playerbuff = 196834,
      barcolors   = {
      playerbuff  = {080/255, 111/255, 151/255, 0.5},
@@ -190,14 +264,12 @@ function EventHorizon:InitializeClass()
   -- Overcharge
   self:newSpell({
     requiredTree = 2,
-    requiredTalent = 12,
     cooldown = 187837,
   })
 
   -- Earthen Spike
   self:newSpell({
     requiredTree = 2,
-    requiredTalent = 20,
     cooldown = 188089,
     debuff = 188089,
      barcolors   = {
@@ -206,25 +278,9 @@ function EventHorizon:InitializeClass()
      },
   })
 
-  -- Crash Lightning
-  self:newSpell({
-    requiredTree = 2,
-    requiredLevel = 28,
-    cooldown = 187874,
-    playerbuff = 187878,
-  })
-
-  -- Sundering
-  self:newSpell({
-    requiredTree = 2,
-    requiredTalent = 18,
-    cooldown = 197214,
-  })
-
   -- Fury of Air and Feral Spirit cooldown at half height.
   self:newSpell({
     requiredTree = 2,
-    requiredLevel = 36,
     cooldown = 51533,
     smallCooldown = true,
     playerbuff = 197211,
@@ -237,7 +293,6 @@ function EventHorizon:InitializeClass()
   -- Ascendance
   self:newSpell({
     requiredTree = 2,
-    requiredTalent = 21,
     cooldown = 114051,
     playerbuff = 114051,
      barcolors   = {
@@ -245,6 +300,7 @@ function EventHorizon:InitializeClass()
      playerbuff  = {252/255, 191/255, 181/255, 0.6}
      },
   })
+]]--
 
 --[[ seems to have been removed but the spell still exists in the Db, unlike others which were removed, so I'm leaving it here for future changes.
   -- Windsong
@@ -259,7 +315,8 @@ function EventHorizon:InitializeClass()
      },
   })
 ]]--
-[[
+
+--[[
   -- Restoration
 
   -- Lava Burst recharge, Lava Surge proc and spell casts.
@@ -397,7 +454,7 @@ function EventHorizon:InitializeClass()
      playerbuff  = {232/255, 191/255, 181/255, 0.4}
      },
   })
-]]
+]]--
 -- Utility spells or long cooldowns, hidden by default as there are already many bars for this spec. Remove the comment "--[[ ]]--" block lines to show the ones you'd like.
 --[[
   -- Spiritwalker's Grace
