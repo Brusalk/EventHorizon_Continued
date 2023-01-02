@@ -10,6 +10,7 @@ local Wod = select(4,GetBuildInfo()) >= 60000
 local Legion = select(4,GetBuildInfo()) >= 70000
 local BFA = select(4,GetBuildInfo()) >= 80000
 local Shadowlands = select(4, GetBuildInfo()) >= 90000
+local Dragonflight = select(4, GetBuildInfo()) >= 100000
 
 local DEBUG = false
 local spellIDsEnabled = DEBUG -- Toggles display of spellIDs in tooltips. Useful for working on spell configs
@@ -322,6 +323,110 @@ local BuildShadowlandsClassConfigStatusText = function()
 end
 
 
+
+
+local DragonflightStatusText = ""
+
+DragonflightStatusText = DragonflightStatusText .. "Welcome to EventHorizon for Dragonflight -- This is a beta release, but things should work. "
+DragonflightStatusText = DragonflightStatusText .. "If you do encounter a bug, please copy the whole error message including stack trace and post it in EventHorizon's discord \n\n"
+DragonflightStatusText = DragonflightStatusText .. "Class configurations are to be considered a team effort: if you have an updated class config for your spec, please post it to EventHorizon's Discord so it can be added! \n\n  Thanks!\n - Discord: Brusalk#2615 \n\n"
+
+local DragonflightSpecIDMapping = {
+  [62] = "Mage: Arcane",
+  [63] = "Mage: Fire",
+  [64] = "Mage: Frost",
+  [65] = "Paladin: Holy",
+  [66] = "Paladin: Protection",
+  [70] = "Paladin: Retribution",
+  [71] = "Warrior: Arms",
+  [72] = "Warrior: Fury",
+  [73] = "Warrior: Protection",
+  [102] = "Druid: Balance",
+  [103] = "Druid: Feral",
+  [104] = "Druid: Guardian",
+  [105] = "Druid: Restoration",
+  [250] = "Death Knight: Blood",
+  [251] = "Death Knight: Frost",
+  [252] = "Death Knight: Unholy",
+  [253] = "Hunter: Beast Mastery",
+  [254] = "Hunter: Marksmanship",
+  [255] = "Hunter: Survival",
+  [256] = "Priest: Discipline",
+  [257] = "Priest: Holy",
+  [258] = "Priest: Shadow",
+  [259] = "Rogue: Assassination",
+  [260] = "Rogue: Outlaw",
+  [261] = "Rogue: Subtlety",
+  [262] = "Shaman: Elemental",
+  [263] = "Shaman: Enhancement",
+  [264] = "Shaman: Restoration",
+  [265] = "Warlock: Affliction",
+  [266] = "Warlock: Demonology",
+  [267] = "Warlock: Destruction",
+  [268] = "Monk: Brewmaster",
+  [269] = "Monk: Windwalker",
+  [270] = "Monk: Mistweaver",
+  [577] = "Demon Hunter: Havoc",
+  [581] = "Demon Hunter: Vengeance",
+  [1467] = "Evoker: Devastation",
+  [1468] = "Evoker: Preservation",
+}
+
+local DragonflightClassesNotImplemented = {
+  [62] = "Mage: Arcane",
+  [63] = "Mage: Fire",
+  [64] = "Mage: Frost",
+  [65] = "Paladin: Holy",
+  [66] = "Paladin: Protection",
+  [70] = "Paladin: Retribution",
+  [71] = "Warrior: Arms",
+  [72] = "Warrior: Fury",
+  [73] = "Warrior: Protection",
+  [102] = "Druid: Balance",
+  [103] = "Druid: Feral",
+  [104] = "Druid: Guardian",
+  [105] = "Druid: Restoration",
+  [250] = "Death Knight: Blood",
+  [251] = "Death Knight: Frost",
+  [252] = "Death Knight: Unholy",
+  [253] = "Hunter: Beast Mastery",
+  [254] = "Hunter: Marksmanship",
+  [255] = "Hunter: Survival",
+  [256] = "Priest: Discipline",
+  [257] = "Priest: Holy",
+  [258] = "Priest: Shadow",
+  [259] = "Rogue: Assassination",
+  [260] = "Rogue: Outlaw",
+  [261] = "Rogue: Subtlety",
+  [262] = "Shaman: Elemental",
+  [263] = "Shaman: Enhancement",
+  [264] = "Shaman: Restoration",
+  [265] = "Warlock: Affliction",
+  [266] = "Warlock: Demonology",
+  [267] = "Warlock: Destruction",
+  [268] = "Monk: Brewmaster",
+  [269] = "Monk: Windwalker",
+  [270] = "Monk: Mistweaver",
+  [577] = "Demon Hunter: Havoc",
+  [581] = "Demon Hunter: Vengeance",
+  [1467] = "Evoker: Devastation",
+  [1468] = "Evoker: Preservation",
+}
+
+
+local BuildDragonflightClassConfigStatusText = function()
+  local ret = "EventHorizon - Dragonflight Alpha Release\nCurrent Class Status \n\n"
+  for specID, classname in pairs(DragonflightSpecIDMapping) do
+    local id, name, desc, icon, background, role, class = GetSpecializationInfoByID(specID)
+    if DragonflightClassesNotImplemented[specID] then
+      ret = ret .. name .. " | NYI \n"
+    end
+  end
+  ret = ret .. "\nIf your spec is Not Yet Implemented (NYI), please send me your customized config via Github or Discord, so I can add it as the default config for your spec!\n"
+  return ret
+end
+
+
 ns.defaultDB = {
   point = {'CENTER', 'UIParent', 'CENTER'},
   isActive = true,
@@ -614,6 +719,7 @@ ns.defaultcolors = {
   bgcolor = {0,0,0,0.6},
   bordercolor = {1,1,1,1},
   gcdColor = {1,1,1,0.5},
+  timerAfterCast = {true,class == 'PRIEST' and 0.7 or 1,0.3},
 }
 
 ns.defaultlayouts = {
@@ -693,6 +799,7 @@ local draworder = {
   channeltick = 0,
   now = 1,
   gcd = 2,
+  timerAfterCast = 3,
   nowI = 7,
 }
 
@@ -746,6 +853,7 @@ local mainframeEvents = {
   ['COMBAT_LOG_EVENT_UNFILTERED'] = true,
   ['PLAYER_TALENT_UPDATE'] = true,
   ['ACTIVE_TALENT_GROUP_CHANGED'] = true,
+  ['TRAIT_CONFIG_UPDATED'] = true,
   ['UPDATE_SHAPESHIFT_FORM'] = true,
   ['UPDATE_SHAPESHIFT_FORMS'] = true,
   ['SPELL_UPDATE_COOLDOWN'] = true,
@@ -764,6 +872,7 @@ local reloadEvents = {
   ['LFG_LOCK_INFO_RECEIVED'] = true,
   ['PLAYER_TALENT_UPDATE'] = true,
   ['ACTIVE_TALENT_GROUP_CHANGED'] = true,
+  ['TRAIT_CONFIG_UPDATED'] = true,
   ['PLAYER_ENTERING_WORLD'] = true,
 }
 
@@ -1474,6 +1583,32 @@ local mainframe_CLEU_OtherInterestingSpell = function (self, time, event, hideCa
           break
         end
       end
+    elseif event == 'SPELL_CAST_SUCCESS' and id.isTimer then
+      for i in pairs(bf) do
+        local showTimer = false
+        local timerAfterCast = bf[i].timerAfterCast
+        if timerAfterCast then
+          if type(timerAfterCast[1]) == "number" and timerAfterCast[1] == spellid then
+            showTimer = true
+          elseif type(timerAfterCast[1]) == "table" then
+            for _, value in pairs(timerAfterCast[1]) do
+              if value == spellid then
+                showTimer = true
+                break
+              end
+            end
+          end
+          if showTimer then
+            local now = GetTime()
+            if bf[i].timersegment and bf[i].timersegment.stop > now then
+              bf[i].timersegment.stop = now + timerAfterCast[2]
+            else
+              bf[i].timersegment = bf[i]:AddSegment('timerAfterCast', 'timerAfterCast', now, now + timerAfterCast[2])
+            end
+            break
+          end
+        end
+      end
     end
   end
 end
@@ -1520,7 +1655,6 @@ local SpellFrame_COMBAT_LOG_EVENT_UNFILTERED = function (...)
   if event == 'SPELL_CAST_SUCCESS' then
     --debug('SPELL_CAST_SUCCESS',destguid)
     self.castsuccess[destguid] = now
-
   elseif tickevents[event] then
     local isInvalid = not(self.dot) and (self.cast and self.cast[spellname] and not(self.cast[spellname].numhits))  -- filter out cast+channel bars
     if isInvalid then return end
@@ -2136,7 +2270,16 @@ local SpellFrame_Deactivate = function (self)
   --debug('unregistering events for', self.spellname)
   self:UnregisterAllEvents()
   if self.interestingCLEU then
-    mainframe.framebyspell[self.spellname] = nil
+    local activeFrame = nil
+    for _, frame in ipairs(ns.frames.active) do
+      if frame.spellname == self.spellname then
+        activeFrame = frame
+        break
+      end
+    end
+    if not activeFrame then
+      mainframe.framebyspell[self.spellname] = nil
+    end
   end
   self:Hide()
   for index=#self.indicators,1,-1 do
@@ -2164,6 +2307,7 @@ end
 local timer = 0
 local checkInProgress
 function ns:CheckTalents()
+  --print('CheckTalents')
   if not self.isReady or checkInProgress then return end
   checkInProgress = true
   frame3:SetScript('OnUpdate', function (f,elapsed)
@@ -2234,6 +2378,7 @@ function ns:SetFrameDimensions()
     end
   end
 end
+
 --[[
 function ns:AddCheckedTalent(tab,index)
   local required = true
@@ -2247,10 +2392,10 @@ function ns:AddCheckedTalent(tab,index)
   end
 end
 ]]
+
 function ns:CheckRequirements()
   if not ns.isReady then return end
 
-  --print('CheckTalents')
   table.wipe(self.frames.active)
   table.wipe(self.frames.mouseover)
   --print('checkrequirements')
@@ -2263,12 +2408,37 @@ function ns:CheckRequirements()
   vars.activeTalentGroup = GetActiveSpecGroup('player')
   vars.currentLevel = UnitLevel('player')
 
+  --print("activeTree: "..vars.activeTree)
+  --print("activeTalentGroup: "..vars.activeTalentGroup)
+  --print("activeLevel: "..vars.currentLevel)
+
   vars.currentTalents = {};
 
-    for i=1, GetNumTalents() do
-        local nameTalent, icon, tier, column, active = GetTalentInfo(i);
-        vars.currentTalents[i] = active;
+  if Dragonflight then
+    local configId = C_ClassTalents.GetActiveConfigID()
+    if configId then
+      local configInfo = C_Traits.GetConfigInfo(configId)
+      for _, treeId in ipairs(configInfo.treeIDs) do
+        local nodes = C_Traits.GetTreeNodes(treeId)
+        for _, nodeId in ipairs(nodes) do
+          local node = C_Traits.GetNodeInfo(configId, nodeId)
+          if node and node.ID ~= 0 then
+            for _, talentId in ipairs(node.entryIDsWithCommittedRanks) do
+              local entryInfo = C_Traits.GetEntryInfo(configId, talentId)
+              local definitionInfo = C_Traits.GetDefinitionInfo(entryInfo.definitionID)
+--	        print("tId="..talentId, "sId="..definitionInfo.spellID, select(1,GetSpellInfo(definitionInfo.spellID)).." rank "..node.currentRank)
+              vars.currentTalents[definitionInfo.spellID] = node.currentRank
+	    end
+          end
+        end
+      end
     end
+  else
+    for i=1, GetNumTalents() do
+      local nameTalent, icon, tier, column, active = GetTalentInfo(i);
+      vars.currentTalents[i] = active;
+    end
+  end
 
   for i,config in ipairs(self.frames.config) do
     local rS = config.requiredTree
@@ -2295,19 +2465,19 @@ function ns:CheckRequirements()
       end
     end
 
-        -- All talents must be active for it to work
+    -- All talents must be active for it to work
     if rT then
-      haveTalentReq = true
       if type(rT) == 'number' then
           rT = {rT}
       end
       --nameTalent, icon, tier, column, active = GetTalentInfo(rT);
       for i, talent in ipairs(rT) do
+      	  --print(talent..' check')
           haveTalentReq = haveTalentReq and vars.currentTalents[talent]
       end
     end
 
-      --print("nRT Check:", nRT, vars.currentTalents[nRT])
+    --print("nRT Check:", nRT, vars.currentTalents[nRT])
     if nRT then
       if vars.currentTalents[nRT] then
         haveTalentRequiredUnselected = nil
@@ -2319,7 +2489,10 @@ function ns:CheckRequirements()
     local spellframe = self.frames.frames[i]
     local frameExists = spellframe~=nil
 
+    --print(haveSpecReq, haveLevelReq, haveTalentReq, haveTalentRequiredUnselected)
+
     if haveSpecReq and haveLevelReq and haveTalentReq and haveTalentRequiredUnselected then
+      --print('adding bar')
       if frameExists then
         spellframe:Activate()
       else
@@ -2463,7 +2636,7 @@ end
 
 -- Dispatch the CLEU.
 local mainframe_COMBAT_LOG_EVENT_UNFILTERED = function (...)
-  local self,time, event, hideCaster, srcguid,srcname,srcflags, destguid,destname,destflags, spellid,spellname = ...
+  local self,time, event, hideCaster, srcguid,srcname,srcflags,srcraidflags,destguid,destname,destflags, destraidflags,spellid,spellname = ...
   if srcguid~=vars.playerguid or event:sub(1,5)~='SPELL' then return end
   local spellframe = self.framebyspell[spellname]
   if ns.otherIDs[spellname] then
@@ -2530,6 +2703,7 @@ function ns:newSpell(config) -- New class config to old class config
   n.cooldown = c.cooldown
   n.recharge = c.recharge
   n.rechargeMaxDisplayCount = c.rechargeMaxDisplayCount
+  n.timerAfterCast = c.timerAfterCast
   n.refreshable = c.refreshable == false and false or true
 
   if type(c.debuff) == "table" then
@@ -2658,6 +2832,22 @@ local function SetSpellAttributes(spellframe,config)
   spellframe.iconTexture = tex
 
   interestingEvent['UNIT_SPELLCAST_SENT'] = true
+  if config.timerAfterCast then
+    local timerAfterCast = config.timerAfterCast
+    spellframe.castsuccess = {}
+    spellframe.timerAfterCast = timerAfterCast
+
+    local sn = GetSpellInfo(config.channeled)
+    if type(timerAfterCast[1]) == "number" then
+      local sn = GetSpellInfo(timerAfterCast[1])
+      otherids[sn] = {isTimer = true}
+    elseif type(timerAfterCast[1]) == "table" then
+      for _, value in pairs(timerAfterCast[1]) do
+        local sn = GetSpellInfo(value)
+        otherids[sn] = {isTimer = true}
+      end
+    end
+  end
 
   if config.itemID or config.slotID then
     spellframe.cooldown = true  -- Not getting out of this one. It's an item, what else do you watch?
@@ -3085,7 +3275,7 @@ Should only be called after the DB is loaded and spell and talent information is
 function ns:Initialize()
   -- Make sure this function is called only once.
   --self.Initialize = nil
-  --print('initialize')
+  --print('initialize, game version: ', select(4, GetBuildInfo()))
   self:InitDB()
   local popupIn = function(popup_to_show, delay)
     local popup_f = CreateFrame("frame")
@@ -3125,7 +3315,7 @@ function ns:Initialize()
     end,
     OnAccept = function()
       StaticPopup_Hide("EH_GithubDialog1")
-      EventHorizonDB.__GithubDialog1NotificationShadowlands = true
+      EventHorizonDB.__GithubDialog1NotificationDragonflight = true
     end,
   }
 
@@ -3141,11 +3331,11 @@ function ns:Initialize()
       self:SetText("discord.gg/mR8xUUK") -- Esentially don't allow them to change the value
     end,
     OnAccept = function()
-      EventHorizonDB.__DiscordDialog1NotificationShadowlands = true
+      EventHorizonDB.__DiscordDialog1NotificationDragonflight = true
     end,
     OnHide = function()
       StaticPopup_Hide("EH_DiscordDialog1")
-      if not EventHorizonDB.__GithubDialog1NotificationShadowlands then
+      if not EventHorizonDB.__GithubDialog1NotificationDragonflight then
          popupIn("EH_GithubDialog1", 0.5)
       end
     end,
@@ -3278,7 +3468,58 @@ function ns:Initialize()
     end,
   }
 
-  if Shadowlands then
+  StaticPopupDialogs["EH_DragonflightDialog2"] = {
+    text = BuildDragonflightClassConfigStatusText(),
+    showAlert = true,
+    button1 = "Hide Forever",
+    button2 = "Hide",
+    hideOnEscape = 1,
+    OnAccept = function()
+      EventHorizonDB.__DragonflightClassConfigStatusNotification2 = true
+    end,
+    OnHide = function()
+      StaticPopup_Hide("EH_DragonflightDialog2")
+      if not EventHorizonDB.__DiscordDialog1Notification then
+        popupIn("EH_DiscordDialog1", 0.5)
+      end
+    end,
+  }
+
+
+  StaticPopupDialogs["EH_DragonflightDialog1"] = {
+    text = DragonflightStatusText,
+    showAlert = true,
+    button1 = "Hide Forever",
+    button2 = "Hide",
+    hideOnEscape = 1,
+    OnAccept = function()
+      EventHorizonDB.__DragonflightClassStatusNotification2 = true
+    end,
+    OnHide = function()
+      StaticPopup_Hide("EH_DragonflightDialog1")
+      if not EventHorizonDB.__DragonflightClassConfigStatusNotification2 then
+        popupIn("EH_DragonflightDialog2", 0.5)
+      end
+    end,
+  }
+
+  if Dragonflight then
+    if EventHorizonDB.__DragonflightClassStatusNotification2 then -- Dialog1 hidden
+      if EventHorizonDB.__DragonflightClassConfigStatusNotification2 then -- We've hidden dialog2
+        if EventHorizonDB.__DiscordDialog1NotificationDragonflight then
+          if not EventHorizonDB.__GithubDialog1NotificationDragonflight then
+            popupIn("EH_GithubDialog1", 2)
+          end
+        else
+          popupIn("EH_DiscordDialog1", 2)
+        end
+      else
+        popupIn("EH_DragonflightDialog2", 2)
+      end
+    else
+      popupIn("EH_DragonflightDialog1", 2) -- Need to show Dialog1
+    end
+  elseif Shadowlands then
     if EventHorizonDB.__ShadowlandsClassStatusNotification2 then -- Dialog1 hidden
       if EventHorizonDB.__ShadowlandsClassConfigStatusNotification2 then -- We've hidden dialog2
         if EventHorizonDB.__DiscordDialog1NotificationShadowlands then
@@ -3463,6 +3704,9 @@ function ns:Initialize()
       for i in pairs(self.modules) do print('  '..i) end
       print('Visible bars:')
       for i,v in pairs(self.frames.shown) do print('  ' .. v.spellname) end
+    elseif cmd == 'talents' then
+      print('Detected talents:')
+        for tid,ta in pairs(vars.currentTalents) do print('  '..ta..' in '..tid..' ('..select(1,GetSpellInfo(tid))..')') end
     elseif cmd == 'reset' then
       if anchor[2]=='EventHorizonHandle' then
         print('Resetting EventHorizon\'s position.')
@@ -3774,6 +4018,7 @@ mainframe.COMBAT_LOG_EVENT_UNFILTERED = mainframe_COMBAT_LOG_EVENT_UNFILTERED
 mainframe.UPDATE_SHAPESHIFT_FORMS = mainframe_UPDATE_SHAPESHIFT_FORM
 mainframe.PLAYER_TALENT_UPDATE = ns.CheckTalents
 mainframe.ACTIVE_TALENT_GROUP_CHANGED = ns.CheckTalents
+mainframe.TRAIT_CONFIG_UPDATED = ns.CheckTalents
 mainframe.PLAYER_LEVEL_UP = ns.CheckTalents
 mainframe.PLAYER_TARGET_CHANGED = mainframe_PLAYER_TARGET_CHANGED
 mainframe.UNIT_AURA = mainframe_UNIT_AURA

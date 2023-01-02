@@ -79,6 +79,7 @@ c.recharge = {0.6,0.8,1,0.3}            -- Recharge bars. Default = {0.6,0.8,1,0
 c.debuffmine = {true,Priest and 0.7 or 1,0.3}  -- YOUR debuff bars. Default = {true,Priest and 0.7 or 1,0.3} (class colored, dimmed a bit if you're a Priest, 0.3 unmodified alpha)
 c.debuff = {true,0.5,0.3}            -- OTHER PLAYERS' debuff bars. Default = {true,0.5,0.3} (class colored, darkened by 50%, 0.3 unmodified alpha)
 c.playerbuff = {true,Priest and 0.7 or 1,0.3}  -- Buff bars. Default = {true,Priest and 0.7 or 1,0.3} (class colored, dimmed a bit if you're a Priest, 0.3 unmodified alpha)
+c.timerAfterCast = {true,Priest and 0.7 or 1,0.3}  -- Timer bars. Default = {true,Priest and 0.7 or 1,0.3} (class colored, dimmed a bit if you're a Priest, 0.3 unmodified alpha)
 c.nowLine = {1,1,1,0.3}              -- The "Now" line.
 c.bgcolor = {0,0,0,0.6}              -- Color of the frame's background. Default = {0,0,0,0.6} (black, 60% opacity)
 c.bordercolor = {1,1,1,1}            -- Color of the frame's border. Default = {1,1,1,1} (white, fully opaque)
