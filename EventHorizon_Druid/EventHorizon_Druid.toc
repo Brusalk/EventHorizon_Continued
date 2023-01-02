@@ -7,7 +7,7 @@
 ## SavedVariables: 
 
 config.lua
-# myconfig.lua
+myconfig.lua
 
 # Custom myconfigs not in existing folder
 # You can specify class configs in the below files, but due to the Curse Client deleting all folders before unzip

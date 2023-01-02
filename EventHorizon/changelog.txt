@@ -1,4 +1,9 @@
 Changelog:
+v1.11.1
+* Dragonflight Core Support
+* TOC Bump for Release
+* Some Druid/Shaman Support (#129) @StragaSevera @Ayliena
+
 v1.10.1
 * Shadowlands Core Support
 * TOC Bump for Release

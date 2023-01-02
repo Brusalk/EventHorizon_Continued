@@ -11,18 +11,18 @@ function EventHorizon:InitializeClass()
 -- them in a more logical order
 
 -- specializations
-  balance = 1
-  feral = 2
-  guardian = 3
-  restoration = 4
+  local balance = 1
+  local feral = 2
+  local guardian = 3
+  local restoration = 4
 
 -- stances
-  human = 0
-  bear = 1
-  cat = 2
-  travel = 3
-  moonkin = 4
-  flying = 5
+  local human = 0
+  local bear = 1
+  local cat = 2
+  local travel = 3
+  local moonkin = 4
+  local flying = 5
 
 -- baseline skills
 
